@@ -2,7 +2,9 @@ import React from 'react'
 
 const RouteOptimizer = () => {
   return (
-    <div>RouteOptimizer</div>
+    <div className='pt-16'>
+      <h1>Route optimizer</h1>
+    </div>
   )
 }
 

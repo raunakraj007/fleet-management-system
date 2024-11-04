@@ -2,7 +2,9 @@ import React from 'react'
 
 const FleetManagement = () => {
   return (
-    <div>FleetManagement</div>
+    <div className='pt-16'>
+      <h1>fleetManagement</h1>
+    </div>
   )
 }
 

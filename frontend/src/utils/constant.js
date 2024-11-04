@@ -1,0 +1,1 @@
+export const LOGO_URL = "https://apsissolutions.com/wp-content/uploads/2021/02/Delivery-Management.png";

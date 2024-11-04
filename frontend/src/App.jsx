@@ -12,15 +12,16 @@ import Home from "./pages/HomePage";
 import FleetManagement from "./pages/FleetManagement";
 import RouteOptimizer from "./pages/RouteOptimizer";
 import LoginSignUp from "./pages/LoginSignUp";
-
+import AcountPage from "./pages/AcountPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
-      <Route path="" element={<Home />} />
+      <Route path="home" element={<Home />} />
       <Route path="fleetManagement" element={<FleetManagement />} />
-      <Route path="routeOptimite" element={<RouteOptimizer />} />
+      <Route path="routeOptimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />
+      <Route path="account" element={<AcountPage />} />
     </Route>
   )
 );
