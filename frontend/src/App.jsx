@@ -15,20 +15,19 @@ import LoginSignUp from "./pages/LoginSignUp";
 import AcountPage from "./pages/AcountPage";
 import Dashboard from "./components/Dashboard";
 import Shipments from "./components/Shipments";
-import  Vehicles  from "./components/Vehicles";
+import Vehicles from "./components/Vehicles";
+import Shipment from "./components/Shipment";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
-      <Route path="home" element={<Home />} />
-      <Route path="fleetManagement" element={<FleetManagement />}>
-        <Route path="" element={<Dashboard />} />
-        <Route path="shipments" element={<Shipments />} />
-        <Route path="vehicles" element={<Vehicles />} />
-      </Route>
+      <Route path="" element={<Home />} />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="shipments" element={<Shipment />} />
+      <Route path="vehicles" element={<Vehicles />} />
       <Route path="routeOptimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />
-      <Route path="account" element={<AcountPage />} />
+      <Route path="profile" element={<AcountPage />} />
     </Route>
   )
 );
