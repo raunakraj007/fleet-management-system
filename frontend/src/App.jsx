@@ -17,6 +17,7 @@ import Dashboard from "./components/Dashboard";
 import Shipments from "./components/Shipments";
 import Vehicles from "./components/Vehicles";
 import Shipment from "./components/Shipment";
+import ManageFleet from "./components/ManageFleet";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +26,8 @@ const router = createBrowserRouter(
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="shipments" element={<Shipment />} />
       <Route path="vehicles" element={<Vehicles />} />
-      <Route path="routeOptimization" element={<RouteOptimizer />} />
+      <Route path="vehicles" element={<Vehicles />} />
+      <Route path="manage-fleet" element={<ManageFleet/>} />
       <Route path="login" element={<LoginSignUp />} />
       <Route path="profile" element={<AcountPage />} />
     </Route>
