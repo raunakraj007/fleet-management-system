@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { addShipments } from '../redux/shipmentSlice';
-import { useDispatch } from 'react-redux';
-
+import React, { useState } from "react";
+import { addShipments } from "../redux/shipmentSlice";
+import { useDispatch } from "react-redux";
 
 const JsonFileUploader = () => {
   const dispatch = useDispatch();
@@ -39,15 +38,11 @@ const JsonFileUploader = () => {
   };
 
   return (
-    <div className='w-full'>
-      <input 
-        type="file" 
-        accept=".json" 
-        onChange={handleFileChange} 
-      />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="w-full">
+      <input type="file" accept=".json" onChange={handleFileChange} />
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {jsonData && (
-        <div className='w-full'>
+        <div className="w-full">
           <h3>Parsed JSON Data:</h3>
           <pre>{JSON.stringify(jsonData, null, 2)}</pre>
         </div>

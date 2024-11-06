@@ -13,12 +13,19 @@ import FleetManagement from "./pages/FleetManagement";
 import RouteOptimizer from "./pages/RouteOptimizer";
 import LoginSignUp from "./pages/LoginSignUp";
 import AcountPage from "./pages/AcountPage";
+import Dashboard from "./components/Dashboard";
+import { Shipments } from "./components/Shipments";
+import { Vehicles } from "./components/Vehicles";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
       <Route path="home" element={<Home />} />
-      <Route path="fleetManagement" element={<FleetManagement />} />
+      <Route path="fleetManagement" element={<FleetManagement />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="shipmnets" element={<Shipments />} />
+        <Route path="dashboard" element={<Vehicles />} />
+      </Route>
       <Route path="routeOptimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />
       <Route path="account" element={<AcountPage />} />
