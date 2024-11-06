@@ -15,7 +15,7 @@ import LoginSignUp from "./pages/LoginSignUp";
 import AcountPage from "./pages/AcountPage";
 import Dashboard from "./components/Dashboard";
 import Shipments from "./components/Shipments";
-import { Vehicles } from "./components/Vehicles";
+import  Vehicles  from "./components/Vehicles";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

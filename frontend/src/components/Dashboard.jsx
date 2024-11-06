@@ -1,14 +1,220 @@
-import React from 'react'
+import React, { useState } from 'react';
+
+// Sample user data
+const testUser = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  title: 'Software Engineer',
+  title2: 'Web dev',
+  status: 'Active',
+  role: 'Owner',
+  picture:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+};
 
 const Dashboard = () => {
+  // Users state using React's useState hook
+  const [users] = useState([...Array(10).keys()].map(() => testUser));
+
   return (
+    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <div className="container mx-auto px-6 py-8">
+    <div>
+      <h3 className="text-3xl font-medium text-gray-700">Dashboard</h3>
 
-      <div>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi sed doloribus assumenda consequuntur praesentium eum? Architecto repellendus, quo quae vel nam corporis voluptatibus aliquam laudantium alias! Sequi fugit ducimus neque ad, magnam eaque laudantium sapiente ipsam, aperiam atque aspernatur minus ipsa. Tenetur ut eius deserunt adipisci aperiam cum at? Aliquid laborum quis dignissimos eaque nisi ex sapiente explicabo, at totam possimus consectetur vitae exercitationem aut nostrum, perspiciatis et. Consectetur nulla minima cupiditate quo quibusdam pariatur nesciunt distinctio, sed veritatis illum consequatur voluptates debitis eius at itaque eaque assumenda repellendus corporis temporibus error iste in quaerat natus! Reiciendis nobis alias tempora!lorem1000
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores, magnam! Beatae consequatur inventore nulla exercitationem voluptatem at eum placeat iure nam quisquam sint animi commodi iste, omnis explicabo. Unde earum autem repudiandae vel libero, beatae dicta ipsam voluptates laboriosam quaerat porro nesciunt, suscipit quibusdam molestias. Dolor dolore veniam repellendus! Consequatur, voluptate. Quos in iure corporis laborum similique aperiam recusandae architecto nulla nostrum sit qui quod, nobis molestiae adipisci! Doloremque qui impedit provident consequatur odit totam voluptas? Similique maxime animi quam eveniet sequi delectus nam tempora, porro sapiente laborum officiis cupiditate. Repellendus illum nulla iste dolorem, nostrum minus ullam, repudiandae, non magni dolorum unde temporibus laborum laudantium. Sit, accusamus iusto delectus aperiam quaerat natus quibusdam eaque iste, soluta itaque provident, perferendis excepturi molestias illo unde harum. Dolores praesentium, sint aperiam, aut corporis modi pariatur, voluptates quaerat nulla similique laudantium veniam? In beatae atque molestiae unde voluptatum fugiat incidunt magni vitae, explicabo dolor repudiandae recusandae, assumenda aut nisi dolores asperiores ullam, illum facere tempore quod? Iusto odit autem, atque repellat tenetur harum perspiciatis ipsum beatae obcaecati odio fuga voluptate vero ad quae velit natus nihil accusantium molestiae non, impedit voluptatibus cumque. Vel fugit ipsum, ullam sapiente cumque perferendis labore tempora laboriosam, et distinctio explicabo dignissimos dolores quasi! Dolorem omnis laborum repellat facere quas! Culpa voluptatum amet at deleniti vitae eum, harum sequi qui quas, mollitia possimus maxime error saepe fuga debitis rem dicta. A id et, atque nobis, eius unde repellendus iure veniam sapiente vitae voluptatibus totam deserunt labore fugit voluptatum veritatis voluptatem quas nostrum nisi ipsam provident! Error libero natus dolorem sint sunt neque rerum dignissimos? Aliquam eveniet aperiam deserunt earum omnis veritatis dolorum, distinctio, repellat necessitatibus culpa officia enim iste dolore doloribus laboriosam, blanditiis voluptatibus at adipisci fugit? Commodi autem minima expedita nihil eligendi at omnis, blanditiis vero odio eos tenetur iure quaerat esse saepe aliquid, sed facere explicabo? Commodi enim cupiditate inventore adipisci rem rerum at ab possimus incidunt consectetur. Perferendis saepe aliquam sequi. Similique repellat, animi sapiente sint sed id velit nihil voluptas nulla possimus commodi neque incidunt voluptatibus natus alias eum recusandae unde eius eveniet a, consequatur explicabo molestiae odit nisi. Sequi cupiditate quod dolorum, maiores iste nobis dolor eaque quaerat excepturi minima. Aliquid ut eos dicta eius veniam, nam et, voluptatem officia ratione reprehenderit quisquam iure ex, ducimus excepturi saepe vitae aliquam ad adipisci consequatur optio facilis deserunt rerum praesentium. Atque sint pariatur aspernatur quasi voluptas harum cupiditate suscipit vel impedit! Voluptatem excepturi vero amet itaque sit doloribus libero perspiciatis laudantium quae, ut nesciunt officia hic illum ad ullam vel similique eius in perferendis est velit quas. Enim, porro odit? Optio, tenetur. Tenetur beatae dolorem numquam provident rem at dignissimos, accusamus molestiae nemo commodi eligendi in totam repellat fugiat sint blanditiis sit, voluptatibus nesciunt possimus vel minima non adipisci amet! Dolore optio repudiandae minima, itaque eligendi voluptatem quasi ut aut illo et sapiente exercitationem dolor in odit nisi ea nostrum beatae est voluptatum, vel eveniet nulla, atque aperiam! Excepturi quia alias, sed asperiores quod commodi non voluptas quidem dolore? Eos nemo illo aspernatur quaerat, culpa distinctio voluptatem, ipsa, voluptates rem sapiente sequi. Asperiores fuga ipsam officia eligendi numquam nostrum necessitatibus cum modi. Eligendi quae ratione illum consectetur ducimus reprehenderit adipisci ipsa earum, itaque omnis, voluptatum facere quam ab. Voluptatem obcaecati iure amet libero accusantium. Impedit adipisci tenetur, esse similique magnam amet facere pariatur reprehenderit excepturi doloremque cupiditate ipsa laudantium magni fugiat nesciunt! Omnis, accusamus ipsum libero distinctio porro atque, nostrum sequi placeat nemo iure doloremque, voluptatum id ratione corporis? Impedit maxime error obcaecati corrupti necessitatibus quas ad, optio commodi enim nostrum cum officia officiis? Beatae temporibus natus maxime quo quisquam excepturi repellat, maiores itaque praesentium officia voluptatem fuga corrupti dolor illum omnis mollitia dolores repudiandae molestias quas at. Omnis nostrum necessitatibus consequuntur ipsum reiciendis tempora. Quaerat enim doloribus ut praesentium asperiores officia quod esse saepe quidem laudantium ratione nostrum aliquam eius hic, odio fugiat, perferendis sequi expedita ad dolorem temporibus nemo. Accusamus, rem eaque. Ab sunt maxime eum repudiandae eius eos repellendus dicta temporibus similique inventore est quia cupiditate quasi iure fugit voluptatum eligendi laudantium hic, nisi odio veritatis vero molestiae quis. Optio veritatis iusto vitae molestiae eum voluptatum, odit eligendi reprehenderit. Error, dolor atque illo ut sit officia. Aspernatur dolor, rem officia aperiam molestiae vero blanditiis sunt! Voluptate voluptatem veritatis aperiam vel quos placeat dolorum, officia fugiat minus eligendi distinctio quas accusantium ullam atque ad a consequuntur nesciunt exercitationem sit accusamus nisi unde deleniti eius! Iure inventore, similique incidunt laborum velit pariatur officiis minus corrupti dignissimos reprehenderit exercitationem quidem expedita voluptatibus quae, aliquam ut. Nostrum molestiae tempora ratione nesciunt dolores eos ut maxime voluptatibus libero similique, omnis, obcaecati et dolor delectus corporis in ea eius repellendus optio quisquam reprehenderit, quia earum. Velit dolorem tempora illum perspiciatis autem? Explicabo, eum! Est reprehenderit laboriosam molestias quia excepturi quis officiis, quo hic dolores facilis ad blanditiis, velit accusamus corporis voluptatum? Cupiditate enim voluptatem totam, ullam officia, quis placeat aut quasi rem iste ratione accusamus ipsa exercitationem temporibus laboriosam? Tenetur qui aperiam est eligendi, nesciunt assumenda maxime excepturi itaque dignissimos fugiat repudiandae, ad veniam, vitae velit. Doloribus, incidunt nam velit rem distinctio nisi eligendi ipsum quasi veniam et maxime ex maiores eum excepturi iure illum quod nemo vel delectus iste blanditiis inventore fuga voluptatum odio. Ducimus, aspernatur corrupti est, culpa cupiditate eaque odio modi architecto recusandae ullam eveniet libero? Odit dicta explicabo, libero reiciendis eum, vitae sit minima dolor nemo ducimus pariatur officiis rem. Doloremque molestiae numquam nobis incidunt earum quam distinctio veniam asperiores. Excepturi exercitationem tenetur, fuga quos cum consequatur suscipit molestiae at atque odio, nulla officiis vitae id debitis mollitia odit eligendi cupiditate sed quidem ullam deleniti. Dicta, laborum! Hic omnis vel maxime temporibus eius sapiente iure molestiae cupiditate numquam reiciendis! Animi quia repellendus libero aliquam similique perferendis aperiam? Voluptate dolorem enim illo sequi expedita atque facere molestiae sint debitis repellendus ut, aspernatur deserunt eius nam nostrum eos impedit. Repellat fugiat illum mollitia excepturi aliquam neque doloribus, aperiam quisquam error cupiditate vitae animi ratione accusantium fuga deserunt?
-      
-     </div>
-  )
-}
+      <div className="mt-4">
+        <div className="flex flex-wrap -mx-6">
+          {/* First Card */}
+          <div className="w-full px-6 sm:w-1/2 xl:w-1/3">
+            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+              <div className="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+                <svg
+                  className="w-8 h-8 text-white"
+                  viewBox="0 0 28 30"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18.2 9.08889C18.2 11.5373 16.3196 13.5222 14 13.5222C11.6804 13.5222 9.79999 11.5373 9.79999 9.08889C9.79999 6.64043 11.6804 4.65556 14 4.65556C16.3196 4.65556 18.2 6.64043 18.2 9.08889Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M25.2 12.0444C25.2 13.6768 23.9464 15 22.4 15C20.8536 15 19.6 13.6768 19.6 12.0444C19.6 10.4121 20.8536 9.08889 22.4 9.08889C23.9464 9.08889 25.2 10.4121 25.2 12.0444Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M19.6 22.3889C19.6 19.1243 17.0927 16.4778 14 16.4778C10.9072 16.4778 8.39999 19.1243 8.39999 22.3889V26.8222H19.6V22.3889Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M8.39999 12.0444C8.39999 13.6768 7.14639 15 5.59999 15C4.05359 15 2.79999 13.6768 2.79999 12.0444C2.79999 10.4121 4.05359 9.08889 5.59999 9.08889C7.14639 9.08889 8.39999 10.4121 8.39999 12.0444Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M22.4 26.8222V22.3889C22.4 20.8312 22.0195 19.3671 21.351 18.0949C21.6863 18.0039 22.0378 17.9556 22.4 17.9556C24.7197 17.9556 26.6 19.9404 26.6 22.3889V26.8222H22.4Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M6.64896 18.0949C5.98058 19.3671 5.59999 20.8312 5.59999 22.3889V26.8222H1.39999V22.3889C1.39999 19.9404 3.2804 17.9556 5.59999 17.9556C5.96219 17.9556 6.31367 18.0039 6.64896 18.0949Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div className="mx-5">
+                <h4 className="text-2xl font-semibold text-gray-700">8,282</h4>
+                <div className="text-gray-500">New Users</div>
+              </div>
+            </div>
+          </div>
 
-export default Dashboard
+          {/* Second Card */}
+          <div className="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+              <div className="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+                <svg
+                  className="w-8 h-8 text-white"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.19999 1.4C3.4268 1.4 2.79999 2.02681 2.79999 2.8C2.79999 3.57319 3.4268 4.2 4.19999 4.2H5.9069L6.33468 5.91114C6.33917 5.93092 6.34409 5.95055 6.34941 5.97001L8.24953 13.5705L6.99992 14.8201C5.23602 16.584 6.48528 19.6 8.97981 19.6H21C21.7731 19.6 22.4 18.9732 22.4 18.2C22.4 17.4268 21.7731 16.8 21 16.8H8.97983L10.3798 15.4H19.6C20.1303 15.4 20.615 15.1004 20.8521 14.6261L25.0521 6.22609C25.2691 5.79212 25.246 5.27673 24.991 4.86398C24.7357 4.45123 24.2852 4.2 23.8 4.2H8.79308L8.35818 2.46044C8.20238 1.83722 7.64241 1.4 6.99999 1.4H4.19999Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M22.4 23.1C22.4 24.2598 21.4598 25.2 20.3 25.2C19.1403 25.2 18.2 24.2598 18.2 23.1C18.2 21.9402 19.1403 21 20.3 21C21.4598 21 22.4 21.9402 22.4 23.1Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M9.1 25.2C10.2598 25.2 11.2 24.2598 11.2 23.1C11.2 21.9402 10.2598 21 9.1 21C7.9402 21 7 21.9402 7 23.1C7 24.2598 7.9402 25.2 9.1 25.2Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div className="mx-5">
+                <h4 className="text-2xl font-semibold text-gray-700">200,521</h4>
+                <div className="text-gray-500">Total Orders</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Third Card */}
+          <div className="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+              <div className="p-3 bg-pink-600 bg-opacity-75 rounded-full">
+                <svg
+                  className="w-8 h-8 text-white"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.99998 11.2H21L22.4 23.8H5.59998L6.99998 11.2Z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M9.79999 8.4C9.79999 6.08041 11.6804 4.2 14 4.2C16.3196 4.2 18.2 6.08041 18.2 8.4V12.6C18.2 14.9197 16.3196 16.8 14 16.8C11.6804 16.8 9.79999 14.9197 9.79999 12.6V8.4Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </div>
+              <div className="mx-5">
+                <h4 className="text-2xl font-semibold text-gray-700">215,542</h4>
+                <div className="text-gray-500">Available Products</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* User Table */}
+      <div className="mt-8">
+        <div className="flex flex-col mt-8">
+          <div className="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+              <table className="min-w-full">
+                <thead>
+                  <tr>
+                    <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Title
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 border-b border-gray-200 bg-gray-50" />
+                  </tr>
+                </thead>
+
+                <tbody className="bg-white">
+                  {users.map((u, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 w-10 h-10">
+                            <img
+                              className="w-10 h-10 rounded-full"
+                              src={u.picture}
+                              alt=""
+                            />
+                          </div>
+
+                          <div className="ml-4">
+                            <div className="text-sm font-medium leading-5 text-gray-900">
+                              {u.name}
+                            </div>
+                            <div className="text-sm leading-5 text-gray-500">
+                              {u.email}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                        <div className="text-sm leading-5 text-gray-900">
+                          {u.title}
+                        </div>
+                        <div className="text-sm leading-5 text-gray-500">
+                          {u.title2}
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                          {u.status}
+                        </span>
+                      </td>
+
+                      <td className="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                        {u.role}
+                      </td>
+
+                      <td className="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                          Edit
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+    
+  );
+};
+
+export default Dashboard;
