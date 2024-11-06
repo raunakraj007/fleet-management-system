@@ -29,7 +29,7 @@ const Header = () => {
     //   <button onClick={handleSignOut}>Sign Out</button>
     // </div>
 
-    <nav className=" w-full fixed bg-[#C6E7FF] border-gray-200 dark:bg-gray-900">
+    <nav className="h-[10%] w-full fixed bg-[#C6E7FF] border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={LOGO_URL} className="h-8" alt="Logo" />

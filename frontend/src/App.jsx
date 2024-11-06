@@ -22,9 +22,9 @@ const router = createBrowserRouter(
     <Route path="/" element={<AppLayout />}>
       <Route path="home" element={<Home />} />
       <Route path="fleetManagement" element={<FleetManagement />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="shipmnets" element={<Shipments />} />
-        <Route path="dashboard" element={<Vehicles />} />
+        <Route path="" element={<Dashboard />} />
+        <Route path="shipments" element={<Shipments />} />
+        <Route path="vehicles" element={<Vehicles />} />
       </Route>
       <Route path="routeOptimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />

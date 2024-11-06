@@ -7,7 +7,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-center h-14 border-b">
           <div>Sidebar Navigation By iAmine</div>
         </div>
-        <div className="overflow-y-auto overflow-x-hidden flex-grow">
+        <div className=" scrollbar-hide overflow-y-auto overflow-x-hidden flex-grow">
           <ul className="flex flex-col py-4 space-y-1">
             <li className="px-5">
               <div className="flex flex-row items-center h-8">
