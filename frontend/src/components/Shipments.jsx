@@ -1,11 +1,793 @@
-import React from 'react'
+import React from "react";
 
-export const Shipments = () => {
+const Shipments = () => {
   return (
-      <div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quasi praesentium odio reiciendis laudantium corrupti eos at sunt quos quia, dolore natus tempora dignissimos tenetur dicta harum expedita exercitationem nisi sed asperiores saepe dolor quo! Reprehenderit illo quisquam iste quam accusantium hic officiis? Debitis, ullam! Deserunt quam quaerat a modi quod nemo sapiente dicta, perferendis recusandae qui id ea velit laboriosam, sit blanditiis hic, necessitatibus nobis accusantium voluptatum maxime nisi beatae? Nobis aliquid veniam saepe, repellat, magni odio in voluptate voluptatem voluptatum similique enim. Commodi unde animi quaerat explicabo non nemo dolores beatae ducimus maiores, hic nisi laboriosam soluta neque?</div>
+    <>
+      <div className="relative flex flex-col rounded-lg bg-white shadow-sm border border-slate-200">
+        {/* Fixed top bar */}
+        <div
+          role="button"
+          className="sticky top-0 z-10 bg-white text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+        >
+          <div>S no.</div>
+          <div className="ml-auto grid place-items-center justify-self-end">
+            Label
+          </div>
+          <div className="ml-auto grid place-items-center justify-self-end">
+            visit
+          </div>
+          <div className="ml-auto grid place-items-center justify-self-end">
+            TimeWindow
+          </div>
+          <div className="ml-auto  grid place-items-center justify-self-end">
+            Duration
+          </div>
+          <div className="ml-5 flex">
+            <button
+              className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            <button
+              className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
+        {/* Scrollable Nav Bar */}
+        <nav className="flex min-w-[240px] flex-col gap-1 p-1.5 max-h-full overflow-y-auto">
+          {/* List Items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
 
-       Shipments Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia odit saepe magni, magnam fuga quo iste placeat voluptatem, quam, nemo facilis reprehenderit quasi possimus? Molestias amet repellendus sapiente quibusdam exercitationem blanditiis atque ea, temporibus quisquam facilis sed nesciunt magni odit suscipit possimus praesentium iure dolor dolore incidunt perspiciatis recusandae. Ab accusamus id error ex. Modi cum repellat, sapiente dolor delectus odio deleniti dolorem doloribus totam soluta vitae voluptatibus blanditiis eum, sed quaerat perferendis. Hic ipsam itaque quas magnam dignissimos assumenda, quis eius, eum, aliquid dicta consequuntur repellat nam praesentium quam reiciendis quia asperiores cupiditate iure nihil blanditiis atque. Commodi qui, nisi enim corrupti tempora ad veniam inventore reiciendis numquam rerum, vero sed cum quod consequuntur est dolorem, in maiores magni culpa fugit vitae deserunt labore impedit reprehenderit. Sapiente laboriosam corrupti magnam? Dolorum esse magni nihil magnam perspiciatis quisquam minus optio voluptatum quibusdam sed, culpa eum vel maiores, dicta quod! Distinctio nihil ut necessitatibus eos? Laudantium omnis quam magnam sint tenetur! Corrupti, dolorum aut, in, blanditiis aperiam quaerat voluptas minus corporis ut iste expedita vitae ad quia repellat ipsam exercitationem! Mollitia doloremque vero animi ex maxime harum asperiores voluptate delectus eos. Voluptas voluptatem libero sed quibusdam vel nihil explicabo, earum consequatur optio quia praesentium dignissimos natus itaque beatae veniam animi dolor quas sint? Iusto architecto reprehenderit dolorum fugit eius dicta cumque, deleniti porro quis laudantium corporis commodi placeat, pariatur facere, hic ipsam fugiat nesciunt. Tenetur eligendi non, eos ducimus aperiam distinctio suscipit reprehenderit id dolorum cumque voluptas, officia alias qui nulla expedita ab aut itaque similique praesentium corrupti rem amet? Voluptatum fugiat vel ea dignissimos, nam eum. Reprehenderit ut exercitationem quas inventore dignissimos omnis atque, dolorem sequi doloremque est sunt! Nulla eum nobis dolores architecto in non adipisci eligendi maiores nesciunt quod omnis voluptates fuga dolorem minima, id quidem neque vel. Fugiat tempore quaerat, pariatur vel autem culpa officiis commodi molestiae cupiditate corporis quos beatae officia odio ratione odit nihil nemo voluptatum laboriosam enim. Provident quaerat non enim porro debitis? Nisi culpa dolorem dolore voluptates autem labore eos, officia minima asperiores fugiat non veritatis laudantium, odio enim iusto unde quibusdam natus tenetur excepturi aut consequatur illo earum numquam! Quisquam soluta sequi sed quo, voluptatem voluptas expedita molestias earum illum illo labore asperiores sit nemo in neque assumenda dolor quos totam obcaecati porro adipisci, provident explicabo. Accusamus recusandae magni perspiciatis dolorem. Modi quibusdam harum consectetur numquam vero rerum. Placeat ut molestias cumque maxime voluptatum in laboriosam, inventore dolor et debitis, dolores ab. Nam ex eaque consequuntur voluptas, nemo maiores? Delectus corrupti, non vitae maxime sed minus, illum incidunt voluptatibus eveniet officiis error atque ducimus ab natus neque dolorum recusandae. Explicabo porro voluptates qui sit inventore nulla dolore ipsum molestiae maiores enim! Illo maxime numquam ea est molestias pariatur dolor aspernatur? Quisquam facere culpa pariatur exercitationem error illum sapiente, alias dolore accusamus, dolores fuga veritatis quis voluptatum doloribus corporis amet voluptas quas ducimus? Sed quaerat quasi quas repellendus sapiente tenetur dolorum aspernatur, nulla, esse iste nam aliquid facilis magnam numquam veniam commodi ad ut pariatur dignissimos libero delectus sit minima, facere totam! Nostrum reiciendis et veniam earum ad dolor voluptatum quod rerum aliquid labore quidem in magnam quo eveniet explicabo at eum architecto delectus, minus quos sint. Excepturi perspiciatis et illum reprehenderit porro quae deleniti. Ducimus, assumenda. Iure quaerat assumenda quasi recusandae magnam numquam non, nihil aut sunt tempora dolor aperiam iusto deserunt cupiditate necessitatibus iste consequatur delectus totam voluptates minus optio inventore minima. Saepe sed tempora perferendis non totam vitae hic incidunt, nostrum neque asperiores debitis magnam animi dolor et ipsum! Ad, qui sint. Atque, voluptatum eius. Quod iusto incidunt numquam dicta, illum enim corporis quisquam perspiciatis possimus voluptatibus ad quibusdam sed molestiae id harum architecto omnis officia ex sit dolor ullam et atque. Odio minus quasi corrupti distinctio maiores quidem harum neque, sit fugit quos culpa. Voluptates id esse, quos eveniet harum, cumque fugiat accusantium a labore aliquid quod minima quae? Adipisci porro repudiandae earum corrupti dicta incidunt in veritatis, praesentium, dolorum aut assumenda nemo voluptatibus delectus sapiente? Totam natus ea repudiandae error quaerat aspernatur. At, aperiam quibusdam eius aliquam iste quos ratione nemo voluptatibus dolorum mollitia a laboriosam id laborum sed eligendi totam! Non eos, voluptas pariatur in, placeat cumque fugit qui laudantium, quasi quia illo? Perferendis ab odio, amet sequi dolorum enim pariatur quia illum eaque, possimus autem corrupti quis at impedit rem quos sint eligendi maxime quisquam officiis exercitationem deserunt, minus optio repellat? Aut explicabo consequuntur, temporibus error velit atque nobis, doloribus quod quo cumque voluptatibus itaque. Sed, maiores laudantium? Magnam suscipit voluptatum molestiae inventore aspernatur fugiat labore, numquam, assumenda laboriosam incidunt nihil ea at perspiciatis, facilis nobis odio fugit debitis nulla. Perferendis harum ipsum sed porro totam odit vitae cumque molestiae quisquam reprehenderit, commodi non beatae exercitationem magni asperiores fugit eos aut fugiat dolor amet ex facilis officiis optio! Enim quidem corporis repellat voluptatem maxime, neque magni iste iusto asperiores quo labore illo temporibus laborum necessitatibus aliquid dignissimos nisi illum corrupti, laudantium velit soluta explicabo! Laboriosam, sint cum recusandae, facilis voluptatum consectetur vero distinctio eveniet architecto odit itaque iure dolor expedita illum beatae earum autem. Repellat nobis nemo, deleniti ad natus veniam mollitia ab vero, numquam optio architecto sequi alias nostrum quos atque earum voluptatibus adipisci unde enim dolor, odit eius magnam blanditiis quae. Quasi quos ipsa quas ipsam recusandae vitae ipsum laudantium repudiandae doloremque tempore maiores ex cum molestiae, hic aliquid at error neque provident autem beatae praesentium magnam architecto. Quae esse rerum omnis, repudiandae ducimus iure cumque labore quis optio sequi impedit, quos nulla tempore. Autem cupiditate dolorum, quaerat ex porro provident iure blanditiis quos illum quae quas ipsam possimus in repellat ullam itaque asperiores necessitatibus deleniti suscipit est! Quaerat alias quasi iure, nulla eveniet veritatis distinctio culpa autem accusantium, impedit fugiat, commodi quam non dolores sed reiciendis repellat omnis placeat quos voluptas libero. Voluptatibus, culpa ad libero sed, unde obcaecati minus illo iusto odio quod deleniti a deserunt. Accusamus omnis sequi fuga provident, dolores fugit unde molestias, esse eos a quasi harum cumque? Ut.</div>      
-  )
-}
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>1</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Pickup <br /> <br /> <br />
+              Dilvery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              30/12/24 <br /> <small>14:20</small> <br />
+              30/12/24 <br />
+              <small>14:20</small>
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00 <br /> <br /> <br />
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Additional List Items */}
+          {/* Repeat for other items */}
+          <div
+            role="button"
+            className="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+          >
+            <div>2</div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Raj kum
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              Delivery
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              {/* 30/12/24 <br /> <small>14:20</small>  - 30/12/24 <br /> <small>14:20</small> */}
+              <span title="12/2/23-12/2/23">
+
+              14:20 - 16:40
+              </span>
+            
+            </div>
+            <div className="ml-auto grid place-items-center justify-self-end">
+              1:60:00
+            </div>
+            <div className="ml-5 flex">
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                className="rounded-md border border-transparent mx-2 p-2.5 text-center text-sm transition-all text-slate-600 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </>
+    // <></>
+  );
+};
+
+export default Shipments;
