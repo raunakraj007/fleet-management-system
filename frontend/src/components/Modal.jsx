@@ -87,8 +87,6 @@
 
 // // export default Modal;
 
-
-
 // import React, { useState, useEffect } from 'react';
 // import ModalForm from './ShipmentFormModal';
 
@@ -139,7 +137,7 @@
 //           className="absolute inset-0 bg-gray-900 opacity-50"
 //           onClick={closeModal}
 //         />
-        
+
 //         {/* Modal Content */}
 //         <div className="z-50 w-auto mx-auto overflow-y-auto bg-white rounded shadow-lg md:max-w-md relative">
 //           {/* Close Button */}
@@ -208,8 +206,6 @@
 // };
 
 // export default Modal;
-
-
 
 // import React, { useState, useEffect } from 'react';
 
@@ -605,7 +601,6 @@
 
 // export default ModalForm;
 
-
 // import React, { useState } from 'react';
 
 // const ModalForm = () => {
@@ -917,37 +912,38 @@
 
 // export default ModalForm;
 
-
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import DeliveryPickupSelector from "./PickupDileverySelector";
 
 const ModalForm = () => {
+  const [isPickUp, setIsPickUp] = useState(true);
+  const [isDelivery, setIsDelivery] = useState(false);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    displayName: '',
+    displayName: "",
     pickups: [
       {
         arrivalWaypoint: {
           location: {
             latLng: {
-              latitude: '',
-              longitude: '',
+              latitude: "",
+              longitude: "",
             },
           },
         },
         timeWindows: [
           {
-            startTime: '',
-            endTime: '',
+            startTime: "",
+            endTime: "",
           },
         ],
         duration: {
-          seconds: '',
+          seconds: "",
         },
-        cost: '',
+        cost: "",
         loadDemands: {
           weight: {
-            amount: '',
+            amount: "",
           },
         },
       },
@@ -957,35 +953,35 @@ const ModalForm = () => {
         arrivalWaypoint: {
           location: {
             latLng: {
-              latitude: '',
-              longitude: '',
+              latitude: "",
+              longitude: "",
             },
           },
         },
         timeWindows: [
           {
-            startTime: '',
-            endTime: '',
+            startTime: "",
+            endTime: "",
           },
         ],
         duration: {
-          seconds: '',
+          seconds: "",
         },
-        cost: '',
+        cost: "",
         loadDemands: {
           weight: {
-            amount: '',
+            amount: "",
           },
         },
       },
     ],
     loadDemands: {
       weight: {
-        amount: '',
+        amount: "",
       },
     },
     allowedVehicleIndices: [0, 1],
-    pickupToDeliveryTimeLimit: '',
+    pickupToDeliveryTimeLimit: "",
     ignore: false,
   });
 
@@ -1000,7 +996,7 @@ const ModalForm = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
-      const keys = name.split('.');
+      const keys = name.split(".");
       const lastKey = keys.pop();
       const nestedObj = keys.reduce((acc, key) => acc[key], prevData);
 
@@ -1024,7 +1020,9 @@ const ModalForm = () => {
 
   // Convert time (HH:mm) to epoch time (seconds)
   const convertTimeToEpoch = (timeString) => {
-    const [hours, minutes] = timeString.split(':').map((part) => parseInt(part, 10));
+    const [hours, minutes] = timeString
+      .split(":")
+      .map((part) => parseInt(part, 10));
     const date = new Date();
     date.setHours(hours, minutes, 0, 0); // Set the time
     return Math.floor(date.getTime() / 1000); // Return epoch time (seconds)
@@ -1071,7 +1069,9 @@ const ModalForm = () => {
 
       <div
         className={`modal fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
-          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          open
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
         <div
@@ -1090,9 +1090,7 @@ const ModalForm = () => {
               height="18"
               viewBox="0 0 18 18"
             >
-              <path
-                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
-              />
+              <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
             </svg>
             <span className="text-sm">(Esc)</span>
           </div>
@@ -1113,6 +1111,9 @@ const ModalForm = () => {
                   className="input"
                 />
               </div>
+
+              {/* toggle Section */}
+              <DeliveryPickupSelector/>
 
               {/* Pickups Section */}
               <div>
@@ -1210,7 +1211,9 @@ const ModalForm = () => {
                       <input
                         type="number"
                         name={`deliveries.${index}.arrivalWaypoint.location.latLng.latitude`}
-                        value={delivery.arrivalWaypoint.location.latLng.latitude}
+                        value={
+                          delivery.arrivalWaypoint.location.latLng.latitude
+                        }
                         onChange={handleInputChange}
                         className="input"
                       />
@@ -1219,7 +1222,9 @@ const ModalForm = () => {
                       <input
                         type="number"
                         name={`deliveries.${index}.arrivalWaypoint.location.latLng.longitude`}
-                        value={delivery.arrivalWaypoint.location.latLng.longitude}
+                        value={
+                          delivery.arrivalWaypoint.location.latLng.longitude
+                        }
                         onChange={handleInputChange}
                         className="input"
                       />
