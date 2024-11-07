@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const DeliveryPickupSelector = () => {
-  const [selectedOption, setSelectedOption] = useState('pickup');
+  const [selectedOption, setSelectedOption] = useState("pickup");
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
       <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
         <button
-          onClick={() => setSelectedOption('pickup')}
+          onClick={() => setSelectedOption("pickup")}
           className={`
             flex items-center justify-center
             px-6 py-3 rounded-lg
@@ -15,9 +15,9 @@ const DeliveryPickupSelector = () => {
             transition-all duration-200
             border-2
             ${
-              selectedOption === 'pickup'
-              ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+              selectedOption === "pickup"
+                ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
             }
           `}
         >
@@ -38,7 +38,7 @@ const DeliveryPickupSelector = () => {
         </button>
 
         <button
-          onClick={() => setSelectedOption('delivery')}
+          onClick={() => setSelectedOption("delivery")}
           className={`
             flex items-center justify-center
             px-6 py-3 rounded-lg
@@ -46,9 +46,9 @@ const DeliveryPickupSelector = () => {
             transition-all duration-200
             border-2
             ${
-              selectedOption === 'delivery'
-              ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+              selectedOption === "delivery"
+                ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
             }
           `}
         >

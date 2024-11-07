@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DeliveryPickupSelector from "./PickupDileverySelector";
 import DateTimeInput from "./DateTime";
 
-const ModalForm = () => {
+const ShipmentModalForm = () => {
   const [isPickUp, setIsPickUp] = useState(true);
   const [isDelivery, setIsDelivery] = useState(false);
   const [open, setOpen] = useState(false);
@@ -151,7 +151,7 @@ const ModalForm = () => {
         className="px-6 py-3 mt-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none"
         onClick={openModal}
       >
-        Open Modal
+        Open Modal2
       </button>
 
       <div
@@ -292,8 +292,7 @@ const ModalForm = () => {
               {/* Deliveries Section */}
               <div>
                 <div className="w-1/2">
-
-                <DateTimeInput />
+                  <DateTimeInput />
                 </div>
                 <h3>Deliveries</h3>
                 {formData.deliveries.map((delivery, index) => (
@@ -415,4 +414,4 @@ const ModalForm = () => {
   );
 };
 
-export default ModalForm;
+export default ShipmentModalForm;

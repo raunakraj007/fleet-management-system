@@ -8,6 +8,7 @@ import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
 import FormModal from "./ShipmentForm";
 import Modal from "./Modal";
+import ShipmentModalForm from "./ShipmentModalForm";
 
 // Mock data for demo purposes
 const defaultUsers = [
@@ -171,6 +172,7 @@ const Shipment = ({ users = defaultUsers }) => {
             <Modal />
 
             <JsonFileReader />
+            <ShipmentModalForm />
             <img
               src={del}
               alt=""
