@@ -6,6 +6,8 @@ import JsonFileReader from "./JsonFileReader";
 import addIcon from "../assets/add.svg";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
+import FormModal from "./ShipmentForm";
+import Modal from "./Modal";
 
 // Mock data for demo purposes
 const defaultUsers = [
@@ -165,6 +167,8 @@ const Shipment = ({ users = defaultUsers }) => {
               alt=""
               className="w-14 hover:scale-110 transition-transform duration-200"
             />
+            {/* <FormModal /> */}
+            <Modal />
 
             <JsonFileReader />
             <img
