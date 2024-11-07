@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 
-const DeliveryPickupSelector = () => {
+const DeliveryPickupSelector = (props) => {
+  const { setIsDelivery, setIsPickUp } = props;
   const [selectedOption, setSelectedOption] = useState("pickup");
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
       <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
         <button
-          onClick={() => setSelectedOption("pickup")}
+          onClick={() => {
+            setSelectedOption("pickup");
+            setIsDelivery(false);
+            setIsPickUp(true);
+          }}
           className={`
             flex items-center justify-center
             px-6 py-3 rounded-lg
@@ -38,7 +43,11 @@ const DeliveryPickupSelector = () => {
         </button>
 
         <button
-          onClick={() => setSelectedOption("delivery")}
+          onClick={() => {
+            setSelectedOption("delivery");
+            setIsDelivery(true);
+            setIsPickUp(false);
+          }}
           className={`
             flex items-center justify-center
             px-6 py-3 rounded-lg

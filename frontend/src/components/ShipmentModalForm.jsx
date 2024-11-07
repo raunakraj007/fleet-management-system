@@ -3,8 +3,8 @@ import DeliveryPickupSelector from "./PickupDileverySelector";
 import DateTimeInput from "./DateTime";
 
 const ShipmentModalForm = () => {
-  const [isPickUp, setIsPickUp] = useState(true);
-  const [isDelivery, setIsDelivery] = useState(false);
+  const [isPickUp, setIsPickUp] = useState(false);
+  const [isDelivery, setIsDelivery] = useState(true);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     displayName: "",
@@ -188,210 +188,170 @@ const ShipmentModalForm = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-              <div>
-                <label>Display Name</label>
-                <input
-                  type="text"
-                  name="displayName"
-                  value={formData.displayName}
-                  onChange={handleInputChange}
-                  className="input"
-                />
-              </div>
+              <div className="flex">
+                <div className="w-4/6">
+                  <div>
+                    <label>Display Name</label>
+                    <input
+                      type="text"
+                      name="displayName"
+                      value={formData.displayName}
+                      onChange={handleInputChange}
+                      className="input"
+                    />
+                  </div>
 
-              {/* toggle Section */}
-              <DeliveryPickupSelector />
-              {/* Map */}
-              <div className="w-44 h-44 bg-black"></div>
+                  {/* toggle Section */}
+                  <DeliveryPickupSelector
+                    setIsDelivery={setIsDelivery}
+                    setIsPickUp={setIsPickUp}
+                  />
+                  <br />
 
-              {/* Pickups Section */}
-              <div>
-                <h3>Pickups</h3>
-                {formData.pickups.map((pickup, index) => (
-                  <div key={index}>
+                  {/* Pickups Section */}
+                  {isPickUp && (
                     <div>
-                      <h4>Pickup {index + 1}</h4>
-                      <label>Latitude</label>
-                      <input
-                        type="number"
-                        name={`pickups.${index}.arrivalWaypoint.location.latLng.latitude`}
-                        value={pickup.arrivalWaypoint.location.latLng.latitude}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
+                      <h3>Pickups</h3>
+                      {formData.pickups.map((pickup, index) => (
+                        <div key={index}>
+                          <div>
+                            <h4>Pickup {index + 1}</h4>
+                            <label>Latitude</label>
+                            <input
+                              type="number"
+                              name={`pickups.${index}.arrivalWaypoint.location.latLng.latitude`}
+                              value={
+                                pickup.arrivalWaypoint.location.latLng.latitude
+                              }
+                              onChange={handleInputChange}
+                              className="input"
+                            />
 
-                      <label>Longitude</label>
-                      <input
-                        type="number"
-                        name={`pickups.${index}.arrivalWaypoint.location.latLng.longitude`}
-                        value={pickup.arrivalWaypoint.location.latLng.longitude}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-                    </div>
+                            <label>Longitude</label>
+                            <input
+                              type="number"
+                              name={`pickups.${index}.arrivalWaypoint.location.latLng.longitude`}
+                              value={
+                                pickup.arrivalWaypoint.location.latLng.longitude
+                              }
+                              onChange={handleInputChange}
+                              className="input"
+                            />
+                          </div>
 
-                    <div>
-                      <h4>Time Windows</h4>
-                      {pickup.timeWindows.map((window, timeIndex) => (
-                        <div key={timeIndex}>
-                          <label>Start Time</label>
-                          <input
-                            type="time"
-                            name={`pickups.${index}.timeWindows.${timeIndex}.startTime`}
-                            value={window.startTime}
-                            onChange={handleInputChange}
-                            className="input"
-                          />
+                          <div>
+                            <h4>Time Windows</h4>
+                            {pickup.timeWindows.map((window, timeIndex) => (
+                              <div key={timeIndex}>
+                                <label>Start Time</label>
+                                <input
+                                  type="time"
+                                  name={`pickups.${index}.timeWindows.${timeIndex}.startTime`}
+                                  value={window.startTime}
+                                  onChange={handleInputChange}
+                                  className="input"
+                                />
 
-                          <label>End Time</label>
-                          <input
-                            type="time"
-                            name={`pickups.${index}.timeWindows.${timeIndex}.endTime`}
-                            value={window.endTime}
-                            onChange={handleInputChange}
-                            className="input"
-                          />
+                                <label>End Time</label>
+                                <input
+                                  type="time"
+                                  name={`pickups.${index}.timeWindows.${timeIndex}.endTime`}
+                                  value={window.endTime}
+                                  onChange={handleInputChange}
+                                  className="input"
+                                />
+                              </div>
+                            ))}
+                          </div>
+
+                          <div>
+                            <label>Duration (seconds)</label>
+                            <input
+                              type="number"
+                              name={`pickups.${index}.duration.seconds`}
+                              value={pickup.duration.seconds}
+                              onChange={handleInputChange}
+                              className="input"
+                            />
+
+                            <label>Cost</label>
+                            <input
+                              type="number"
+                              name={`pickups.${index}.cost`}
+                              value={pickup.cost}
+                              onChange={handleInputChange}
+                              className="input"
+                            />
+                          </div>
+
+                          <div>
+                            <label>Load Weight</label>
+                            <input
+                              type="number"
+                              name={`pickups.${index}.loadDemands.weight.amount`}
+                              value={pickup.loadDemands.weight.amount}
+                              onChange={handleInputChange}
+                              className="input"
+                            />
+                          </div>
                         </div>
                       ))}
                     </div>
+                  )}
 
+                  {/* Deliveries Section */}
+                  {isDelivery && (
                     <div>
-                      <label>Duration (seconds)</label>
+                      <h3>Deliveries</h3>
+                      <label>Coordinates</label>
+                      <input
+                        type="text"
+                        name=""
+                        value={`${formData?.deliveries[0]?.arrivalWaypoint?.location?.latLng?.latitude},${formData?.deliveries[0]?.arrivalWaypoint?.location?.latLng?.longitude}`}
+                      />
+
+                      <label>Duration </label>
                       <input
                         type="number"
-                        name={`pickups.${index}.duration.seconds`}
-                        value={pickup.duration.seconds}
+                        // name={}
+                        // value={formData?.deliveries[0]?.duration?.seconds}
                         onChange={handleInputChange}
-                        className="input"
+                        className=""
                       />
 
                       <label>Cost</label>
                       <input
                         type="number"
-                        name={`pickups.${index}.cost`}
-                        value={pickup.cost}
+                        value={formData?.deliveries[0]?.cost}
                         onChange={handleInputChange}
-                        className="input"
+                        className="input border-black border-2"
                       />
-                    </div>
 
-                    <div>
-                      <label>Load Weight</label>
-                      <input
-                        type="number"
-                        name={`pickups.${index}.loadDemands.weight.amount`}
-                        value={pickup.loadDemands.weight.amount}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
+                      <div className="w-full">
+                        <DateTimeInput />
+                      </div>
+                      <div className="w-full">
+                        <DateTimeInput />
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  )}
 
-              {/* Deliveries Section */}
-              <div>
-                <div className="w-1/2">
-                  <DateTimeInput />
+                  {/* Final Controls */}
+                  {/* <div>
+                    <label>Ignore</label>
+                    <input
+                      type="checkbox"
+                      name="ignore"
+                      checked={formData.ignore}
+                      onChange={handleCheckboxChange}
+                    />
+                  </div> */}
                 </div>
-                <h3>Deliveries</h3>
-                {formData.deliveries.map((delivery, index) => (
-                  <div key={index}>
-                    <div>
-                      <h4>Delivery {index + 1}</h4>
-                      <label>Latitude</label>
-                      <input
-                        type="number"
-                        name={`deliveries.${index}.arrivalWaypoint.location.latLng.latitude`}
-                        value={
-                          delivery.arrivalWaypoint.location.latLng.latitude
-                        }
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-
-                      <label>Longitude</label>
-                      <input
-                        type="number"
-                        name={`deliveries.${index}.arrivalWaypoint.location.latLng.longitude`}
-                        value={
-                          delivery.arrivalWaypoint.location.latLng.longitude
-                        }
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-                    </div>
-
-                    <div>
-                      <h4>Time Windows</h4>
-                      {delivery.timeWindows.map((window, timeIndex) => (
-                        <div key={timeIndex}>
-                          <label>Start Time</label>
-                          <input
-                            type="time"
-                            name={`deliveries.${index}.timeWindows.${timeIndex}.startTime`}
-                            value={window.startTime}
-                            onChange={handleInputChange}
-                            className="input"
-                          />
-
-                          <label>End Time</label>
-                          <input
-                            type="time"
-                            name={`deliveries.${index}.timeWindows.${timeIndex}.endTime`}
-                            value={window.endTime}
-                            onChange={handleInputChange}
-                            className="input"
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div>
-                      <label>Duration (seconds)</label>
-                      <input
-                        type="number"
-                        name={`deliveries.${index}.duration.seconds`}
-                        value={delivery.duration.seconds}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-
-                      <label>Cost</label>
-                      <input
-                        type="number"
-                        name={`deliveries.${index}.cost`}
-                        value={delivery.cost}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-                    </div>
-
-                    <div>
-                      <label>Load Weight</label>
-                      <input
-                        type="number"
-                        name={`deliveries.${index}.loadDemands.weight.amount`}
-                        value={delivery.loadDemands.weight.amount}
-                        onChange={handleInputChange}
-                        className="input"
-                      />
-                    </div>
-                  </div>
-                ))}
+                <div>
+                  {/* Map */}
+                  <div className="w-44 h-44 bg-black"></div>
+                </div>
               </div>
-
-              {/* Final Controls */}
-              <div>
-                <label>Ignore</label>
-                <input
-                  type="checkbox"
-                  name="ignore"
-                  checked={formData.ignore}
-                  onChange={handleCheckboxChange}
-                />
-              </div>
-
               <div className="flex justify-end pt-4">
                 <button
                   className="p-3 px-6 py-2 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
