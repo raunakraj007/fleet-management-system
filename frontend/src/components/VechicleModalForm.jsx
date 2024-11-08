@@ -3,7 +3,7 @@ import DeliveryPickupSelector from "./PickupDileverySelector";
 import DateTimeInput from "./DateTime";
 import App from "../components/Maps/autoComplete/src/app"
 
-const ShipmentModalForm = () => {
+const VehicleModalForm = () => {
   const [isPickUp, setIsPickUp] = useState(false);
   const [isDelivery, setIsDelivery] = useState(true);
   const [open, setOpen] = useState(false);
@@ -255,4 +255,4 @@ const ShipmentModalForm = () => {
   );
 };
 
-export default ShipmentModalForm;
+export default VehicleModalForm;

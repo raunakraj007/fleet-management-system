@@ -774,6 +774,7 @@ import addIcon from "../assets/add.svg";
 import del from "../assets/bin.svg"
 import edit from "../assets/edit.svg"
 import JsonFileReader from "./JsonFileReader";
+import VehicleModalForm from "./VechicleModalForm";
 
 // Mock data for demo purposes
 const defaultUsers = [
@@ -919,6 +920,7 @@ const Vehicles = ({ users = defaultUsers }) => {
               alt=""
               className="w-14 hover:scale-110 transition-transform duration-200"
             />
+            <VehicleModalForm/>
 
             <JsonFileReader />
             <img
