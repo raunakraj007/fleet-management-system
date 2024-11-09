@@ -18,6 +18,8 @@ import Shipments from "./components/Shipments";
 import Vehicles from "./components/Vehicles";
 import Shipment from "./components/Shipment";
 import ManageFleet from "./components/ManageFleet";
+import ProfileList from "./components/VehiclesNewPage";
+import VehiclesNewPage from "./components/VehiclesNewPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +29,8 @@ const router = createBrowserRouter(
       <Route path="shipments" element={<Shipment />} />
       <Route path="vehicles" element={<Vehicles />} />
       <Route path="vehicles" element={<Vehicles />} />
-      <Route path="manage-fleet" element={<ManageFleet/>} />
+      {/* <Route path="manage-fleet" element={<ManageFleet/>} /> */}
+      <Route path="manage-fleet" element={<VehiclesNewPage/>} />
       <Route path="login" element={<LoginSignUp />} />
       <Route path="profile" element={<AcountPage />} />
     </Route>
