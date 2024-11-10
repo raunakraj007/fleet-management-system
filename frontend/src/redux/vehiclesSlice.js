@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
   vehicles: [],
@@ -7,16 +7,27 @@ const initialState = {
 export const vehiclesSlice = createSlice({
   name: "vehicles",
   initialState,
-  reducer: {
+  reducers: {
     addVehicles: (state, action) => {
-      const vehiclesWithId = action.payload.map((vehicle) => ({
-        id: nanoid(),
-        ...vehicle,
-      }));
-      state.vehicles.push(...vehiclesWithId);
-    },
-    removeAllVehicles: (state, action) => {
-      state.vehicles = [];
+      console.log("Payload Length:", action.payload.length);
+      console.log("Payload Content:", action.payload);
+      const vehiclesWithId = action.payload.map((vehicle, index) => {
+        console.log(`Processing vehicle at index ${index}:`, vehicle);
+        if (!vehicle) {
+          console.log(
+            `Skipped vehicle at index ${index} due to invalid data:`,
+            vehicle
+          );
+          return null;
+        }
+        const newVehicle = { id: nanoid(), ...vehicle };
+        console.log("New Vehicle:", newVehicle);
+        return newVehicle;
+      });
+      const validVehicles = vehiclesWithId.filter((v) => v !== null);
+      console.log("Valid Vehicles With ID:", validVehicles);
+      state.vehicles.push(...validVehicles);
+      console.log("Updated State:", state.vehicles);
     },
     editVehicleByID: (state, action) => {
       const { id, data } = action.payload;

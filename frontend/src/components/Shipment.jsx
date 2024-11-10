@@ -1,12 +1,12 @@
 import React from "react";
 import { Users } from "lucide-react";
-import Shipments from "./Shipments";
-import JsonFileUploader from "./Input";
+import Shipments from "./bin/Shipments";
+import JsonFileUploader from "./bin/Input";
 import JsonFileReader from "./JsonFileReader";
 import addIcon from "../assets/add.svg";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
-import FormModal from "./ShipmentForm";
+import FormModal from "./bin/ShipmentForm";
 import Modal from "./Modal";
 import ShipmentModalForm from "./ShipmentModalForm";
 

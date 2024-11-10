@@ -293,7 +293,7 @@ const ModalForm = () => {
               <div>
                 <div className="w-1/2">
 
-                <DateTimeInput />
+                {/* <DateTimeInput /> */}
                 </div>
                 <h3>Deliveries</h3>
                 {formData.deliveries.map((delivery, index) => (

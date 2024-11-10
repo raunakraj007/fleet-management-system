@@ -201,9 +201,9 @@ const ShipmentModalForm = () => {
                   <h3 className="text-gray-700 mt-4">
                     <strong>Time Window</strong>
                   </h3>
-                  <DateTimeInput />
+                  {/* <DateTimeInput /> */}
                   <h3>to</h3>
-                  <DateTimeInput />
+                  {/* <DateTimeInput /> */}
 
                   <h3 className="text-gray-700">
                     <strong>Select Duration</strong>
