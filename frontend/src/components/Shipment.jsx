@@ -7,7 +7,7 @@ import addIcon from "../assets/add.svg";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
 import FormModal from "./bin/ShipmentForm";
-import Modal from "./Modal";
+// import Modal from "./Modal";
 import ShipmentModalForm from "./ShipmentModalForm";
 
 // Mock data for demo purposes
@@ -154,25 +154,12 @@ const Shipment = ({ users = defaultUsers }) => {
         <div>
           <h3 className="text-3xl font-medium text-gray-700">Shipments</h3>
 
-          {/* <div className="mt-4">
-            <div className="flex flex-wrap -mx-6">
-              {metrics.map((metric, index) => (
-                <MetricCard key={index} {...metric} />
-              ))}
-            </div>
-          </div> */}
-          {/* <JsonFileUploader/> */}
           <div className="flex align-baseline justify-around ">
-            <img
-              src={addIcon}
-              alt=""
-              className="w-14 hover:scale-110 transition-transform duration-200"
-            />
             {/* <FormModal /> */}
-            <Modal />
+            {/* <Modal /> */}
+            <ShipmentModalForm />
 
             <JsonFileReader />
-            <ShipmentModalForm />
             <img
               src={del}
               alt=""
