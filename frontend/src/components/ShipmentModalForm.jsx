@@ -359,7 +359,6 @@ const ShipmentModalForm = () => {
           value !== "" &&
           value !== false &&
           value !== 0 &&
-          value !== NaN &&
           value !== "false" &&
           value !== "0" &&
           value !== "null" &&
@@ -376,7 +375,6 @@ const ShipmentModalForm = () => {
                   item !== "" &&
                   item !== false &&
                   item !== 0 &&
-                  item !== NaN &&
                   item !== "false" &&
                   item !== "0" &&
                   item !== "null" &&

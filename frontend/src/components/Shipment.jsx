@@ -1,13 +1,13 @@
 import React from "react";
 import { Users } from "lucide-react";
-import Shipments from "./bin/Shipments";
-import JsonFileUploader from "./bin/Input";
+// import Shipments from "../Shipments";
+// import JsonFileUploader from "../Input";
 import JsonFileReader from "./JsonFileReader";
 import addIcon from "../assets/add.svg";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
-import FormModal from "./bin/ShipmentForm";
-// import Modal from "./Modal";
+// import FormModal from "../ShipmentForm";
+// import Modal from "../Modal";
 import ShipmentModalForm from "./ShipmentModalForm";
 
 // Mock data for demo purposes
@@ -156,9 +156,8 @@ const Shipment = ({ users = defaultUsers }) => {
 
           <div className="flex align-baseline justify-around ">
             {/* <FormModal /> */}
-            {/* <Modal /> */}
-            <ShipmentModalForm />
 
+            <ShipmentModalForm />
             <JsonFileReader />
             <img
               src={del}

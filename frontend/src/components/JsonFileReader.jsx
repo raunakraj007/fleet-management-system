@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import logo from "../assets/fileAdd.svg";
+import { useDispatch } from "react-redux";
+import {addShipments} from "../redux/shipmentSlice";
 
 const JsonFileReader = () => {
+  const dispatch = useDispatch();
   const [jsonData, setJsonData] = useState(null);
+
   const [error, setError] = useState("");
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -13,6 +18,7 @@ const JsonFileReader = () => {
         try {
           const json = JSON.parse(e.target.result);
           console.log(json);
+          dispatch(addShipments(json));
           setJsonData(json);
           setError("");
         } catch (error) {
@@ -36,12 +42,7 @@ const JsonFileReader = () => {
         style={{ display: "none" }}
       />
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {jsonData && (
-        <div className="w-full">
-          <h3>Parsed JSON Data:</h3>
-          <pre>{JSON.stringify(jsonData, null, 2)}</pre>
-        </div>
-      )}
+      
     </div>
   );
 };

@@ -191,10 +191,8 @@ const AddVehicles = () => {
           value !== "false" &&
           value !== "0" &&
           value !== "null" &&
-          value !== "undefined" &&
-          value !== "NaN" &&
-          value !== "NaN" &&
-          value !== NaN
+          value !== "undefined" 
+          
         ) {
           acc[key] = isObject(value) ? removeNullValues(value) : value;
         }
