@@ -1,0 +1,36 @@
+.custom-marker {
+    transition: all 200ms ease-in-out;
+  }
+  
+  .custom-html-content {
+    width: 25px;
+    height: 25px;
+    transition: all 200ms ease-in-out;
+    border: 1px solid #ffa700;
+
+    border-radius: 4px;
+    /* border-radius: 50%; */
+
+    background: #0057e7;
+  }
+  
+  .custom-html-content.selected {
+    /* background: #22ccff; */
+    background:red
+  }
+  
+  .visualization-marker {
+    width: 8px;
+    height: 8px;
+    background: #ffa700;
+    background:green;
+    border-radius: 50%;
+    border: 1px solid #0057e7;
+  }
+  
+  .map-container {
+    width: 100%; /* Adjust to your desired width */
+    height: 75vh; /* Set to your desired height */
+    position: relative; /* Make sure the position is relative for the map */
+  }
+  

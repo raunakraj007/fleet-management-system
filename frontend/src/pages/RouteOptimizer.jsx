@@ -1,6 +1,6 @@
 import React from "react";
 // import MapComponent from "../components/Maps/map-component";
-import MapComponent   from "../components/Maps/jsMap/MapComponent";
+import MapComponent   from "../components/jsMap/MapComponent";
 
 const RouteOptimizer = () => {
   return <div>
