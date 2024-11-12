@@ -29,8 +29,8 @@ const router = createBrowserRouter(
       <Route path="shipments" element={<Shipment />} />
       {/* <Route path="vehicles" element={<Vehicles />} /> */}
       <Route path="vehicles" element={<VehiclesNewPage />} />
-      <Route path="manage-fleet" element={<ManageFleet/>} />
-      {/* <Route path="manage-fleet" element={<VehiclesNewPage/>} /> */}
+      <Route path="manage-fleet" element={<ManageFleet />} />
+      <Route path="route-optimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />
       <Route path="profile" element={<AcountPage />} />
     </Route>
