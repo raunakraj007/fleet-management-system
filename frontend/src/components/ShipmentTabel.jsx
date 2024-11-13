@@ -6,11 +6,12 @@ import ShipmentEditForm from "./Edit";
 import { useState } from "react";
 
 const ShipmentTable = () => {
-  const [openEditBox, setOpenEditBox] = useState(false);
   const [editID, setEditID] = useState(null);
+  const [openEditBox, setOpenEditBox] = useState(false);
 
   const openEdit = (id) => {
-    console.log("button")
+    console.log("button clicked eith id"); 
+    console.log(id);
     setEditID(id);
     setOpenEditBox(true);
   };

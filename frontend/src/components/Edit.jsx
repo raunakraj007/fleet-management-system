@@ -3,10 +3,11 @@ import DeliveryPickupSelector from "./PickupDileverySelector";
 import DateTimeInput from "./DateTime";
 import App from "../components/Maps/autoComplete/src/app";
 import addIcon from "../assets/add.svg";
-import { addShipments } from "../redux/shipmentSlice";
+import { addShipments, editShipmentByID } from "../redux/shipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ShipmentEditForm = ({ id, setOpenEditBox }) => {
+  console.log("id:", id);
   const shipment = useSelector((state) =>
     state.shipmentSlice.shipments.find((shipment) => shipment.id === id)
   );
@@ -133,7 +134,7 @@ const ShipmentEditForm = ({ id, setOpenEditBox }) => {
     console.log("delivLocation:", delivLocation); // Ensure this logs the expected value
     console.log("deliCost:", deliCost); // Ensure this logs the expected value
 
-    const Shipment = {};
+    const Shipment = {id: id};
 
     if (name) {
       Shipment.displayName = name.toString();
@@ -342,8 +343,10 @@ const ShipmentEditForm = ({ id, setOpenEditBox }) => {
 
     const cleanedShipment = removeNullValues(Shipment);
     console.log("Cleaned Shipment Object:", cleanedShipment);
+   
 
-    dispatch(addShipments([cleanedShipment]));
+    dispatch(editShipmentByID({ id: id, data: cleanedShipment }));
+    closeModal();
   };
 
   return (
@@ -363,7 +366,7 @@ const ShipmentEditForm = ({ id, setOpenEditBox }) => {
           <div className="h-[75vh] w-[800px] ">
             <p className="text-2xl font-bold"></p>
             <h3 className="text-gray-700 text-2xl font-bold">
-              <strong>Add Shipment</strong>
+              <strong>Edit Shipment</strong>
             </h3>
 
             <div className="flex">
@@ -580,7 +583,7 @@ const ShipmentEditForm = ({ id, setOpenEditBox }) => {
                     className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
                     onClick={handleSubmitButton}
                   >
-                    Submit
+                    Save
                   </button>
                 </div>
               </div>

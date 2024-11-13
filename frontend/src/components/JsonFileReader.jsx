@@ -17,7 +17,7 @@ const JsonFileReader = () => {
       reader.onload = (e) => {
         try {
           const json = JSON.parse(e.target.result);
-          console.log(json);
+          // console.log(json);
           dispatch(addShipments(json));
           setJsonData(json);
           setError("");
