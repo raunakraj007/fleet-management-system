@@ -9,10 +9,13 @@ import edit from "../assets/edit.svg";
 // import FormModal from "../ShipmentForm";
 // import Modal from "../Modal";
 import ShipmentModalForm from "./ShipmentModalForm";
+import { removeAllShipments } from "../redux/shipmentSlice";
+import { useDispatch } from "react-redux";
 
 import ShipmentTable from "./ShipmentTabel";
 
 const Shipment = () => {
+  const dispatch = useDispatch();
   return (
     <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
       <div className="container mx-auto px-6 py-8 h-[100vh]">
@@ -23,6 +26,9 @@ const Shipment = () => {
             <ShipmentModalForm />
             <JsonFileReader />
             <img
+              onClick={() => {
+                dispatch(removeAllShipments());
+              }}
               src={del}
               alt=""
               className="w-14 hover:scale-110 transition-transform duration-200"

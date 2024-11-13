@@ -1,16 +1,18 @@
 import { useSelector } from "react-redux";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
-
+import { deleteShipmentByID } from "../redux/shipmentSlice";
 import ShipmentEditForm from "./Edit";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const ShipmentTable = () => {
+  const dispatch = useDispatch();
   const [editID, setEditID] = useState(null);
   const [openEditBox, setOpenEditBox] = useState(false);
 
   const openEdit = (id) => {
-    console.log("button clicked eith id"); 
+    console.log("button clicked eith id");
     console.log(id);
     setEditID(id);
     setOpenEditBox(true);
@@ -203,7 +205,12 @@ const ShipmentTable = () => {
                           <button onClick={() => openEdit(id)}>
                             <img src={edit} alt="" className="w-9" />
                           </button>
-                          <button>
+                          <button
+                            onClick={() => {
+                              dispatch(deleteShipmentByID(id));
+                              console.log("delete clicked");
+                            }}
+                          >
                             <img src={del} alt="" className="w-8 pb-1 pl-2" />
                           </button>
                         </td>
@@ -216,8 +223,10 @@ const ShipmentTable = () => {
           </div>
         </div>
       </div>
-      
-      {openEditBox && <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />}
+
+      {openEditBox && (
+        <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />
+      )}
     </div>
   );
 };

@@ -331,6 +331,7 @@ const ShipmentModalForm = () => {
     console.log("Cleaned Shipment Object:", cleanedShipment);
 
     dispatch(addShipments([cleanedShipment]));
+    closeModal();
   };
 
   return (
