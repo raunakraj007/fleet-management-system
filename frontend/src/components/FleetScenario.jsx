@@ -80,11 +80,11 @@ const FleetScenario = () => {
           <h3 className="text-gray-500">
             <strong>Fleet Starting Time</strong>
           </h3>
-          <DateTimeInput setTimee={setGlobalStrTime} />
+          <DateTimeInput setTimee={setGlobalStrTime} currentTime={null} />
           <h3 className="text-gray-500">
             <strong>Fleet Ending Time</strong>
           </h3>
-          <DateTimeInput setTimee={setGlobalEndTime} />
+          <DateTimeInput setTimee={setGlobalEndTime} currentTime={null}/>
         </div>
 
         <div className="flex items-center mt-5 ml-7">

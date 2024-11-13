@@ -4,13 +4,16 @@ import DateTimeInput from "./DateTime";
 import App from "../components/Maps/autoComplete/src/app";
 import addIcon from "../assets/add.svg";
 import { addShipments } from "../redux/shipmentSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const ShipmentModalForm = () => {
+const ShipmentEditForm = ({ id, setOpenEditBox }) => {
+  const shipment = useSelector((state) =>
+    state.shipmentSlice.shipments.find((shipment) => shipment.id === id)
+  );
   const dispatch = useDispatch();
   const [isPickUp, setIsPickUp] = useState(true);
   const [isDelivery, setIsDelivery] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [pickupTimeStr, setPickupTimeStr] = useState(null);
   const [pickupTimeEnd, setPickupTimeEnd] = useState(null);
   const [deliveryTimeStr, setDeliveryTimeStr] = useState(null);
@@ -29,10 +32,20 @@ const ShipmentModalForm = () => {
 
   const closeModal = () => {
     setOpen(false);
+    setOpenEditBox(false);
   };
 
   const openModal = () => {
     setOpen(true);
+  };
+
+  const convertSecondsToTime = (seconds) => {
+    if (seconds === null) return "00:00";
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60); // Use String.prototype.padStart to ensure two digits
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    return `${formattedHours}:${formattedMinutes}`;
   };
 
   const handleInputChange = (e) => {
@@ -335,13 +348,6 @@ const ShipmentModalForm = () => {
 
   return (
     <div>
-      <img
-        src={addIcon}
-        alt=""
-        className="w-14 hover:scale-110 transition-transform duration-200"
-        onClick={openModal}
-      />
-
       <div
         className={`modal fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
           open
@@ -369,6 +375,8 @@ const ShipmentModalForm = () => {
                     type="text"
                     className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                     placeholder=" "
+                    // value={shipment?.displayName}
+                    defaultValue={shipment?.displayName ?? ""}
                     required
                     ref={labl}
                   />
@@ -383,6 +391,7 @@ const ShipmentModalForm = () => {
                     type="number"
                     className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                     placeholder=" "
+                    defaultValue={shipment?.loadDemands?.weight?.amount ?? ""}
                     required
                     ref={loadDemands}
                   />
@@ -403,11 +412,21 @@ const ShipmentModalForm = () => {
                     <div className="relative w-full max-w-xs mt-7">
                       <input
                         type="text"
-                        className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
+                        className="peer w-full px-2 py-2 border-b-[2px] h-10 border-gray-300 mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
+                        defaultValue={`${
+                          shipment?.pickups?.[0]?.arrivalWaypoint?.location
+                            ?.latLng?.latitude ?? ""
+                        }${
+                          shipment?.pickups?.[0]?.arrivalWaypoint?.location
+                            ?.latLng?.longitude != null
+                            ? `, ${shipment?.pickups?.[0]?.arrivalWaypoint?.location?.latLng?.longitude}`
+                            : ""
+                        }`}
                         ref={picUpLoc}
                       />
+
                       <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                         Location
                       </label>
@@ -415,9 +434,21 @@ const ShipmentModalForm = () => {
 
                     {/* Time*/}
                     <h3 className="text-gray-700 mt-4">Time Window</h3>
-                    <DateTimeInput setTimee={setPickupTimeStr} currentTime={null} />
+                    <DateTimeInput
+                      setTimee={setPickupTimeStr}
+                      currentTime={
+                        shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime ??
+                        null
+                      }
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setPickupTimeEnd} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setPickupTimeEnd}
+                      currentTime={
+                        shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime ??
+                        null
+                      }
+                    />
 
                     {/* Duration */}
                     <h3 className="text-gray-700">
@@ -428,7 +459,9 @@ const ShipmentModalForm = () => {
                       id="time"
                       ref={picUpDuration}
                       name="time"
-                      defaultValue="00:00"
+                      defaultValue={convertSecondsToTime(
+                        shipment?.pickups?.[0]?.duration?.seconds ?? null
+                      )}
                       className="mt-1 ml-2 block w-2/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
 
@@ -439,6 +472,7 @@ const ShipmentModalForm = () => {
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
+                        defaultValue={shipment?.pickups?.[0]?.cost ?? ""}
                         ref={picUpCost}
                       />
                       <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -455,6 +489,18 @@ const ShipmentModalForm = () => {
                     <div className="relative w-full max-w-xs mt-7">
                       <input
                         type="text"
+                        defaultValue={`${
+                          shipment?.deliveries?.[0].arrivalWaypoint?.location
+                            ?.latLng?.latitude ?? ""
+                        }${
+                          shipment?.deliveries?.[0]?.arrivalWaypoint
+                            ?.location != null
+                            ? `, ${
+                                shipment?.deliveries?.[0]?.arrivalWaypoint
+                                  ?.location?.latLng?.longitude ?? ""
+                              }`
+                            : ""
+                        }`}
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
@@ -467,9 +513,21 @@ const ShipmentModalForm = () => {
 
                     {/* Time*/}
                     <h3 className="text-gray-700 mt-4">Time Window</h3>
-                    <DateTimeInput setTimee={setDeliveryTimeStr} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setDeliveryTimeStr}
+                      currentTime={
+                        shipment?.deliveries?.[0]?.timeWindows?.[0]
+                          ?.startTime ?? null
+                      }
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setDeliveryTimeEnd} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setDeliveryTimeEnd}
+                      currentTime={
+                        shipment?.deliveries?.[0]?.timeWindows?.[0]?.endTime ??
+                        null
+                      }
+                    />
 
                     {/* Duration */}
                     <h3 className="text-gray-700">
@@ -480,13 +538,16 @@ const ShipmentModalForm = () => {
                       type="time"
                       id="time"
                       name="time"
-                      defaultValue="00:00"
+                      defaultValue={convertSecondsToTime(
+                        shipment?.deliveries?.[0]?.duration?.seconds ?? null
+                      )}
                       className="mt-1 ml-2 block w-2/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
 
                     {/* cost  */}
                     <div className="relative w-1/3 max-w-xs mt-7">
                       <input
+                        defaultValue={shipment?.deliveries?.[0]?.cost ?? ""}
                         ref={delivCost}
                         type="number"
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
@@ -531,4 +592,4 @@ const ShipmentModalForm = () => {
   );
 };
 
-export default ShipmentModalForm;
+export default ShipmentEditForm;

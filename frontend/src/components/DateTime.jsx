@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const DateTimeInput = ({ setTimee }) => {
+const DateTimeInput = ({ setTimee, currentTime }) => {
   // // State to manage date and time
   // const [date, setDate] = useState("");
   // const [time, setTime] = useState("");
@@ -58,7 +58,21 @@ const DateTimeInput = ({ setTimee }) => {
   //     </div>
   //   </div>
   // );
-  const [datetime, setDatetime] = useState("");
+
+  const convertEpochToInputFormat = (epochTime) => {
+    const date = new Date(epochTime * 1000); // Convert seconds to milliseconds
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    // Return in the format YYYY-MM-DDTHH:MM
+    console.log(`${year}-${month}-${day}T${hours}:${minutes}`);
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+
+  const [datetime, setDatetime] = useState(currentTime? convertEpochToInputFormat(currentTime): "");
 
   useEffect(() => {
     if (datetime) {
@@ -92,7 +106,7 @@ const DateTimeInput = ({ setTimee }) => {
           type="datetime-local"
           id="datetime"
           name="datetime"
-          value={datetime}
+          defaultValue={datetime}
           onChange={(e) => setDatetime(e.target.value)}
           className="mt-1 block w-3/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         />

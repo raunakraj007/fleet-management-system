@@ -191,8 +191,7 @@ const AddVehicles = () => {
           value !== "false" &&
           value !== "0" &&
           value !== "null" &&
-          value !== "undefined" 
-          
+          value !== "undefined"
         ) {
           acc[key] = isObject(value) ? removeNullValues(value) : value;
         }
@@ -376,13 +375,25 @@ const AddVehicles = () => {
                     </h2>
 
                     <h3 className="text-gray-700 mt-4">Starting Time Window</h3>
-                    <DateTimeInput setTimee={setStartingTimeWindowStarts} />
+                    <DateTimeInput
+                      setTimee={setStartingTimeWindowStarts}
+                      currentTime={null}
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setStartingTimeWindowEnds} />
+                    <DateTimeInput
+                      setTimee={setStartingTimeWindowEnds}
+                      currentTime={null}
+                    />
                     <h3 className="text-gray-700 mt-4">Ending Time Window</h3>
-                    <DateTimeInput setTimee={setEndingTimeWindowStarts} />
+                    <DateTimeInput
+                      setTimee={setEndingTimeWindowStarts}
+                      currentTime={null}
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setEndingTimeWindowEnds} />
+                    <DateTimeInput
+                      setTimee={setEndingTimeWindowEnds}
+                      currentTime={null}
+                    />
                   </div>
                 </div>
               </div>

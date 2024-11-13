@@ -1,7 +1,19 @@
 import { useSelector } from "react-redux";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
+
+import ShipmentEditForm from "./Edit";
+import { useState } from "react";
+
 const ShipmentTable = () => {
+  const [openEditBox, setOpenEditBox] = useState(false);
+  const [editID, setEditID] = useState(null);
+
+  const openEdit = (id) => {
+    console.log("button")
+    setEditID(id);
+    setOpenEditBox(true);
+  };
   function convertEpochToHuman(epochTime) {
     const date = new Date(epochTime * 1000);
     const formattedDate = date.toLocaleString();
@@ -187,7 +199,7 @@ const ShipmentTable = () => {
                           }
                         </td>
                         <td className="px-6  py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
-                          <button>
+                          <button onClick={() => openEdit(id)}>
                             <img src={edit} alt="" className="w-9" />
                           </button>
                           <button>
@@ -203,6 +215,8 @@ const ShipmentTable = () => {
           </div>
         </div>
       </div>
+      
+      {openEditBox && <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />}
     </div>
   );
 };
