@@ -1,16 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DeliveryPickupSelector from "./PickupDileverySelector";
 import DateTimeInput from "./DateTime";
 import App from "../components/Maps/autoComplete/src/app";
 import addIcon from "../assets/add.svg";
-import { addShipments } from "../redux/shipmentSlice";
-import { useDispatch } from "react-redux";
+import { addShipments, editShipmentByID } from "../redux/shipmentSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const ShipmentModalForm = () => {
+const ShipmentModalForm = ({ id, setOpenEditBox }) => {
+
+  // useEffect(()=>{
+  //   return()
+  // })
+  console.log("in Shipment Modal")
+  let shipment = null;
+  if (id) {
+    console.log("in ID")
+    shipment = useSelector((state) =>
+      state.shipmentSlice.shipments.find((shipment) => shipment.id === id)
+    );
+  }
   const dispatch = useDispatch();
   const [isPickUp, setIsPickUp] = useState(true);
   const [isDelivery, setIsDelivery] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(id ? true : false);
   const [pickupTimeStr, setPickupTimeStr] = useState(null);
   const [pickupTimeEnd, setPickupTimeEnd] = useState(null);
   const [deliveryTimeStr, setDeliveryTimeStr] = useState(null);
@@ -29,84 +41,31 @@ const ShipmentModalForm = () => {
 
   const closeModal = () => {
     setOpen(false);
+    if (setOpenEditBox) {
+      setOpenEditBox(false);
+    }
   };
 
   const openModal = () => {
     setOpen(true);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => {
-      const keys = name.split(".");
-      const lastKey = keys.pop();
-      const nestedObj = keys.reduce((acc, key) => acc[key], prevData);
-
-      if (Array.isArray(nestedObj)) {
-        const index = parseInt(keys[keys.length - 1]);
-        nestedObj[index][lastKey] = value;
-      } else {
-        nestedObj[lastKey] = value;
-      }
-
-      return { ...prevData };
-    });
+  const convertSecondsToTime = (seconds) => {
+    if (seconds === null) return "00:00";
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60); // Use String.prototype.padStart to ensure two digits
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    return `${formattedHours}:${formattedMinutes}`;
   };
 
-  const handleCheckboxChange = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      ignore: e.target.checked,
-    }));
-  };
-
-  // Convert time (HH:mm) to epoch time (seconds)
-  const convertTimeToEpoch = (timeString) => {
-    const [hours, minutes] = timeString
-      .split(":")
-      .map((part) => parseInt(part, 10));
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0); // Set the time
-    return Math.floor(date.getTime() / 1000); // Return epoch time (seconds)
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Convert timeWindows startTime and endTime to epoch seconds for pickups and deliveries
-    const updatedPickups = formData.pickups.map((pickup) => ({
-      ...pickup,
-      timeWindows: pickup.timeWindows.map((window) => ({
-        ...window,
-        startTime: convertTimeToEpoch(window.startTime),
-        endTime: convertTimeToEpoch(window.endTime),
-      })),
-    }));
-
-    const updatedDeliveries = formData.deliveries.map((delivery) => ({
-      ...delivery,
-      timeWindows: delivery.timeWindows.map((window) => ({
-        ...window,
-        startTime: convertTimeToEpoch(window.startTime),
-        endTime: convertTimeToEpoch(window.endTime),
-      })),
-    }));
-
-    setFormData((prevData) => ({
-      ...prevData,
-      pickups: updatedPickups,
-      deliveries: updatedDeliveries,
-    }));
-
-    console.log(formData); // Log the form data with epoch times
+  const timeStringToSeconds = (timeString) => {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    return hours * 3600 + minutes * 60;
   };
 
   const handleSubmitButton = () => {
     console.log("submit button clicked");
-
-    function timeStringToSeconds(timeString) {
-      const [hours, minutes] = timeString.split(":").map(Number);
-      return hours * 3600 + minutes * 60;
-    }
 
     const name = labl?.current?.value;
     const picUpLocation = picUpLoc?.current?.value;
@@ -121,10 +80,25 @@ const ShipmentModalForm = () => {
     console.log("deliCost:", deliCost); // Ensure this logs the expected value
 
     const Shipment = {};
+    if (id) {
+      Shipment.id = id;
+    }
+    console.log(Shipment)
 
     if (name) {
       Shipment.displayName = name.toString();
       console.log("Shipment.displayName:", Shipment.displayName);
+    }
+
+    if (loadDemands?.current?.value) {
+      Shipment.loadDemands = {
+        weight: {
+          amount: loadDemands.current.value.toString(),
+        },
+      };
+      console.log("Shipment.loadDemands:", Shipment.loadDemands);
+    } else {
+      console.log("Load demands not provided");
     }
 
     if (picUpLocation) {
@@ -268,16 +242,7 @@ const ShipmentModalForm = () => {
       }
     }
 
-    if (loadDemands?.current?.value) {
-      Shipment.loadDemands = {
-        weight: {
-          amount: loadDemands.current.value.toString(),
-        },
-      };
-      console.log("Shipment.loadDemands:", Shipment.loadDemands);
-    } else {
-      console.log("Load demands not provided");
-    }
+    
 
     console.log("Final Shipment Object:", Shipment);
 
@@ -330,19 +295,26 @@ const ShipmentModalForm = () => {
     const cleanedShipment = removeNullValues(Shipment);
     console.log("Cleaned Shipment Object:", cleanedShipment);
 
-    dispatch(addShipments([cleanedShipment]));
+    if (id) {
+      dispatch(editShipmentByID({ id: id, data: cleanedShipment }));
+    } else {
+      console.log("not id")
+      dispatch(addShipments([cleanedShipment]));
+    }
+
     closeModal();
   };
 
   return (
     <div>
-      <img
-        src={addIcon}
-        alt=""
-        className="w-14 hover:scale-110 transition-transform duration-200"
-        onClick={openModal}
-      />
-
+      {!id && (
+        <img
+          src={addIcon}
+          alt=""
+          className="w-14 hover:scale-110 transition-transform duration-200"
+          onClick={openModal}
+        />
+      )}
       <div
         className={`modal fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
           open
@@ -358,7 +330,7 @@ const ShipmentModalForm = () => {
           <div className="h-[75vh] w-[800px] ">
             <p className="text-2xl font-bold"></p>
             <h3 className="text-gray-700 text-2xl font-bold">
-              <strong>Add Shipment</strong>
+              <strong>{id ? "Edit shipment" : "Add Shipment"}</strong>
             </h3>
 
             <div className="flex">
@@ -367,6 +339,7 @@ const ShipmentModalForm = () => {
                 {/* DisplayName */}
                 <div className="relative w-full max-w-xs">
                   <input
+                    defaultValue={shipment?.displayName ?? ""}
                     type="text"
                     className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                     placeholder=" "
@@ -385,6 +358,7 @@ const ShipmentModalForm = () => {
                     className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                     placeholder=" "
                     required
+                    defaultValue={shipment?.loadDemands?.weight?.amount ?? ""}
                     ref={loadDemands}
                   />
                   <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -407,6 +381,15 @@ const ShipmentModalForm = () => {
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
+                        defaultValue={`${
+                          shipment?.pickups?.[0]?.arrivalWaypoint?.location
+                            ?.latLng?.latitude ?? ""
+                        }${
+                          shipment?.pickups?.[0]?.arrivalWaypoint?.location
+                            ?.latLng?.longitude != null
+                            ? `, ${shipment?.pickups?.[0]?.arrivalWaypoint?.location?.latLng?.longitude}`
+                            : ""
+                        }`}
                         ref={picUpLoc}
                       />
                       <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -416,9 +399,21 @@ const ShipmentModalForm = () => {
 
                     {/* Time*/}
                     <h3 className="text-gray-700 mt-4">Time Window</h3>
-                    <DateTimeInput setTimee={setPickupTimeStr} currentTime={null} />
+                    <DateTimeInput
+                      setTimee={setPickupTimeStr}
+                      currentTime={
+                        shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime ??
+                        null
+                      }
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setPickupTimeEnd} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setPickupTimeEnd}
+                      currentTime={
+                        shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime ??
+                        null
+                      }
+                    />
 
                     {/* Duration */}
                     <h3 className="text-gray-700">
@@ -429,7 +424,9 @@ const ShipmentModalForm = () => {
                       id="time"
                       ref={picUpDuration}
                       name="time"
-                      defaultValue="00:00"
+                      defaultValue={convertSecondsToTime(
+                        shipment?.pickups?.[0]?.duration?.seconds ?? null
+                      )}
                       className="mt-1 ml-2 block w-2/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
 
@@ -440,6 +437,7 @@ const ShipmentModalForm = () => {
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
+                        defaultValue={shipment?.pickups?.[0]?.cost ?? ""}
                         ref={picUpCost}
                       />
                       <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -458,6 +456,18 @@ const ShipmentModalForm = () => {
                         type="text"
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
+                        defaultValue={`${
+                          shipment?.deliveries?.[0].arrivalWaypoint?.location
+                            ?.latLng?.latitude ?? ""
+                        }${
+                          shipment?.deliveries?.[0]?.arrivalWaypoint
+                            ?.location != null
+                            ? `, ${
+                                shipment?.deliveries?.[0]?.arrivalWaypoint
+                                  ?.location?.latLng?.longitude ?? ""
+                              }`
+                            : ""
+                        }`}
                         required
                         ref={delivLoc}
                       />
@@ -468,9 +478,21 @@ const ShipmentModalForm = () => {
 
                     {/* Time*/}
                     <h3 className="text-gray-700 mt-4">Time Window</h3>
-                    <DateTimeInput setTimee={setDeliveryTimeStr} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setDeliveryTimeStr}
+                      currentTime={
+                        shipment?.deliveries?.[0]?.timeWindows?.[0]
+                          ?.startTime ?? null
+                      }
+                    />
                     <h3>to</h3>
-                    <DateTimeInput setTimee={setDeliveryTimeEnd} currentTime={null}/>
+                    <DateTimeInput
+                      setTimee={setDeliveryTimeEnd}
+                      currentTime={
+                        shipment?.deliveries?.[0]?.timeWindows?.[0]?.endTime ??
+                        null
+                      }
+                    />
 
                     {/* Duration */}
                     <h3 className="text-gray-700">
@@ -481,7 +503,9 @@ const ShipmentModalForm = () => {
                       type="time"
                       id="time"
                       name="time"
-                      defaultValue="00:00"
+                      defaultValue={convertSecondsToTime(
+                        shipment?.deliveries?.[0]?.duration?.seconds ?? null
+                      )}
                       className="mt-1 ml-2 block w-2/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
 
@@ -489,6 +513,7 @@ const ShipmentModalForm = () => {
                     <div className="relative w-1/3 max-w-xs mt-7">
                       <input
                         ref={delivCost}
+                        defaultValue={shipment?.deliveries?.[0]?.cost ?? ""}
                         type="number"
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
@@ -520,7 +545,7 @@ const ShipmentModalForm = () => {
                     className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
                     onClick={handleSubmitButton}
                   >
-                    Submit
+                    {id ? "Save" : "Add"}
                   </button>
                 </div>
               </div>

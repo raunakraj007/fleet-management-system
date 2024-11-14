@@ -1,5 +1,5 @@
 import "./App.css";
-import MapComponent from "./components/Maps/map-component";
+// import MapComponent from "./components/Maps/map-component";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,16 +9,16 @@ import {
 } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import Home from "./pages/HomePage";
-import FleetManagement from "./pages/FleetManagement";
+// import FleetManagement from "./pages/FleetManagement";
 import RouteOptimizer from "./pages/RouteOptimizer";
 import LoginSignUp from "./pages/LoginSignUp";
 import AcountPage from "./pages/AcountPage";
 import Dashboard from "./components/Dashboard";
-import Shipments from "./components/bin/Shipments";
+// import Shipments from "./components/bin/Shipments";
 // import Vehicles from "./components/bin/Vehicles";
 import Shipment from "./components/Shipment";
 import ManageFleet from "./components/ManageFleet";
-import ProfileList from "./components/VehiclesNewPage";
+// import ProfileList from "./components/VehiclesNewPage";
 import VehiclesNewPage from "./components/VehiclesNewPage";
 
 const router = createBrowserRouter(

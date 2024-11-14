@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import del from "../assets/bin.svg";
 import edit from "../assets/edit.svg";
 import { deleteShipmentByID } from "../redux/shipmentSlice";
-import ShipmentEditForm from "./Edit";
+// import ShipmentEditForm from "./Edit";
+import ShipmentModalForm from "./ShipmentModalForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -225,7 +226,8 @@ const ShipmentTable = () => {
       </div>
 
       {openEditBox && (
-        <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />
+        // <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />
+        <ShipmentModalForm id={editID} setOpenEditBox={setOpenEditBox} />
       )}
     </div>
   );
