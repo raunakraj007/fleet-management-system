@@ -20,6 +20,9 @@ import Shipment from "./components/Shipment";
 import ManageFleet from "./components/ManageFleet";
 // import ProfileList from "./components/VehiclesNewPage";
 import VehiclesNewPage from "./components/VehiclesNewPage";
+import VehiclesPage from "./pages/VehiclesPage";
+
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +31,7 @@ const router = createBrowserRouter(
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="shipments" element={<Shipment />} />
       {/* <Route path="vehicles" element={<Vehicles />} /> */}
-      <Route path="vehicles" element={<VehiclesNewPage />} />
+      <Route path="vehicles" element={<VehiclesPage />} />
       <Route path="manage-fleet" element={<ManageFleet />} />
       <Route path="route-optimization" element={<RouteOptimizer />} />
       <Route path="login" element={<LoginSignUp />} />

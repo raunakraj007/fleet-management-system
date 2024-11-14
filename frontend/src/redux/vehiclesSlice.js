@@ -40,6 +40,9 @@ export const vehiclesSlice = createSlice({
       const id = action.payload;
       state.vehicles = state.vehicles.filter((vehicle) => vehicle.id !== id);
     },
+    removeAllVehicles: (state) => {
+      state.vehicles = [];
+    },
   },
 });
 
