@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 const VehicleCard = ({ vehicle, setId, setOpenEditBox }) => {
   const dispatch = useDispatch();
   return (
-    <div className="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal hover:scale-105 transition-all duration-100">
+    <div className="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal hover:scale-105 transition-all duration-100 ">
       <img src={DeliveryTrucIMG} alt="Article" className="w-full mb-3" />
       <div className="p-4 pt-2">
         <div className="mb-8">

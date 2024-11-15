@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import DeliveryPickupSelector from "./PickupDileverySelector";
-import DateTimeInput from "./DateTime";
-import App from "../components/Maps/autoComplete/src/app";
-import addIcon from "../assets/add.svg";
-import { addShipments, editShipmentByID } from "../redux/shipmentSlice";
+import DeliveryPickupSelector from "../PickupDileverySelector";
+import DateTimeInput from "../DateTime";
+import App from "../Maps/autoComplete/src/app";
+import addIcon from "../../assets/add.svg";
+import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
+import { addShipments, editShipmentByID } from "../../redux/shipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const ShipmentModalForm = ({ id, setOpenEditBox }) => {
+const ShipmentAddFormCall = ({ id, closeBox }) => {
   console.log("in Shipment Modal");
   let shipment = null;
   if (id) {
@@ -16,9 +17,9 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
     );
   }
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(true);
   const [isPickUp, setIsPickUp] = useState(true);
   const [isDelivery, setIsDelivery] = useState(false);
-  const [open, setOpen] = useState(id ? true : false);
   const [pickupTimeStr, setPickupTimeStr] = useState(null);
   const [pickupTimeEnd, setPickupTimeEnd] = useState(null);
   const [deliveryTimeStr, setDeliveryTimeStr] = useState(null);
@@ -37,9 +38,7 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
 
   const closeModal = () => {
     setOpen(false);
-    if (setOpenEditBox) {
-      setOpenEditBox(false);
-    }
+    closeBox(false);
   };
 
   const openModal = () => {
@@ -301,14 +300,6 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
 
   return (
     <div>
-      {!id && (
-        <img
-          src={addIcon}
-          alt=""
-          className="w-14 hover:scale-110 transition-transform duration-200"
-          onClick={openModal}
-        />
-      )}
       {open && (
         <div
           className={`modal fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
@@ -319,7 +310,10 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
         >
           <div
             className="absolute inset-0 bg-gray-900 opacity-50"
-            onClick={closeModal}
+            onClick={() => {
+              console.log("click");
+              closeModal();
+            }}
           />
           <div className="z-50 px-5 py-2 h-[90vh] mx-auto  overflow-y-auto bg-white rounded shadow-lg relative">
             <div className="h-[75vh] w-[800px] ">
@@ -531,7 +525,9 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
                   <div className="flex h-[80%]  mt-4 justify-end pt-4">
                     <button
                       className="p-3 px-6 py-2 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
-                      onClick={closeModal}
+                      onClick={() => {
+                        closeModal();
+                      }}
                     >
                       Close
                     </button>
@@ -553,4 +549,4 @@ const ShipmentModalForm = ({ id, setOpenEditBox }) => {
   );
 };
 
-export default ShipmentModalForm;
+export default ShipmentAddFormCall;

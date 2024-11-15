@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
-import del from "../assets/bin.svg";
-import edit from "../assets/edit.svg";
-import { deleteShipmentByID } from "../redux/shipmentSlice";
-// import ShipmentEditForm from "./Edit";
-import ShipmentModalForm from "./ShipmentModalForm";
+import del from "../../assets/delete-1-svgrepo-com.svg";
+import edit from "../../assets/edit.svg";
+import { deleteShipmentByID } from "../../redux/shipmentSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import ShipmentAddFormCall from "./ShipmentAddFormCall";
 
 const ShipmentTable = () => {
   const dispatch = useDispatch();
@@ -226,8 +225,8 @@ const ShipmentTable = () => {
       </div>
 
       {openEditBox && (
-        // <ShipmentEditForm id={editID} setOpenEditBox={setOpenEditBox} />
-        <ShipmentModalForm id={editID} setOpenEditBox={setOpenEditBox} />
+       
+        <ShipmentAddFormCall id={editID} closeBox={setOpenEditBox} />
       )}
     </div>
   );

@@ -1,78 +1,28 @@
-import React, { useRef, useState } from "react";
-import truck from "../assets/truck-svgrepo-com.svg";
-import filesAdd from "../assets/fileAdd.svg";
-import DeliveryPickupSelector from "./PickupDileverySelector";
-import DateTimeInput from "./DateTime";
-import App from "./Maps/autoComplete/src/app";
-import { addVehicles } from "../redux/vehiclesSlice";
-import { useDispatch } from "react-redux";
-import VehicleAddEditForm from "./VehicleAddEditForm";
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import filesAdd from "../../assets/fileAdd.svg";
+import DateTimeInput from "../DateTime";
+import App from "../Maps/autoComplete/src/app";
+import ADD_TRUCK_ICON from "../../assets/addTruck.svg";
+import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
+import { addVehicles, editVehicleByID } from "../../redux/vehiclesSlice";
 
-const NewCad = () => {
-  return (
-    <div className="w-[30%] py-4">
-      <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
-        {" "}
-        <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]"></span>{" "}
-        <div className="relative z-10 mx-auto max-w-md">
-          {" "}
-          <span className="grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
-            {" "}
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-10 w-10 text-white transition-all"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-              />{" "}
-            </svg>{" "} */}
-            <img src={truck} alt="" className="h-14" />
-          </span>{" "}
-          <div className="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
-            {" "}
-            <p>
-              Perfect for learning how the framework works, prototyping a new
-              idea, or creating a demo to share online.
-            </p>{" "}
-          </div>{" "}
-          <div className="pt-5 text-base font-semibold leading-7">
-            {" "}
-            <p>
-              {" "}
-              <a
-                href="#"
-                className="text-sky-500 transition-all duration-300 group-hover:text-white"
-              >
-                {" "}
-                Read the docs &rarr;{" "}
-              </a>{" "}
-              <a
-                href="#"
-                className="text-sky-500 transition-all duration-300 group-hover:text-white"
-              >
-                {" "}
-                Read the docs &rarr;{" "}
-              </a>{" "}
-            </p>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>
-    </div>
-  );
-};
+const VehicleFormCall = ({ id, closeBox }) => {
+  let currentVehicle = null;
+  if (id) {
+    currentVehicle = useSelector((state) =>
+      state.vehiclesSlice.vehicles.find((vehicle) => vehicle.id === id)
+    );
+  }
 
-const AddVehicles = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-  const [avoidTolls, setAvoidTolls] = useState(false);
-  const [avoidHighways, setAvoidHighways] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [avoidTolls, setAvoidTolls] = useState(
+    currentVehicle?.routeModifiers?.avoidTolls ?? false
+  );
+  const [avoidHighways, setAvoidHighways] = useState(
+    currentVehicle?.routeModifiers?.avoidHighways ?? false
+  );
   const labl = useRef(null);
   const loadLimit = useRef(null);
   const fixedCost = useRef(null);
@@ -87,6 +37,9 @@ const AddVehicles = () => {
 
   const closeModal = () => {
     setOpen(false);
+    if (closeBox) {
+      closeBox(false);
+    }
   };
 
   const openModal = () => {
@@ -116,6 +69,10 @@ const AddVehicles = () => {
       // return;
     }
     const vehicle = {};
+    if (id) {
+      vehicle.id = id;
+    }
+
     if (labl.current.value) {
       vehicle.displayName = labl.current.value;
     }
@@ -227,29 +184,16 @@ const AddVehicles = () => {
 
     const cleanV = removeNullValues(vehicle);
     console.log(cleanV);
-    dispatch(addVehicles([cleanV]));
+    if (id) {
+      dispatch(editVehicleByID({ id: id, data: cleanV }));
+    } else {
+      dispatch(addVehicles([cleanV]));
+    }
+    closeModal();
   };
 
   return (
     <>
-      {/* Modal activator */}
-      <div className="w-[30%] py-4" onClick={openModal}>
-        <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
-          {" "}
-          <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]"></span>{" "}
-          <div className="relative z-10 mx-auto max-w-md">
-            {" "}
-            <span className="grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
-              <img src={filesAdd} alt="" className="h-14" />
-            </span>{" "}
-            <div className="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
-              {" "}
-              <p>Add Json format file</p>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>
-      </div>
-      {/* Modal Content */}
       {open && (
         <div
           className={`modal fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
@@ -268,7 +212,11 @@ const AddVehicles = () => {
               <div className="h-[75vh] w-[800px] ">
                 <p className="text-2xl font-bold"></p>
                 <h3 className="text-gray-700 text-2xl font-bold">
-                  <strong>Modal Form</strong>
+                  <strong>
+                    {id
+                      ? `Edit Vehicle: ${currentVehicle?.displayName}`
+                      : "Add Vehicles"}
+                  </strong>
                 </h3>
 
                 <div className="flex">
@@ -278,6 +226,7 @@ const AddVehicles = () => {
                     <div className="relative w-full max-w-xs">
                       <input
                         type="text"
+                        defaultValue={currentVehicle?.displayName ?? ""}
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
@@ -291,10 +240,13 @@ const AddVehicles = () => {
                     {/* Load Limit weight */}
                     <div className="relative w-full max-w-xs mt-7">
                       <input
-                        type="text"
+                        type="number"
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required
+                        defaultValue={
+                          currentVehicle?.loadLimits?.weight?.amount ?? ""
+                        }
                         ref={loadLimit}
                       />
                       <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -307,6 +259,7 @@ const AddVehicles = () => {
                       <div className="relative w-1/3 max-w-xs mt-7 mr-2">
                         <input
                           ref={fixedCost}
+                          defaultValue={currentVehicle?.fixedCost ?? ""}
                           type="number"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           placeholder=" "
@@ -321,6 +274,7 @@ const AddVehicles = () => {
                       <div className="relative w-1/3 max-w-xs mt-7">
                         <input
                           ref={costPerHour}
+                          defaultValue={currentVehicle?.costPerHour ?? ""}
                           type="number"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           placeholder=" "
@@ -334,9 +288,7 @@ const AddVehicles = () => {
 
                     {/* Avoid Tools */}
                     <div className="flex items-center mt-4">
-                      <span className="mr-2 text-gray-500">
-                        Avoid Tools: {avoidTolls ? "On" : "Off"}
-                      </span>
+                      <span className="mr-2 text-gray-500">Avoid Tools:</span>
                       <div
                         className={`relative inline-flex h-5 w-10 cursor-pointer rounded-full transition-colors duration-200 ease-in-out ${
                           avoidTolls ? "bg-blue-600" : "bg-gray-300"
@@ -354,7 +306,7 @@ const AddVehicles = () => {
                     {/* Avoid Highways */}
                     <div className="flex items-center mt-4">
                       <span className="mr-2 text-gray-500">
-                        Avoid Highways: {avoidHighways ? "On" : "Off"}
+                        Avoid Highways:
                       </span>
                       <div
                         className={`relative inline-flex h-5 w-10 cursor-pointer rounded-full transition-colors duration-200 ease-in-out ${
@@ -374,6 +326,15 @@ const AddVehicles = () => {
                       {/* Starting Location */}
                       <div className="relative w-full max-w-xs">
                         <input
+                          defaultValue={`${
+                            currentVehicle?.startWaypoint?.location?.latLng
+                              ?.latitude ?? ""
+                          }${
+                            currentVehicle?.startWaypoint?.location?.latLng
+                              ?.longitude != null
+                              ? `,${currentVehicle?.startWaypoint?.location?.latLng?.longitude}`
+                              : ""
+                          }`}
                           type="text"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           placeholder=" "
@@ -387,6 +348,15 @@ const AddVehicles = () => {
                       {/* Ending Location */}
                       <div className="relative w-full max-w-xs mt-7">
                         <input
+                          defaultValue={`${
+                            currentVehicle?.endWaypoint?.location?.latLng
+                              ?.latitude ?? ""
+                          }${
+                            currentVehicle?.endWaypoint?.location?.latLng
+                              ?.longitude != null
+                              ? `,${currentVehicle?.endWaypoint?.location?.latLng?.longitude}`
+                              : ""
+                          }`}
                           ref={endingLocation}
                           type="text"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
@@ -407,24 +377,36 @@ const AddVehicles = () => {
                         </h3>
                         <DateTimeInput
                           setTimee={setStartingTimeWindowStarts}
-                          currentTime={null}
+                          currentTime={
+                            currentVehicle?.startTimeWindows?.[0]?.startTime
+                              ?.seconds ?? null
+                          }
                         />
                         <h3>to</h3>
                         <DateTimeInput
                           setTimee={setStartingTimeWindowEnds}
-                          currentTime={null}
+                          currentTime={
+                            currentVehicle?.startTimeWindows?.[0]?.endTime
+                              ?.seconds ?? null
+                          }
                         />
                         <h3 className="text-gray-700 mt-4">
                           Ending Time Window
                         </h3>
                         <DateTimeInput
                           setTimee={setEndingTimeWindowStarts}
-                          currentTime={null}
+                          currentTime={
+                            currentVehicle?.endTimeWindows?.[0]?.startTime
+                              ?.seconds ?? null
+                          }
                         />
                         <h3>to</h3>
                         <DateTimeInput
                           setTimee={setEndingTimeWindowEnds}
-                          currentTime={null}
+                          currentTime={
+                            currentVehicle?.endTimeWindows?.[0]?.endTime
+                              ?.seconds ?? null
+                          }
                         />
                       </div>
                     </div>
@@ -447,7 +429,7 @@ const AddVehicles = () => {
                         className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
                         onClick={handleSubmitButton}
                       >
-                        Submit
+                        {id ? "Edit" : "Add"}
                       </button>
                     </div>
                   </div>
@@ -461,119 +443,4 @@ const AddVehicles = () => {
   );
 };
 
-const AddVehiclesByFile = () => {
-  const dispatch = useDispatch();
-  // const [jsonData, setJsonData] = useState(null);
-  const [error, setError] = useState("");
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const json = JSON.parse(e.target.result);
-          console.log(json);
-          // setJsonData(json);
-          dispatch(addVehicles(json));
-          setError("");
-        } catch (error) {
-          setError("Invalid JSON file.");
-        }
-      };
-      reader.readAsText(file);
-    }
-  };
-  const handleDivClick = () => {
-    document.getElementById("file-upload").click();
-  };
-  return (
-    <div className="w-[30%] py-4">
-      <div
-        onClick={handleDivClick}
-        className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10"
-      >
-        <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]"></span>
-
-        <div className="relative z-10 mx-auto max-w-md">
-          <span className="grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
-            <img src={filesAdd} alt="" className="h-14" />
-          </span>
-          <div className="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
-            <p>Add Json format file</p>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </div>
-        </div>
-      </div>
-      <input
-        id="file-upload"
-        type="file"
-        accept=".json"
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-      />
-    </div>
-  );
-};
-
-function VehiclesList() {
-  // const [opne]
-  const [addShipment, setAddShipment] = useState(false);
-  return (
-    <div className="mt-8">
-      <div className="flex flex-col mt-8">
-        <div className="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 flex flex-wrap justify-between">
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-          <NewCad />
-        </div>
-        <div className="flex justify-between">
-          {/* for Shipment Add */}
-          {/* <div
-            className="w-[30%] py-4"
-            onClick={() => {
-              setAddShipment(true);
-            }}
-          >
-            <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
-              {" "}
-              <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]"></span>{" "}
-              <div className="relative z-10 mx-auto max-w-md">
-                {" "}
-                <span className="grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
-                  <img src={filesAdd} alt="" className="h-14" />
-                </span>{" "}
-                <div className="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
-                  {" "}
-                  <p>Add Json format file</p>{" "}
-                </div>{" "}
-              </div>{" "}
-            </div>
-          </div> */}
-
-          {/* {addShipment && <VehicleAddEditForm/>} */}
-
-          <AddVehicles />
-          <AddVehiclesByFile />
-          <AddVehicles />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default VehiclesList;
+export default VehicleFormCall;
