@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom";
 const FleetScenario = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const v = useSelector((state) => state.vehiclesSlice.vehicles);
+  const currentScenario = useSelector((state) => state.scenarioSlice.scenarios);
+  const numberOfVehicles = useSelector((state) => state.vehiclesSlice.vehicles.length);
   const [globalStrTime, setGlobalStrTime] = useState(null);
   const [globalEndTime, setGlobalEndTime] = useState(null);
   const [maxActiveVehicle, setMaxActiveVehicle] = useState(null);
-  const [considerRoadTraffic, setConsiderRoadTraffic] = useState(false);
+  const [considerRoadTraffic, setConsiderRoadTraffic] = useState(currentScenario?.considerRoadTraffic ?? false);
   const [label, setLabel] = useState("");
-  const [searchMode, setSearchMode] = useState(1);
+  const [searchMode, setSearchMode] = useState(currentScenario?.searchMode ?? 1);
   const [maxTime, setMaxTime] = useState(8);
 
   const labl = useRef();
@@ -24,7 +25,7 @@ const FleetScenario = () => {
   const handleSubmitButton = (e) => {
     e.preventDefault();
 
-    if (maxActiveVehicle > v.length) {
+    if (maxActiveVehicle > numberOfVehicles) {
       alert(
         "Max Active Vehicle should be less than or equal to total number of vehicles"
       );
@@ -53,7 +54,7 @@ const FleetScenario = () => {
       })
     );
 
-   navigator("/route-optimization");
+    navigator("/route-optimization");
   };
 
   return (
@@ -69,6 +70,7 @@ const FleetScenario = () => {
             placeholder=" "
             required
             // ref={labl}
+            defaultValue={currentScenario?.label ?? ""}
             onChange={(e) => setLabel(e.target.value)}
           />
           <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -80,17 +82,17 @@ const FleetScenario = () => {
           <h3 className="text-gray-500">
             <strong>Fleet Starting Time</strong>
           </h3>
-          <DateTimeInput setTimee={setGlobalStrTime} currentTime={null} />
+          <DateTimeInput setTimee={setGlobalStrTime} currentTime={currentScenario?.globalStrTime ?? null} />
           <h3 className="text-gray-500">
             <strong>Fleet Ending Time</strong>
           </h3>
-          <DateTimeInput setTimee={setGlobalEndTime} currentTime={null}/>
+          <DateTimeInput setTimee={setGlobalEndTime} currentTime={currentScenario?.globalEndTime ?? null} />
         </div>
 
         <div className="flex items-center mt-5 ml-7">
           <span className="mr-2 text-gray-500">
             <strong>
-              Consider Road Trafic: {considerRoadTraffic ? "On" : "Off"}
+              Consider Road Trafic:
             </strong>
           </span>
           <div
@@ -113,11 +115,12 @@ const FleetScenario = () => {
             className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
             placeholder=" "
             required
+            defaultValue={currentScenario?.maxTime ?? 10}
             // ref={maxTimeRef}
             onChange={(e) => setMaxTime(e.target.value)}
           />
           <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
-            <strong>Maximum Search Timem (in seconds)</strong>
+            <strong>Maximum Search Time(s)</strong>
           </label>
         </div>
 
@@ -143,6 +146,7 @@ const FleetScenario = () => {
             className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
             placeholder=" "
             required
+            defaultValue={currentScenario?.maxActiveVehicle ?? null}
             // ref={maxActiveVehicleRef}
             onChange={(e) => setMaxActiveVehicle(e.target.value)}
           />

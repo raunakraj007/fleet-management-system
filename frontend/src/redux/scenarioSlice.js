@@ -1,7 +1,7 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-  scenarios: [],
+  scenarios: null,
 };
 
 export const scenarioSlice = createSlice({
@@ -9,27 +9,10 @@ export const scenarioSlice = createSlice({
   initialState,
   reducers: {
     addScenario: (state, action) => {
-      const scenarioWithId = {
-        id: nanoid(),
-        ...action.payload,
-      };
-      state.scenarios.push(scenarioWithId);
+      state.scenarios = action.payload;
     },
-    removeAllScenarios: (state, action) => {
-      state.scenarios = [];
-    },
-    editScenarioByID: (state, action) => {
-      const { id, data } = action.payload;
-      const index = state.scenarios.findIndex((scenario) => scenario.id === id);
-      if (index !== -1) {
-        state.scenarios[index] = data;
-      }
-    },
-    deleteScenarioByID: (state, action) => {
-      const id = action.payload;
-      state.scenarios = state.scenarios.filter(
-        (scenario) => scenario.id !== id
-      );
+    removeScenario:(state, action) => {
+      state.scenarios = null;
     },
   },
 });
@@ -37,9 +20,7 @@ export const scenarioSlice = createSlice({
 
 export const {
   addScenario,
-  removeAllScenarios,
-  editScenarioByID,
-  deleteScenarioByID,
+  removeScenario
 } = scenarioSlice.actions;
 
 export default scenarioSlice.reducer;

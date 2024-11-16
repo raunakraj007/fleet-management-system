@@ -1,5 +1,5 @@
 import React from "react";
-import FleetScenario from "./FleetScenario";
+import FleetScenario from "../components/FleetScenario";
 
 const ManageFleet = () => {
   return (

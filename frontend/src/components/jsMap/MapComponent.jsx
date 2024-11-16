@@ -60,19 +60,19 @@ const handleAPICall = ( shipments,vehicles, scenarios, setPolyLines) => {
 
   const payLoad = {
     timeout: {
-      seconds: parseInt(scenarios[0].maxTime),
+      seconds: parseInt(scenarios.maxTime),
     },
     model: {
       shipments: shipmentList,
       vehicles: vehicleList,
-      globalStartTime: { seconds: scenarios[0].globalStrTime },
-      globalEndTime: { seconds: scenarios[0].globalEndTime },
-      maxActiveVehicles: scenarios[0].maxActiveVehicle,
+      globalStartTime: { seconds: scenarios.globalStrTime },
+      globalEndTime: { seconds: scenarios.globalEndTime },
+      maxActiveVehicles: scenarios?.maxActiveVehicle ?? null,
     },
-    searchMode: parseInt(scenarios[0].searchMode),
-    considerRoadTraffic: scenarios[0].considerRoadTraffic,
+    searchMode: parseInt(scenarios.searchMode),
+    considerRoadTraffic: scenarios.considerRoadTraffic,
     populatePolylines: true,
-    label: scenarios[0].label,
+    label: scenarios.label,
   };
 
   console.log(payLoad);

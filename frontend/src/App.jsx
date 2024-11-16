@@ -12,7 +12,7 @@ import RouteOptimizer from "./pages/RouteOptimizer";
 import LoginSignUp from "./pages/LoginSignUp";
 import AcountPage from "./pages/AcountPage";
 import Dashboard from "./components/Dashboard";
-import ManageFleet from "./components/ManageFleet";
+import ManageFleet from "./pages/ManageFleet";
 import VehiclesPage from "./pages/VehiclesPage";
 import ShipmentPages from "./pages/ShipmentPage";
 
