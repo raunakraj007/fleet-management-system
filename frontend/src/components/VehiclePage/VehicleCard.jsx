@@ -12,7 +12,7 @@ const VehicleCard = ({ vehicle, setId, setOpenEditBox }) => {
       <div className="p-4 pt-2">
         <div className="mb-8">
           <p className=" font-bold text-lg mb-2 text-indigo-600 inline-block">
-            {vehicle?.displayName ?? "----"}
+            {vehicle?.label ?? "----"}
           </p>
 
           <table className="text-gray-600">

@@ -53,7 +53,7 @@ const ShipmentTable = () => {
                 <tbody className="bg-white">
                   {Shipments.map((shipment, index) => {
                     const id = shipment?.id;
-                    const displayName = shipment?.displayName;
+                    const Label = shipment?.label;
                     const pickups = shipment?.pickups;
                     const deliveries = shipment?.deliveries;
 
@@ -105,7 +105,7 @@ const ShipmentTable = () => {
                                 {/* {typeof shipment?.displayName === undefined
                                   ? "___"
                                   : shipment?.displayName} */}
-                                {displayName}
+                                {Label}
                               </div>
                               {/* <div className="text-sm leading-5 text-gray-500">
                               {user.email}

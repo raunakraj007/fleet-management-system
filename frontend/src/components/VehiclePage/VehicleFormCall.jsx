@@ -74,7 +74,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
     }
 
     if (labl.current.value) {
-      vehicle.displayName = labl.current.value;
+      vehicle.label = labl.current.value;
     }
     if (avoidTolls == true || avoidHighways == true) {
       vehicle.routeModifiers = {};
@@ -214,7 +214,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
                 <h3 className="text-gray-700 text-2xl font-bold">
                   <strong>
                     {id
-                      ? `Edit Vehicle: ${currentVehicle?.displayName}`
+                      ? `Edit Vehicle: ${currentVehicle?.label}`
                       : "Add Vehicles"}
                   </strong>
                 </h3>
@@ -226,7 +226,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
                     <div className="relative w-full max-w-xs">
                       <input
                         type="text"
-                        defaultValue={currentVehicle?.displayName ?? ""}
+                        defaultValue={currentVehicle?.label ?? ""}
                         className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                         placeholder=" "
                         required

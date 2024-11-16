@@ -81,8 +81,8 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
     console.log(Shipment);
 
     if (name) {
-      Shipment.displayName = name.toString();
-      console.log("Shipment.displayName:", Shipment.displayName);
+      Shipment.label = name.toString();
+      console.log("Shipment.displayName:", Shipment.label);
     }
 
     if (loadDemands?.current?.value) {
@@ -328,7 +328,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                   {/* DisplayName */}
                   <div className="relative w-full max-w-xs">
                     <input
-                      defaultValue={shipment?.displayName ?? ""}
+                      defaultValue={shipment?.label ?? ""}
                       type="text"
                       className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                       placeholder=" "
