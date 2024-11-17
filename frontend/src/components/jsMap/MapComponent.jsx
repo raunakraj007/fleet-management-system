@@ -20,11 +20,12 @@ import { POLYGONS } from "./encodd-polygon-data";
 // import { poly3 } from "./poly3";
 
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getData2 } from "./getShipments";
 import { Search } from "lucide-react";
 import axios from "axios";
 // import { newPoly } from "./newPoly";
+import { addOptimizeRouteRes } from "../../redux/optimizeRouteRes";
 
 const colors = [
   "#FF5733", // Hexadecimal
@@ -48,71 +49,54 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const BACKEND_URL_ROUTE_OPTIMIZER =
   "http://localhost:8000/api/optimization/fleet-routing/optimize-tours";
 
-const handleAPICall = ( shipments,vehicles, scenarios, setPolyLines) => {
-  console.log("API Call");
-  console.log(shipments)
-  const shipmentList = shipments.map(({ id, ...data }) => data);
-  console.log(shipmentList);
-  const vehicleList = vehicles.map(({ id, ...data }) => data);
-
-  console.log(BACKEND_URL_ROUTE_OPTIMIZER);
-  // console.log(typeof scenarios[0].timeout);
-
-  const payLoad = {
-    timeout: {
-      seconds: parseInt(scenarios.maxTime),
-    },
-    model: {
-      shipments: shipmentList,
-      vehicles: vehicleList,
-      globalStartTime: { seconds: scenarios.globalStrTime },
-      globalEndTime: { seconds: scenarios.globalEndTime },
-      maxActiveVehicles: scenarios?.maxActiveVehicle ?? null,
-    },
-    searchMode: parseInt(scenarios.searchMode),
-    considerRoadTraffic: scenarios.considerRoadTraffic,
-    populatePolylines: true,
-    label: scenarios.label,
-  };
-
-  console.log(payLoad);
-
-  axios
-    .post(BACKEND_URL_ROUTE_OPTIMIZER, payLoad)
-    .then((response) => {
-      console.log(response);
-      const Routes = response.data.routes.map(
-        (route) => route?.routePolyline?.points
-      );
-      setPolyLines(Routes);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
 const MapComponent = () => {
+  const dispatch = useDispatch();
   const shipments = useSelector((state) => state.shipmentSlice.shipments);
   const vehicles = useSelector((state) => state.vehiclesSlice.vehicles);
   const scenarios = useSelector((state) => state.scenarioSlice.scenarios);
+
+  const Routes = useSelector(
+    (state) => state.optimizeRouteRes?.optimizeRouteRes?.routes
+  );
+
+  const routeIndex = useSelector((state) => state.mapSlice?.routeIndex);
+  console.log("Route Index: ", routeIndex);
+  console.log(Routes);
 
   console.log(shipments);
 
   useEffect(() => {
     console.log("Inside useEffect");
-    const data = getData2(shipments);
+    console.log("Route Index Inside Use: ", routeIndex);
+    let shimentIndicies = null;
+    if (routeIndex !== null) {
+      console.log("Inside If", routeIndex);
+      shimentIndicies = Routes[routeIndex]?.visits?.map(
+        (visit) => visit?.shipmentIndex
+      );
+      console.log(shimentIndicies);
+    }
+    const data = getData2(shipments, shimentIndicies);
     // console.log(data);
     setMarkers(data);
     setZ_INDEX_HOVER(data?.length + 1);
     setZ_INDEX_SELECTED(data?.length);
-  }, [shipments]);
+  }, [shipments, routeIndex]);
 
-  // const data = getData()
-  //   .sort((a, b) => b.position.lat - a.position.lat)
-  //   .map((dataItem, index) => ({ ...dataItem, zIndex: index }));
+  useEffect(() => {
+    console.log("Routes");
 
-  // const Z_INDEX_HOVER = data?.length + 1;
-  // const Z_INDEX_SELECTED = data?.length;
+    if (routeIndex !== null) {
+      const PolyLines = Routes[routeIndex]?.routePolyline?.points;
+      setPolyLines([PolyLines]);
+      return;
+    }
+
+    const polyLines = Routes?.map((route) => route?.routePolyline?.points);
+    setPolyLines(polyLines);
+    // console.log()
+    console.log(Routes);
+  }, [Routes, routeIndex]);
 
   const [markers, setMarkers] = useState(null);
   const [Z_INDEX_HOVER, setZ_INDEX_HOVER] = useState(null);
@@ -289,15 +273,6 @@ const MapComponent = () => {
           </Map>
         </div>
       </APIProvider>
-
-      <button
-        className="h-10 w-40 m-3 border-2 bg-slate-400 active:bg-blue-400"
-        onClick={() =>
-          handleAPICall(shipments, vehicles, scenarios, setPolyLines)
-        }
-      >
-        Generate Response
-      </button>
     </>
   );
 };

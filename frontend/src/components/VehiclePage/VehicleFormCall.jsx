@@ -124,7 +124,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
     }
     if (loadLimitValue) {
       vehicle.loadLimits = {};
-      vehicle.loadLimits.weight = { amount: loadLimitValue.toString() };
+      vehicle.loadLimits.weight = { maxLoad: loadLimitValue.toString() };
     }
     if (costPerHourValue) {
       vehicle.costPerHour = Number(costPerHourValue);
@@ -245,7 +245,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
                         placeholder=" "
                         required
                         defaultValue={
-                          currentVehicle?.loadLimits?.weight?.amount ?? ""
+                          currentVehicle?.loadLimits?.weight?.maxLoad ?? ""
                         }
                         ref={loadLimit}
                       />

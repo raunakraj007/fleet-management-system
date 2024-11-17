@@ -1,14 +1,12 @@
-export function getData2(shipments) {
+export function getData2(shipments, shipmentIndicies) {
   console.log("Inside getData2");
   const visits = [];
 
-  shipments.forEach((shipment) => {
+  shipments.forEach((shipment, index) => {
+    if (shipmentIndicies && shipmentIndicies?.length > 0 && !shipmentIndicies.includes(index)) {
+      return;
+    }
     if (shipment?.pickups && shipment?.pickups?.length > 0) {
-      // console.log("pick");
-      // console.log(shipment.pickups[0].arrivalWaypoint.location.latLng.latitude);
-      // console.log(
-      //   shipment.pickups[0].arrivalWaypoint.location.latLng.longitude
-      // );
       visits.push({
         lat: shipment.pickups[0].arrivalWaypoint.location.latLng.latitude,
         lng: shipment.pickups[0].arrivalWaypoint.location.latLng.longitude,
@@ -16,13 +14,6 @@ export function getData2(shipments) {
     }
 
     if (shipment?.deliveries && shipment?.deliveries?.length > 0) {
-      // console.log("ship");
-      // console.log(
-      //   shipment.deliveries[0].arrivalWaypoint.location.latLng.latitude
-      // );
-      // console.log(
-      //   shipment.deliveries[0].arrivalWaypoint.location.latLng.longitude
-      // );
       visits.push({
         lat: shipment.deliveries[0].arrivalWaypoint.location.latLng.latitude,
         lng: shipment.deliveries[0].arrivalWaypoint.location.latLng.longitude,
@@ -36,7 +27,8 @@ export function getData2(shipments) {
     id: String(index),
     position: { lat: visit.lat, lng: visit.lng },
     zIndex: index,
-    type: index === 2 ? "pin" : "html",
+    // type: index === 2 ? "pin" : "html",
+    type: "html",
   }));
 
   return data;

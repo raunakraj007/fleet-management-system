@@ -3,6 +3,8 @@ import userReducer from "./userSlice";
 import shipmentReducer from "./shipmentSlice";
 import vehicleReducer from "./vehiclesSlice";
 import scenarioReducer from "./scenarioSlice";
+import optimizeRouteResReducer from "./optimizeRouteRes";
+import mapReducer from "./mapSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +12,7 @@ export const store = configureStore({
     shipmentSlice: shipmentReducer,
     vehiclesSlice: vehicleReducer,
     scenarioSlice: scenarioReducer,
+    optimizeRouteRes: optimizeRouteResReducer,
+    mapSlice: mapReducer,
   },
 });

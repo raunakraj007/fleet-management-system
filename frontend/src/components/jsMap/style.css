@@ -30,7 +30,6 @@
   
   .map-container {
     width: 100%; /* Adjust to your desired width */
-    height: 75vh; /* Set to your desired height */
+    height: 100%; /* Set to your desired height */
     position: relative; /* Make sure the position is relative for the map */
   }
-  

@@ -18,7 +18,7 @@ const VehicleCard = ({ vehicle, setId, setOpenEditBox }) => {
           <table className="text-gray-600">
             <tr>
               <td>Max Load:</td>
-              <td>{vehicle?.loadLimits?.weight?.amount ?? "----"}</td>
+              <td>{vehicle?.loadLimits?.weight?.maxLoad ?? "----"}</td>
             </tr>
             <tr>
               <td>Fixed Cost: </td>
