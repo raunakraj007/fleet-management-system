@@ -16,6 +16,8 @@ import ManageFleet from "./pages/ManageFleet";
 import VehiclesPage from "./pages/VehiclesPage";
 import ShipmentPages from "./pages/ShipmentPage";
 
+import { KeepAlive } from "react-activation";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
@@ -24,7 +26,14 @@ const router = createBrowserRouter(
       <Route path="shipments" element={<ShipmentPages />} />
       <Route path="vehicles" element={<VehiclesPage />} />
       <Route path="manage-fleet" element={<ManageFleet />} />
-      <Route path="route-optimization" element={<RouteOptimizer />} />
+      <Route
+        path="route-optimization"
+        element={
+          <KeepAlive>
+            <RouteOptimizer />
+          </KeepAlive>
+        }
+      />
       <Route path="login" element={<LoginSignUp />} />
       <Route path="profile" element={<AcountPage />} />
     </Route>
@@ -32,7 +41,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
