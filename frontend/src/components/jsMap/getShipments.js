@@ -42,6 +42,8 @@ export const getShipmentMarkers = (shipments, shipmentIndicies) => {
   console.log("Inside getData2");
   const data = [];
 
+  
+  
   shipments.forEach((shipment, index) => {
     if (
       shipmentIndicies &&
@@ -59,6 +61,7 @@ export const getShipmentMarkers = (shipments, shipmentIndicies) => {
         zIndex: index,
         id: String(index),
         type: "pickup",
+        key:`pickup-${index}`
       });
     }
 
@@ -71,6 +74,7 @@ export const getShipmentMarkers = (shipments, shipmentIndicies) => {
         zIndex: index,
         id: String(index),
         type: "delivery",
+        key:`delivery-${index}`
       });
     }
   });

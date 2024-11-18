@@ -189,61 +189,64 @@ const MapComponent = () => {
               ))}
             {/* <Polyline strokeWeight={10} strokeColor={"green"} encodedPath={poly2} /> */}
             {markers &&
-              markers.map(({ id, zIndex: zIndexDefault, position, type }) => {
-                let zIndex = zIndexDefault;
+              markers.map(
+                ({ id, zIndex: zIndexDefault, position, type, key }) => {
+                  let zIndex = zIndexDefault;
 
-                if (hoverId === id) {
-                  zIndex = Z_INDEX_HOVER;
-                }
+                  if (hoverId === id) {
+                    zIndex = Z_INDEX_HOVER;
+                  }
 
-                if (selectedId === id) {
-                  zIndex = Z_INDEX_SELECTED;
-                }
+                  if (selectedId === id) {
+                    zIndex = Z_INDEX_SELECTED;
+                  }
+                  console.log("Marker ID: ", id);
 
-                return (
-                  <React.Fragment key={id}>
-                    <AdvancedMarkerWithRef
-                      position={position}
-                      zIndex={zIndex}
-                      anchorPoint={AdvancedMarkerAnchorPoint.BOTTOM_CENTER}
-                      className="custom-marker"
-                      style={{
-                        transform: `scale(${
-                          [hoverId, selectedId].includes(id) ? 1.3 : 1
-                        })`,
-                        transformOrigin:
-                          AdvancedMarkerAnchorPoint.BOTTOM_CENTER.join(" "),
-                      }}
-                      onMarkerClick={(marker) => onMarkerClick(id, marker)}
-                      onMouseEnter={() => onMouseEnter(id)}
-                      onMouseLeave={onMouseLeave}
-                    >
-                      <div
-                        // style={{background:"red"}}
-                        className={`custom-html-content ${
-                          selectedId === id ? "selected" : ""
-                        }`}
+                  return (
+                    <React.Fragment key={key}>
+                      <AdvancedMarkerWithRef
+                        position={position}
+                        zIndex={zIndex}
+                        anchorPoint={AdvancedMarkerAnchorPoint.BOTTOM_CENTER}
+                        className="custom-marker"
+                        style={{
+                          transform: `scale(${
+                            [hoverId, selectedId].includes(id) ? 1.3 : 1
+                          })`,
+                          transformOrigin:
+                            AdvancedMarkerAnchorPoint.BOTTOM_CENTER.join(" "),
+                        }}
+                        onMarkerClick={(marker) => onMarkerClick(id, marker)}
+                        onMouseEnter={() => onMouseEnter(id)}
+                        onMouseLeave={onMouseLeave}
                       >
-                        <MarkerIcon
-                          direction={type === "pickup" ? "up" : "down"}
-                          size="20px"
-                        />
-                      </div>
-                    </AdvancedMarkerWithRef>
+                        <div
+                          // style={{background:"red"}}
+                          className={`custom-html-content ${
+                            selectedId === id ? "selected" : ""
+                          }`}
+                        >
+                          <MarkerIcon
+                            direction={type === "pickup" ? "up" : "down"}
+                            size="20px"
+                          />
+                        </div>
+                      </AdvancedMarkerWithRef>
 
-                    <AdvancedMarkerWithRef
-                      onMarkerClick={(marker) => onMarkerClick(id, marker)}
-                      zIndex={zIndex + 1}
-                      onMouseEnter={() => onMouseEnter(id)}
-                      onMouseLeave={onMouseLeave}
-                      anchorPoint={AdvancedMarkerAnchorPoint.CENTER}
-                      position={position}
-                    >
-                      <div className="visualization-marker"></div>
-                    </AdvancedMarkerWithRef>
-                  </React.Fragment>
-                );
-              })}
+                      <AdvancedMarkerWithRef
+                        onMarkerClick={(marker) => onMarkerClick(id, marker)}
+                        zIndex={zIndex + 1}
+                        onMouseEnter={() => onMouseEnter(id)}
+                        onMouseLeave={onMouseLeave}
+                        anchorPoint={AdvancedMarkerAnchorPoint.CENTER}
+                        position={position}
+                      >
+                        <div className="visualization-marker"></div>
+                      </AdvancedMarkerWithRef>
+                    </React.Fragment>
+                  );
+                }
+              )}
 
             {infoWindowShown && selectedMarker && (
               <InfoWindow
