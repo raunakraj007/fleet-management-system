@@ -11,6 +11,7 @@ import {
 } from "@vis.gl/react-google-maps";
 
 import ReactLogo from "../../assets/react.svg";
+import UpLogo from "../../assets/up-logo.svg";
 
 import { getData } from "./data";
 // import ControlPanel from "./control-panel";
@@ -21,25 +22,35 @@ import { POLYGONS } from "./encodd-polygon-data";
 
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getData2 } from "./getShipments";
+import { getData2, getShipmentMarkers } from "./getShipments";
 import { Search } from "lucide-react";
 import axios from "axios";
 // import { newPoly } from "./newPoly";
 import { addOptimizeRouteRes } from "../../redux/optimizeRouteRes";
+import MarkerIcon from "./MarkerIcon";
 
 const colors = [
-  "#FF5733", // Hexadecimal
-  "#33FF57",
-  "#3357FF",
-  "rgb(255, 99, 71)", // RGB
-  "rgb(99, 255, 132)",
-  "rgb(71, 99, 255)",
-  "red", // Color names
-  "green",
-  "blue",
-  "cyan",
-  "magenta",
-  "yellow",
+  "#f57c00",
+  "#c2185b",
+  "#7b1fa2",
+  "#d32f2f",
+  "#00796b",
+  "#0097a7",
+  "#e64a19",
+  "#512da8",
+  "#ffa000",
+  "#a2acb1",
+  "#455a64",
+  "#1976d2",
+  "#5d4037",
+  "#388e3c",
+  "#616161",
+  "#303f9f",
+  "#0288d1",
+  "#689f38",
+  "#afb42b",
+  "#fbc02d",
+  "#555555",
 ];
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -67,6 +78,7 @@ const MapComponent = () => {
 
   useEffect(() => {
     console.log("Inside useEffect");
+    // setMarkers(null);
     console.log("Route Index Inside Use: ", routeIndex);
     let shimentIndicies = null;
     if (routeIndex !== null) {
@@ -76,8 +88,9 @@ const MapComponent = () => {
       );
       console.log(shimentIndicies);
     }
-    const data = getData2(shipments, shimentIndicies);
+    const data = getShipmentMarkers(shipments, shimentIndicies);
     // console.log(data);
+    console.log("Data: ", data.length);
     setMarkers(data);
     setZ_INDEX_HOVER(data?.length + 1);
     setZ_INDEX_SELECTED(data?.length);
@@ -108,7 +121,7 @@ const MapComponent = () => {
   const [infoWindowShown, setInfoWindowShown] = useState(false);
   const [polyLines, setPolyLines] = useState(null);
 
-  console.log(markers);
+  console.log("Marker Length: ", markers?.length);
 
   const onMouseEnter = useCallback((id) => setHoverId(id), []);
   const onMouseLeave = useCallback(() => setHoverId(null), []);
@@ -117,6 +130,7 @@ const MapComponent = () => {
     (id, marker) => {
       setSelectedId(id);
       if (marker) {
+        console.log(marker);
         setSelectedMarker(marker);
       }
       if (id !== selectedId) {
@@ -168,8 +182,8 @@ const MapComponent = () => {
               polyLines.map((polyLine, index) => (
                 <Polyline
                   key={index}
-                  strokeWeight={5}
-                  strokeColor={colors[index]}
+                  strokeWeight={3}
+                  strokeColor={routeIndex ? colors[routeIndex] : colors[index]}
                   encodedPath={polyLine}
                 />
               ))}
@@ -186,78 +200,49 @@ const MapComponent = () => {
                   zIndex = Z_INDEX_SELECTED;
                 }
 
-                if (type === "pin") {
-                  return (
+                return (
+                  <React.Fragment key={id}>
                     <AdvancedMarkerWithRef
-                      onMarkerClick={(marker) => onMarkerClick(id, marker)}
-                      onMouseEnter={() => onMouseEnter(id)}
-                      onMouseLeave={onMouseLeave}
-                      key={id}
+                      position={position}
                       zIndex={zIndex}
+                      anchorPoint={AdvancedMarkerAnchorPoint.BOTTOM_CENTER}
                       className="custom-marker"
                       style={{
                         transform: `scale(${
                           [hoverId, selectedId].includes(id) ? 1.3 : 1
                         })`,
                         transformOrigin:
-                          AdvancedMarkerAnchorPoint["BOTTOM"].join(" "),
+                          AdvancedMarkerAnchorPoint.BOTTOM_CENTER.join(" "),
                       }}
+                      onMarkerClick={(marker) => onMarkerClick(id, marker)}
+                      onMouseEnter={() => onMouseEnter(id)}
+                      onMouseLeave={onMouseLeave}
+                    >
+                      <div
+                        // style={{background:"red"}}
+                        className={`custom-html-content ${
+                          selectedId === id ? "selected" : ""
+                        }`}
+                      >
+                        <MarkerIcon
+                          direction={type === "pickup" ? "up" : "down"}
+                          size="20px"
+                        />
+                      </div>
+                    </AdvancedMarkerWithRef>
+
+                    <AdvancedMarkerWithRef
+                      onMarkerClick={(marker) => onMarkerClick(id, marker)}
+                      zIndex={zIndex + 1}
+                      onMouseEnter={() => onMouseEnter(id)}
+                      onMouseLeave={onMouseLeave}
+                      anchorPoint={AdvancedMarkerAnchorPoint.CENTER}
                       position={position}
                     >
-                      <Pin
-                        background={selectedId === id ? "#22ccff" : null}
-                        borderColor={selectedId === id ? "#1e89a1" : null}
-                        glyphColor={selectedId === id ? "#0f677a" : null}
-                      />
+                      <div className="visualization-marker"></div>
                     </AdvancedMarkerWithRef>
-                  );
-                }
-
-                if (type === "html") {
-                  return (
-                    <React.Fragment key={id}>
-                      <AdvancedMarkerWithRef
-                        position={position}
-                        zIndex={zIndex}
-                        anchorPoint={AdvancedMarkerAnchorPoint.BOTTOM_CENTER}
-                        className="custom-marker"
-                        style={{
-                          transform: `scale(${
-                            [hoverId, selectedId].includes(id) ? 1.3 : 1
-                          })`,
-                          transformOrigin:
-                            AdvancedMarkerAnchorPoint.BOTTOM_CENTER.join(" "),
-                        }}
-                        onMarkerClick={(marker) => onMarkerClick(id, marker)}
-                        onMouseEnter={() => onMouseEnter(id)}
-                        onMouseLeave={onMouseLeave}
-                      >
-                        <div
-                          className={`custom-html-content ${
-                            selectedId === id ? "selected" : ""
-                          }`}
-                        >
-                          <img
-                            src={ReactLogo}
-                            className="h-2/4"
-                            alt="React Logo"
-                          />
-                        </div>
-                      </AdvancedMarkerWithRef>
-
-                      <AdvancedMarkerWithRef
-                        onMarkerClick={(marker) => onMarkerClick(id, marker)}
-                        zIndex={zIndex + 1}
-                        onMouseEnter={() => onMouseEnter(id)}
-                        onMouseLeave={onMouseLeave}
-                        anchorPoint={AdvancedMarkerAnchorPoint.CENTER}
-                        position={position}
-                      >
-                        <div className="visualization-marker"></div>
-                      </AdvancedMarkerWithRef>
-                    </React.Fragment>
-                  );
-                }
+                  </React.Fragment>
+                );
               })}
 
             {infoWindowShown && selectedMarker && (

@@ -71,8 +71,8 @@ const GetResponseButton = () => {
     <>
       <button
         className=" w-full mt-1 bg-slate-400 active:bg-blue-400"
-        // onClick={handleAPICall}
-        onClick={handleAPICall2}
+        onClick={handleAPICall}
+        // onClick={handleAPICall2}
       >
         Get Response
       </button>

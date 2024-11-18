@@ -146,10 +146,15 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
       if (Shipment.pickups && Shipment.pickups.length > 0) {
         Shipment.pickups[0].timeWindows = [
           {
-            startTime:
-              pickupTimeStr == "946665000" ? null : pickupTimeStr.toString(),
-            endTime:
-              pickupTimeEnd == "946665000" ? null : pickupTimeEnd.toString(),
+            startTime: {
+              seconds:
+                pickupTimeStr == "946665000" ? null : pickupTimeStr.toString(),
+            },
+
+            endTime: {
+              seconds:
+                pickupTimeEnd == "946665000" ? null : pickupTimeEnd.toString(),
+            },
           },
         ];
         console.log(
@@ -216,14 +221,19 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
       if (Shipment.deliveries && Shipment.deliveries.length > 0) {
         Shipment.deliveries[0].timeWindows = [
           {
-            startTime:
-              deliveryTimeStr == "946665000"
-                ? null
-                : deliveryTimeStr.toString(),
-            endTime:
-              deliveryTimeEnd == "946665000"
-                ? null
-                : deliveryTimeEnd.toString(),
+            startTime: {
+              seconds:
+                deliveryTimeStr == "946665000"
+                  ? null
+                  : deliveryTimeStr.toString(),
+            },
+
+            endTime: {
+              seconds:
+                deliveryTimeEnd == "946665000"
+                  ? null
+                  : deliveryTimeEnd.toString,
+            },
           },
         ];
         console.log(
@@ -391,7 +401,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                       <DateTimeInput
                         setTimee={setPickupTimeStr}
                         currentTime={
-                          shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime ??
+                          Number(shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime?.seconds) ??
                           null
                         }
                       />
@@ -399,7 +409,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                       <DateTimeInput
                         setTimee={setPickupTimeEnd}
                         currentTime={
-                          shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime ??
+                          Number(shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime?.seconds) ??
                           null
                         }
                       />
@@ -470,16 +480,16 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                       <DateTimeInput
                         setTimee={setDeliveryTimeStr}
                         currentTime={
-                          shipment?.deliveries?.[0]?.timeWindows?.[0]
-                            ?.startTime ?? null
+                          Number(shipment?.deliveries?.[0]?.timeWindows?.[0]
+                            ?.startTime) ?? null
                         }
                       />
                       <h3>to</h3>
                       <DateTimeInput
                         setTimee={setDeliveryTimeEnd}
                         currentTime={
-                          shipment?.deliveries?.[0]?.timeWindows?.[0]
-                            ?.endTime ?? null
+                          Number(shipment?.deliveries?.[0]?.timeWindows?.[0]
+                            ?.endTime) ?? null
                         }
                       />
 

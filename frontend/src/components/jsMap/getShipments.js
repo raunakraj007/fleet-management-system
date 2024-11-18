@@ -3,7 +3,11 @@ export function getData2(shipments, shipmentIndicies) {
   const visits = [];
 
   shipments.forEach((shipment, index) => {
-    if (shipmentIndicies && shipmentIndicies?.length > 0 && !shipmentIndicies.includes(index)) {
+    if (
+      shipmentIndicies &&
+      shipmentIndicies?.length > 0 &&
+      !shipmentIndicies.includes(index)
+    ) {
       return;
     }
     if (shipment?.pickups && shipment?.pickups?.length > 0) {
@@ -33,3 +37,45 @@ export function getData2(shipments, shipmentIndicies) {
 
   return data;
 }
+
+export const getShipmentMarkers = (shipments, shipmentIndicies) => {
+  console.log("Inside getData2");
+  const data = [];
+
+  shipments.forEach((shipment, index) => {
+    if (
+      shipmentIndicies &&
+      shipmentIndicies?.length > 0 &&
+      !shipmentIndicies.includes(index)
+    ) {
+      return;
+    }
+    if (shipment?.pickups && shipment?.pickups?.length > 0) {
+      data.push({
+        position: {
+          lat: shipment.pickups[0].arrivalWaypoint.location.latLng.latitude,
+          lng: shipment.pickups[0].arrivalWaypoint.location.latLng.longitude,
+        },
+        zIndex: index,
+        id: String(index),
+        type: "pickup",
+      });
+    }
+
+    if (shipment?.deliveries && shipment?.deliveries?.length > 0) {
+      data.push({
+        position: {
+          lat: shipment.deliveries[0].arrivalWaypoint.location.latLng.latitude,
+          lng: shipment.deliveries[0].arrivalWaypoint.location.latLng.longitude,
+        },
+        zIndex: index,
+        id: String(index),
+        type: "delivery",
+      });
+    }
+  });
+
+  console.log(data.length)
+  
+  return data;
+};

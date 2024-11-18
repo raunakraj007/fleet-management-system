@@ -59,19 +59,21 @@ const ShipmentTable = () => {
 
                     // Safely access nested properties
                     const pickup = pickups?.[0];
+                    console.log("pickup", pickup);
                     const pickupTimeWindows = pickup?.timeWindows?.[0];
+                    console.log("pickupTimeWindows", pickupTimeWindows);
                     const pickupDuration = pickup?.duration;
                     const pickupStartTime =
-                      pickupTimeWindows?.startTime?.seconds;
-                    const pickupEndTime = pickupTimeWindows?.endTime?.seconds;
+                      Number(pickupTimeWindows?.startTime?.seconds);
+                    const pickupEndTime = Number(pickupTimeWindows?.endTime?.seconds);
 
                     const delivery = deliveries?.[0];
                     const deliveryTimeWindows = delivery?.timeWindows?.[0];
                     const deliveryDuration = delivery?.duration;
                     const deliveryStartTime =
-                      deliveryTimeWindows?.startTime?.seconds;
+                      Number(deliveryTimeWindows?.startTime?.seconds);
                     const deliveryEndTime =
-                      deliveryTimeWindows?.endTime?.seconds;
+                      Number(deliveryTimeWindows?.endTime?.seconds);
 
                     // const pickupDurationSeconds = console.log(
                     //   "shipment",
