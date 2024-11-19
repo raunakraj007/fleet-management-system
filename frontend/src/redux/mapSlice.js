@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   routeIndex: null,
+  autoCompleteId: null,
 };
 
 export const mapSlice = createSlice({
@@ -11,8 +12,11 @@ export const mapSlice = createSlice({
     addRouteIndex: (state, action) => {
       state.routeIndex = action.payload;
     },
+    addAutoCompleteId: (state, action) => {
+      state.autoCompleteId = action.payload;
+    },
   },
 });
 
-export const { addRouteIndex } = mapSlice.actions;
+export const { addRouteIndex, addAutoCompleteId } = mapSlice.actions;
 export default mapSlice.reducer;

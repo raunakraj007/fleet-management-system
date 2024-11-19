@@ -1,13 +1,28 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import filesAdd from "../../assets/fileAdd.svg";
 import DateTimeInput from "../DateTime";
 import App from "../Maps/autoComplete/src/app";
+import AutoCompleteMap from "../AutoComplete/main";
 import ADD_TRUCK_ICON from "../../assets/addTruck.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
 import { addVehicles, editVehicleByID } from "../../redux/vehiclesSlice";
+import AUTO_COMPLETE_ACTIVE from "../../assets/auto-complete-active.png";
+import AUTO_COMPLETE_INACTIVE from "../../assets/auto-complete-iactive.png";
+import { addAutoCompleteId } from "../../redux/mapSlice";
 
 const VehicleFormCall = ({ id, closeBox }) => {
+  // const [autoCompleteStartLocation, setAutoCompleteStartLocation] =
+  //   useState(false);
+
+  // useEffect(() => {
+  //   if (autoCompleteStartLocation) {
+  //     dispatch(addAutoCompleteId(`vehicle-starting-location-${id ?? "new"}`));
+  //   } else {
+  //     dispatch(addAutoCompleteId(null));
+  //   }
+  // }, [autoCompleteStartLocation]);
+
   let currentVehicle = null;
   if (id) {
     currentVehicle = useSelector((state) =>
@@ -23,6 +38,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
   const [avoidHighways, setAvoidHighways] = useState(
     currentVehicle?.routeModifiers?.avoidHighways ?? false
   );
+
   const labl = useRef(null);
   const loadLimit = useRef(null);
   const fixedCost = useRef(null);
@@ -45,6 +61,30 @@ const VehicleFormCall = ({ id, closeBox }) => {
   const openModal = () => {
     setOpen(true);
   };
+
+  const [autoCompleteStartLocation, setAutoCompleteStartLocation] =
+    useState(null);
+  const [autoCompleteEndLocation, setAutoCompleteEndLocation] = useState(null);
+    console.log("autoCompleteStartLocation", autoCompleteStartLocation);
+    console.log("autoCompleteEndLocation", autoCompleteEndLocation);
+  const [selectAutoComplete, setSelectAutoComplete] = useState(null);
+
+  // useEffect(()=>{
+  //   if(selectAutoComplete===1){
+  //     dispatch(addAutoCompleteId(`vehicle-starting-location-${id ?? "new"}`));
+  //   }else if(selectAutoComplete===2){
+  //     dispatch(addAutoCompleteId(`vehicle-ending-location-${id ?? "new"}`));
+  // }),[selectAutoComplete]);
+
+  useEffect(() => {
+    if (selectAutoComplete === 1) {
+      dispatch(addAutoCompleteId(`vehicle-starting-location-${id ?? "new"}`));
+    } else if (selectAutoComplete === 2) {
+      dispatch(addAutoCompleteId(`vehicle-ending-location-${id ?? "new"}`));
+    } else {
+      dispatch(addAutoCompleteId(null));
+    }
+  }, [selectAutoComplete]);
 
   const handleSubmitButton = () => {
     console.log("submit button clicked");
@@ -83,6 +123,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
     }
 
     if (startingLocationValue) {
+      console.log("inside starting location");
       const strLat = Number(startingLocationValue.split(",")[0]);
       const strLng = Number(startingLocationValue.split(",")[1]);
       vehicle.startWaypoint = {
@@ -324,8 +365,9 @@ const VehicleFormCall = ({ id, closeBox }) => {
 
                     <div className="mt-7">
                       {/* Starting Location */}
-                      <div className="relative w-full max-w-xs">
+                      <div className="relative flex  w-full max-w-xs">
                         <input
+                          id={`vehicle-starting-location-${id ?? "new"}`}
                           defaultValue={`${
                             currentVehicle?.startWaypoint?.location?.latLng
                               ?.latitude ?? ""
@@ -341,13 +383,30 @@ const VehicleFormCall = ({ id, closeBox }) => {
                           required
                           ref={startingLocation}
                         />
+
+                        <img
+                          src={
+                            selectAutoComplete === 1
+                              ? AUTO_COMPLETE_ACTIVE
+                              : AUTO_COMPLETE_INACTIVE
+                          }
+                          alt=""
+                          className="h-10 w-11 cursor-pointer"
+                          onClick={() =>
+                            setSelectAutoComplete(
+                              selectAutoComplete === 1 ? null : 1
+                            )
+                          }
+                        />
+
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Stating Location
                         </label>
                       </div>
                       {/* Ending Location */}
-                      <div className="relative w-full max-w-xs mt-7">
+                      <div className="relative flex w-full max-w-xs mt-7">
                         <input
+                          id={`vehicle-ending-location-${id ?? "new"}`}
                           defaultValue={`${
                             currentVehicle?.endWaypoint?.location?.latLng
                               ?.latitude ?? ""
@@ -361,6 +420,20 @@ const VehicleFormCall = ({ id, closeBox }) => {
                           type="text"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           required
+                        />
+                        <img
+                          src={
+                            selectAutoComplete === 2
+                              ? AUTO_COMPLETE_ACTIVE
+                              : AUTO_COMPLETE_INACTIVE
+                          }
+                          alt=""
+                          className="h-10 w-11 cursor-pointer"
+                          onClick={() =>
+                            setSelectAutoComplete(
+                              selectAutoComplete === 2 ? null : 2
+                            )
+                          }
                         />
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Ending Location
@@ -414,7 +487,21 @@ const VehicleFormCall = ({ id, closeBox }) => {
                   {/* map */}
                   <div className="w-[40%] h-auto grid grid-rows-6">
                     <div className="row-span-5 bg-black">
-                      <App />
+                      {/* <App /> */}
+                      <AutoCompleteMap
+                        loc1={
+                          currentVehicle?.startWaypoint?.location?.latLng ??
+                          null
+                        }
+                        loc2={
+                          currentVehicle?.endWaypoint?.location?.latLng ?? null
+                        }
+                        // ref1={startingLocation}
+                        // ref2={endingLocation}
+                        setLoc1={setAutoCompleteStartLocation}
+                        setLoc2={setAutoCompleteEndLocation}
+                        selectLoc={selectAutoComplete}
+                      />
                     </div>
 
                     <div className="flex h-[80%]  mt-4 justify-end pt-4">

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import DeliveryPickupSelector from "../PickupDileverySelector";
 import DateTimeInput from "../DateTime";
 import App from "../Maps/autoComplete/src/app";
+import AutoCompleteMap from "../AutoComplete/main"
 import addIcon from "../../assets/add.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
 import { addShipments, editShipmentByID } from "../../redux/shipmentSlice";
@@ -530,6 +531,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                 <div className="w-[40%] h-auto grid grid-rows-6">
                   <div className="row-span-5">
                     <App />
+                    {/* <AutoCompleteMap/> */}
                   </div>
 
                   <div className="flex h-[80%]  mt-4 justify-end pt-4">
