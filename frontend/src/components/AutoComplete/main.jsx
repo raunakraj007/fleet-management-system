@@ -102,7 +102,8 @@ const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc}) => {
             position={position}
             clickable={true}
             onClick={() => {
-              selectLoc(index);
+              // selectLoc(index);
+              console.log("marker clicked")
             }}
           />
         );

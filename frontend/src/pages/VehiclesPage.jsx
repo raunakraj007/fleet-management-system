@@ -7,8 +7,9 @@ import { addVehicles, removeAllVehicles } from "../redux/vehiclesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import VehiclesList from "../components/VehiclePage/VehiclesList";
 import EmptyVehiclePage from "../components/VehiclePage/EmptyVehiclePage";
-import VehicleFormCall from "../components/VehiclePage/VehicleFormCall";
+// import VehicleFormCall from "../components/VehiclePage/VehicleFormCall";
 import ConfirmationModal from "../components/ConfirmationModal";
+import VehicleAddForm from "../components/VehiclePage/Form/index"
 
 const VehiclesPage = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,8 @@ const VehiclesPage = () => {
               <img src={delIcon} alt="" />
             </div>
           </div>
-          {openAddForm && <VehicleFormCall closeBox={setOpenAddForm} />}
+          {/* {openAddForm && <VehicleFormCall closeBox={setOpenAddForm} />} */}
+          {openAddForm && <VehicleAddForm closeBox={setOpenAddForm} />}
           {openAlert && (
             <ConfirmationModal
               open={openAlert}

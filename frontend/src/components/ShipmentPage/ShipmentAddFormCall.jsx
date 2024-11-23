@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import DeliveryPickupSelector from "../PickupDileverySelector";
 import DateTimeInput from "../DateTime";
 import App from "../Maps/autoComplete/src/app";
-import AutoCompleteMap from "../AutoComplete/main"
+import AutoCompleteMap from "../AutoComplete/main";
 import addIcon from "../../assets/add.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
 import { addShipments, editShipmentByID } from "../../redux/shipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AUTO_COMPLETE_ACTIVE_ICON from "../../assets/auto-complete-active.png"
+import AUTO_COMPLETE_INACTIVE_ICON from "../../assets/auto-complete-iactive.png"
 
 const ShipmentAddFormCall = ({ id, closeBox }) => {
   console.log("in Shipment Modal");
@@ -335,7 +337,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
 
               <div className="flex">
                 {/* form details */}
-                <div className=" mt-2 w-[60%] pt-6 max-h-[74vh] overflow-y-auto scrollbar-hide ">
+                <div className=" flex-1 mt-2  pt-6 max-h-[74vh] overflow-y-auto scrollbar-hide ">
                   {/* DisplayName */}
                   <div className="relative w-full max-w-xs">
                     <input
@@ -395,6 +397,8 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Location
                         </label>
+
+                        {/* <img src={} alt="" /> */}
                       </div>
 
                       {/* Time*/}
@@ -402,16 +406,20 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                       <DateTimeInput
                         setTimee={setPickupTimeStr}
                         currentTime={
-                          Number(shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime?.seconds) ??
-                          null
+                          Number(
+                            shipment?.pickups?.[0]?.timeWindows?.[0]?.startTime
+                              ?.seconds
+                          ) ?? null
                         }
                       />
                       <h3>to</h3>
                       <DateTimeInput
                         setTimee={setPickupTimeEnd}
                         currentTime={
-                          Number(shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime?.seconds) ??
-                          null
+                          Number(
+                            shipment?.pickups?.[0]?.timeWindows?.[0]?.endTime
+                              ?.seconds
+                          ) ?? null
                         }
                       />
 
@@ -481,16 +489,19 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                       <DateTimeInput
                         setTimee={setDeliveryTimeStr}
                         currentTime={
-                          Number(shipment?.deliveries?.[0]?.timeWindows?.[0]
-                            ?.startTime) ?? null
+                          Number(
+                            shipment?.deliveries?.[0]?.timeWindows?.[0]
+                              ?.startTime
+                          ) ?? null
                         }
                       />
                       <h3>to</h3>
                       <DateTimeInput
                         setTimee={setDeliveryTimeEnd}
                         currentTime={
-                          Number(shipment?.deliveries?.[0]?.timeWindows?.[0]
-                            ?.endTime) ?? null
+                          Number(
+                            shipment?.deliveries?.[0]?.timeWindows?.[0]?.endTime
+                          ) ?? null
                         }
                       />
 
@@ -528,7 +539,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                 </div>
 
                 {/* map */}
-                <div className="w-[40%] h-auto grid grid-rows-6">
+                <div className="flex-1 h-auto grid grid-rows-6">
                   <div className="row-span-5">
                     <App />
                     {/* <AutoCompleteMap/> */}

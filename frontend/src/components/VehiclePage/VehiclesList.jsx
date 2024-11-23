@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import VehicleCard from "./VehicleCard";
 import VehicleFormCall from "./VehicleFormCall";
+import VehicleForm from "./Form/index"
 
 const VehiclesList = () => {
   const vehicles = useSelector((state) => state.vehiclesSlice.vehicles);
@@ -23,7 +24,8 @@ const VehiclesList = () => {
           ))}
         </div>
       </div>
-      {openEditBox && <VehicleFormCall id={editId} closeBox={setOpenEditBox} />}
+      {/* {openEditBox && <VehicleFormCall id={editId} closeBox={setOpenEditBox} />} */}
+      {openEditBox && <VehicleForm id={editId} closeBox={setOpenEditBox} />}
     </>
   );
 };

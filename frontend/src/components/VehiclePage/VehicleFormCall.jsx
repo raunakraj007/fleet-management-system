@@ -12,17 +12,6 @@ import AUTO_COMPLETE_INACTIVE from "../../assets/auto-complete-iactive.png";
 import { addAutoCompleteId } from "../../redux/mapSlice";
 
 const VehicleFormCall = ({ id, closeBox }) => {
-  // const [autoCompleteStartLocation, setAutoCompleteStartLocation] =
-  //   useState(false);
-
-  // useEffect(() => {
-  //   if (autoCompleteStartLocation) {
-  //     dispatch(addAutoCompleteId(`vehicle-starting-location-${id ?? "new"}`));
-  //   } else {
-  //     dispatch(addAutoCompleteId(null));
-  //   }
-  // }, [autoCompleteStartLocation]);
-
   let currentVehicle = null;
   if (id) {
     currentVehicle = useSelector((state) =>
@@ -65,16 +54,9 @@ const VehicleFormCall = ({ id, closeBox }) => {
   const [autoCompleteStartLocation, setAutoCompleteStartLocation] =
     useState(null);
   const [autoCompleteEndLocation, setAutoCompleteEndLocation] = useState(null);
-    console.log("autoCompleteStartLocation", autoCompleteStartLocation);
-    console.log("autoCompleteEndLocation", autoCompleteEndLocation);
+  console.log("autoCompleteStartLocation", autoCompleteStartLocation);
+  console.log("autoCompleteEndLocation", autoCompleteEndLocation);
   const [selectAutoComplete, setSelectAutoComplete] = useState(null);
-
-  // useEffect(()=>{
-  //   if(selectAutoComplete===1){
-  //     dispatch(addAutoCompleteId(`vehicle-starting-location-${id ?? "new"}`));
-  //   }else if(selectAutoComplete===2){
-  //     dispatch(addAutoCompleteId(`vehicle-ending-location-${id ?? "new"}`));
-  // }),[selectAutoComplete]);
 
   useEffect(() => {
     if (selectAutoComplete === 1) {
@@ -99,15 +81,16 @@ const VehicleFormCall = ({ id, closeBox }) => {
     console.log("Cost Per Hour Value:", costPerHourValue);
     console.log("Fixed Cost Value:", fixedCostValue);
     if (
-      !startingLocationValue ||
-      !endingLocationValue ||
+      !labl.current.value ||
       !loadLimitValue ||
       !costPerHourValue ||
-      !fixedCostValue
+      !fixedCostValue ||
+      !startingLocationValue
     ) {
       console.log("One of the required values is missing");
-      // return;
+      return;
     }
+
     const vehicle = {};
     if (id) {
       vehicle.id = id;
@@ -260,9 +243,9 @@ const VehicleFormCall = ({ id, closeBox }) => {
                   </strong>
                 </h3>
 
-                <div className="flex">
+                <div className="flex mt-4">
                   {/* form details */}
-                  <div className="mt-2 pt-6 w-[60%] max-h-[75vh] overflow-y-auto scrollbar-hide">
+                  <div className="flex-1 mt-2 pt-6  max-h-[70vh] overflow-y-auto scrollbar-hide">
                     {/* Label of Vehicle */}
                     <div className="relative w-full max-w-xs">
                       <input
@@ -392,11 +375,23 @@ const VehicleFormCall = ({ id, closeBox }) => {
                           }
                           alt=""
                           className="h-10 w-11 cursor-pointer"
-                          onClick={() =>
+                          // onClick={() =>
+                          //   setSelectAutoComplete(
+                          //     selectAutoComplete === 1 ? null : 1
+                          //   )
+                          // }
+                          onClick={() => {
+                            if (selectAutoComplete === 1) {
+                              startingLocation.current.value = `${autoCompleteStartLocation.latitude},${autoCompleteStartLocation.longitude}`;
+                            }
+                            if (selectAutoComplete === 2) {
+                              endingLocation.current.value = `${autoCompleteEndLocation.latitude},${autoCompleteEndLocation.longitude}`;
+                            }
+
                             setSelectAutoComplete(
                               selectAutoComplete === 1 ? null : 1
-                            )
-                          }
+                            );
+                          }}
                         />
 
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
@@ -418,6 +413,7 @@ const VehicleFormCall = ({ id, closeBox }) => {
                           }`}
                           ref={endingLocation}
                           type="text"
+                          placeholder=" "
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           required
                         />
@@ -429,11 +425,23 @@ const VehicleFormCall = ({ id, closeBox }) => {
                           }
                           alt=""
                           className="h-10 w-11 cursor-pointer"
-                          onClick={() =>
+                          // onClick={() =>
+                          //   setSelectAutoComplete(
+                          //     selectAutoComplete === 2 ? null : 2
+                          //   )
+                          // }
+                          onClick={() => {
+                            if (selectAutoComplete === 2) {
+                              endingLocation.current.value = `${autoCompleteEndLocation.latitude},${autoCompleteEndLocation.longitude}`;
+                            }
+                            if (selectAutoComplete === 1) {
+                              startingLocation.current.value = `${autoCompleteStartLocation.latitude},${autoCompleteStartLocation.longitude}`;
+                            }
+
                             setSelectAutoComplete(
                               selectAutoComplete === 2 ? null : 2
-                            )
-                          }
+                            );
+                          }}
                         />
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Ending Location
@@ -485,8 +493,8 @@ const VehicleFormCall = ({ id, closeBox }) => {
                     </div>
                   </div>
                   {/* map */}
-                  <div className="w-[40%] h-auto grid grid-rows-6">
-                    <div className="row-span-5 bg-black">
+                  <div className=" flex-1    h-[70vh]">
+                    <div className="h-full bg-black">
                       {/* <App /> */}
                       <AutoCompleteMap
                         loc1={
@@ -503,23 +511,23 @@ const VehicleFormCall = ({ id, closeBox }) => {
                         selectLoc={selectAutoComplete}
                       />
                     </div>
-
-                    <div className="flex h-[80%]  mt-4 justify-end pt-4">
-                      <button
-                        className="p-3 px-6 py-2 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
-                        onClick={closeModal}
-                      >
-                        Close
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
-                        onClick={handleSubmitButton}
-                      >
-                        {id ? "Edit" : "Add"}
-                      </button>
-                    </div>
                   </div>
+                </div>
+
+                <div className=" float-right ">
+                  <button
+                    className="p-3 px-6 py-2 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
+                    onClick={closeModal}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
+                    onClick={handleSubmitButton}
+                  >
+                    {id ? "Edit" : "Add"}
+                  </button>
                 </div>
               </div>
             </div>

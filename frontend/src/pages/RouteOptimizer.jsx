@@ -9,7 +9,7 @@ const RouteOptimizer = () => {
     <>
       <div style={{ height: "100vh" }}>
         <Split
-          className="split "
+          className="split"
           direction="vertical"
           sizes={[80, 20]}
           style={{ display: "flex", flexDirection: "column" }}
