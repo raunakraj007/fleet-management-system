@@ -11,7 +11,7 @@ import MapHandler from "./MapHandler";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc}) => {
+const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc }) => {
   // console.log(inputRef)
   const [selectedPlace, setSelectedPlace] = useState(null);
 
@@ -19,6 +19,13 @@ const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc}) => {
     { lat: Number(loc1?.latitude ?? 0), lng: Number(loc1?.longitude ?? 0) },
     { lat: Number(loc2?.latitude ?? 0), lng: Number(loc2?.longitude ?? 0) },
   ]);
+
+  const defaultMapPosition =
+    loc1?.latitude && loc1?.longitude
+      ? { lat: loc1.latitude, lng: loc1.longitude }
+      : loc2?.latitude && loc2?.longitude
+      ? { lat: loc2.latitude, lng: loc2.longitude }
+      : { lat: 31.234875, lng: 75.804975 };
 
   useEffect(() => {
     if (selectedPlace) {
@@ -48,12 +55,11 @@ const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc}) => {
     }
   }, [selectedPlace]);
 
-
   return (
     <APIProvider apiKey={API_KEY}>
       <Map
         defaultZoom={12}
-        defaultCenter={{ lat: 31.234875, lng: 75.804975 }}
+        defaultCenter={defaultMapPosition}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
         onClick={(event) => {
@@ -103,7 +109,7 @@ const main = ({ loc1, loc2, setLoc1, setLoc2, selectLoc}) => {
             clickable={true}
             onClick={() => {
               // selectLoc(index);
-              console.log("marker clicked")
+              console.log("marker clicked");
             }}
           />
         );

@@ -5,11 +5,21 @@ import { deleteShipmentByID } from "../../redux/shipmentSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ShipmentAddFormCall from "./ShipmentAddFormCall";
+import ConfirmationModal from "../ConfirmationModal";
+import axios from "axios";
 
 const ShipmentTable = () => {
   const dispatch = useDispatch();
   const [editID, setEditID] = useState(null);
   const [openEditBox, setOpenEditBox] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleDeleteShipmentByID = async (id) => {
+    console.log("delete button clicked with id");
+    console.log(id);
+    setOpen(true);
+    setEditID(id);
+  };
 
   const openEdit = (id) => {
     console.log("button clicked eith id");
@@ -42,7 +52,7 @@ const ShipmentTable = () => {
                       Visit
                     </th>
                     <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      TimeWindow
+                      Weight
                     </th>
                     <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                       Duration
@@ -52,39 +62,35 @@ const ShipmentTable = () => {
                 </thead>
                 <tbody className="bg-white">
                   {Shipments.map((shipment, index) => {
-                    const id = shipment?.id;
+                    const id = shipment?._id;
                     const Label = shipment?.label;
                     const pickups = shipment?.pickups;
                     const deliveries = shipment?.deliveries;
 
                     // Safely access nested properties
                     const pickup = pickups?.[0];
+                    const weight =
+                      shipment?.loadDemands?.weight?.amount ?? "______";
                     console.log("pickup", pickup);
                     const pickupTimeWindows = pickup?.timeWindows?.[0];
                     console.log("pickupTimeWindows", pickupTimeWindows);
-                    const pickupDuration = pickup?.duration;
-                    const pickupStartTime =
-                      Number(pickupTimeWindows?.startTime?.seconds);
-                    const pickupEndTime = Number(pickupTimeWindows?.endTime?.seconds);
+                    const pickupDuration = pickup?.duration ?? null;
+                    const pickupStartTime = Number(
+                      pickupTimeWindows?.startTime?.seconds
+                    );
+                    const pickupEndTime = Number(
+                      pickupTimeWindows?.endTime?.seconds
+                    );
 
                     const delivery = deliveries?.[0];
                     const deliveryTimeWindows = delivery?.timeWindows?.[0];
-                    const deliveryDuration = delivery?.duration;
-                    const deliveryStartTime =
-                      Number(deliveryTimeWindows?.startTime?.seconds);
-                    const deliveryEndTime =
-                      Number(deliveryTimeWindows?.endTime?.seconds);
-
-                    // const pickupDurationSeconds = console.log(
-                    //   "shipment",
-                    //   shipment
-                    // );
-                    // console.log("id", id);
-                    // console.log("displayName", displayName);
-                    // console.log("pickups", pickups);
-                    // console.log("deliveries", deliveries);
-                    // console.log("timeWindows", timeWindows);
-                    // console.log("duration", duration);
+                    const deliveryDuration = delivery?.duration ?? null;
+                    const deliveryStartTime = Number(
+                      deliveryTimeWindows?.startTime?.seconds
+                    );
+                    const deliveryEndTime = Number(
+                      deliveryTimeWindows?.endTime?.seconds
+                    );
 
                     return (
                       <tr key={id} className="hover:bg-gray-200">
@@ -146,14 +152,15 @@ const ShipmentTable = () => {
                               : convertEpochToHuman(
                                   shipment.pickups[0]?.timeWindows?.startTime
                                 )} */}
-                            {pickupStartTime &&
+                            {/* {pickupStartTime &&
                               convertEpochToHuman(pickupStartTime)}
                             {pickupEndTime &&
                               convertEpochToHuman(pickupEndTime)}
                             {deliveryStartTime &&
                               convertEpochToHuman(deliveryStartTime)}
                             {deliveryEndTime &&
-                              convertEpochToHuman(deliveryEndTime)}
+                              convertEpochToHuman(deliveryEndTime)} */}
+                            {weight}
                           </div>
                           <div className="text-sm leading-5 text-gray-500">
                             {/* {typeof shipment.pickups[0]?.timeWindows
@@ -192,13 +199,34 @@ const ShipmentTable = () => {
                           sec */}
                           {
                             // pickupDurationSeconds
+
+                            // pickup
+                            //   ? Math.floor(
+                            //       Number(pickupDuration?.seconds) / 60
+                            //     ) + " min"
+                            //   : delivery
+                            //   ? Math.floor(
+                            //       Number(deliveryDuration?.seconds) / 60
+                            //     ) + " min"
+                            //   : null
+
                             pickup
-                              ? Math.floor(
-                                  Number(pickupDuration.seconds) / 60
-                                ) + " min"
+                              ? delivery
+                                ? Math.floor(
+                                    Number(pickupDuration?.seconds ?? 0) / 60
+                                  ) +
+                                  " min" +
+                                  " | " +
+                                  Math.floor(
+                                    Number(deliveryDuration?.seconds ?? 0) / 60
+                                  ) +
+                                  " min"
+                                : Math.floor(
+                                    Number(pickupDuration?.seconds ?? 0) / 60
+                                  ) + " min"
                               : delivery
                               ? Math.floor(
-                                  Number(deliveryDuration.seconds) / 60
+                                  Number(deliveryDuration?.seconds ?? 0) / 60
                                 ) + " min"
                               : null
                           }
@@ -207,12 +235,7 @@ const ShipmentTable = () => {
                           <button onClick={() => openEdit(id)}>
                             <img src={edit} alt="" className="w-9" />
                           </button>
-                          <button
-                            onClick={() => {
-                              dispatch(deleteShipmentByID(id));
-                              console.log("delete clicked");
-                            }}
-                          >
+                          <button onClick={() => handleDeleteShipmentByID(id)}>
                             <img src={del} alt="" className="w-8 pb-1 pl-2" />
                           </button>
                         </td>
@@ -227,9 +250,26 @@ const ShipmentTable = () => {
       </div>
 
       {openEditBox && (
-       
         <ShipmentAddFormCall id={editID} closeBox={setOpenEditBox} />
       )}
+
+      <ConfirmationModal
+        open={open}
+        setOpen={setOpen}
+        Confirm={() => {
+          axios
+            .post(
+              `${import.meta.env.VITE_BACKEND_URL}/shipments/deleteShipment/${editID}`
+            )
+            .then((res) => {
+              console.log(res);
+              dispatch(deleteShipmentByID(editID));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      />
     </div>
   );
 };

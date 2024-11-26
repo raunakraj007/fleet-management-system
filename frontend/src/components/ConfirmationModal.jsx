@@ -19,7 +19,7 @@ const ConfirmationModal = ({ open, setOpen, Confirm }) => {
             {/* content */}
             <h1 className="text-red-600 text-5xl">Alert!</h1>
             <p className="text-gray-600 text-lg">
-              Are you sure you want to delete All?
+              Are you sure you want to delete?
             </p>
             <div className="flex justify-end space-x-2 mt-6">
               <button

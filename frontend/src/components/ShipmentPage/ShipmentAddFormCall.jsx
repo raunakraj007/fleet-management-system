@@ -7,8 +7,11 @@ import addIcon from "../../assets/add.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
 import { addShipments, editShipmentByID } from "../../redux/shipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
-import AUTO_COMPLETE_ACTIVE_ICON from "../../assets/auto-complete-active.png"
-import AUTO_COMPLETE_INACTIVE_ICON from "../../assets/auto-complete-iactive.png"
+import AUTO_COMPLETE_ACTIVE_ICON from "../../assets/auto-complete-active.png";
+import AUTO_COMPLETE_INACTIVE_ICON from "../../assets/auto-complete-iactive.png";
+import AutoComMap from "../AutoComplete/main";
+import { addAutoCompleteId } from "../../redux/mapSlice";
+import axios from "axios";
 
 const ShipmentAddFormCall = ({ id, closeBox }) => {
   console.log("in Shipment Modal");
@@ -16,7 +19,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
   if (id) {
     console.log("in ID");
     shipment = useSelector((state) =>
-      state.shipmentSlice.shipments.find((shipment) => shipment.id === id)
+      state.shipmentSlice.shipments.find((shipment) => shipment._id === id)
     );
   }
   const dispatch = useDispatch();
@@ -38,6 +41,20 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
   const delivLoc = useRef();
   const delivDuration = useRef();
   const delivCost = useRef();
+
+  const [selectAutoComplete, setSelectAutoComplete] = useState(null);
+  const [autoCompletePicUp, setAutoCompletePicUp] = useState(null);
+  const [autoCompleteDeliv, setAutoCompleteDeliv] = useState(null);
+
+  useEffect(() => {
+    if (selectAutoComplete === 1) {
+      dispatch(addAutoCompleteId(`shipment-pickup-location-${id ?? "new"}`));
+    } else if (selectAutoComplete === 2) {
+      dispatch(addAutoCompleteId(`shipment-delivery-location-${id ?? "new"}`));
+    } else {
+      dispatch(addAutoCompleteId(null));
+    }
+  }, [selectAutoComplete]);
 
   const closeModal = () => {
     setOpen(false);
@@ -79,7 +96,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
 
     const Shipment = {};
     if (id) {
-      Shipment.id = id;
+      Shipment._id = id;
     }
     console.log(Shipment);
 
@@ -302,10 +319,37 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
     console.log("Cleaned Shipment Object:", cleanedShipment);
 
     if (id) {
-      dispatch(editShipmentByID({ id: id, data: cleanedShipment }));
+      console.log("in");
+
+      axios
+        .post(
+          `${import.meta.env.VITE_BACKEND_URL}/shipments/editShipment`,
+          cleanedShipment
+        )
+        .then((res) => {
+          console.log(res);
+          dispatch(editShipmentByID({ _id: id, data: cleanedShipment }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log("not id");
-      dispatch(addShipments([cleanedShipment]));
+      // axios.lo
+      axios
+        .post(import.meta.env.VITE_BACKEND_URL + "/shipments/addShipmet", [
+          cleanedShipment,
+        ])
+        .then((res) => {
+          console.log(res);
+          cleanedShipment._id = res.data;
+          console.log("cleanedShipment:", cleanedShipment);
+          dispatch(addShipments([cleanedShipment]));
+          console.log("dispatched");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     closeModal();
@@ -337,7 +381,7 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
 
               <div className="flex">
                 {/* form details */}
-                <div className=" flex-1 mt-2  pt-6 max-h-[74vh] overflow-y-auto scrollbar-hide ">
+                <div className=" flex-1 mt-2  pt-6 max-h-[75vh] overflow-y-auto scrollbar-hide ">
                   {/* DisplayName */}
                   <div className="relative w-full max-w-xs">
                     <input
@@ -377,8 +421,9 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                   <>
                     <div className={isPickUp ? "block" : "hidden"}>
                       {/* Location */}
-                      <div className="relative w-full max-w-xs mt-7">
+                      <div className="relative w-full flex max-w-xs mt-7">
                         <input
+                          id={`shipment-pickup-location-${id ?? "new"}`}
                           type="text"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           placeholder=" "
@@ -397,6 +442,29 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Location
                         </label>
+                        <img
+                          src={
+                            selectAutoComplete === 1
+                              ? AUTO_COMPLETE_ACTIVE_ICON
+                              : AUTO_COMPLETE_INACTIVE_ICON
+                          }
+                          alt=""
+                          className="h-10 w-11 cursor-pointer"
+                          onClick={() => {
+                            if (selectAutoComplete === 1) {
+                              picUpLoc.current.value = `${autoCompletePicUp.latitude},${autoCompletePicUp.longitude}`;
+                            }
+                            if (selectAutoComplete === 2) {
+                              delivLoc.current.value = `${autoCompleteDeliv.latitude},${autoCompleteDeliv.longitude}`;
+                            }
+
+                            picUpLoc.current.focus();
+
+                            setSelectAutoComplete(
+                              selectAutoComplete === 1 ? null : 1
+                            );
+                          }}
+                        />
 
                         {/* <img src={} alt="" /> */}
                       </div>
@@ -459,13 +527,14 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                   <>
                     <div className={isDelivery ? "block" : "hidden"}>
                       {/* Location */}
-                      <div className="relative w-full max-w-xs mt-7">
+                      <div className="relative flex w-full max-w-xs mt-7">
                         <input
+                          id={`shipment-delivery-location-${id ?? "new"}`}
                           type="text"
                           className="peer w-full px-2 py-2 border-b-[2px]  h-10  border-gray-300  mx-2 outline-none focus:border-blue-500"
                           placeholder=" "
                           defaultValue={`${
-                            shipment?.deliveries?.[0].arrivalWaypoint?.location
+                            shipment?.deliveries?.[0]?.arrivalWaypoint?.location
                               ?.latLng?.latitude ?? ""
                           }${
                             shipment?.deliveries?.[0]?.arrivalWaypoint
@@ -482,6 +551,27 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                         <label className="absolute left-2 top-2 text-gray-500 transition-all duration-200 ease-in-out peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-blue-600 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-blue-600">
                           Location
                         </label>
+                        <img
+                          src={
+                            selectAutoComplete === 2
+                              ? AUTO_COMPLETE_ACTIVE_ICON
+                              : AUTO_COMPLETE_INACTIVE_ICON
+                          }
+                          alt=""
+                          className="h-10 w-11 cursor-pointer"
+                          onClick={() => {
+                            if (selectAutoComplete === 2) {
+                              delivLoc.current.value = `${autoCompleteDeliv.latitude},${autoCompleteDeliv.longitude}`;
+                            }
+                            if (selectAutoComplete === 1) {
+                              picUpLoc.current.value = `${autoCompletePicUp.latitude},${autoCompletePicUp.longitude}`;
+                            }
+
+                            setSelectAutoComplete(
+                              selectAutoComplete === 2 ? null : 2
+                            );
+                          }}
+                        />
                       </div>
 
                       {/* Time*/}
@@ -540,12 +630,30 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
 
                 {/* map */}
                 <div className="flex-1 h-auto grid grid-rows-6">
-                  <div className="row-span-5">
-                    <App />
+                  <div className="row-span-6">
+                    {/* <App /> */}
+                    <AutoComMap
+                      loc1={
+                        shipment?.pickups?.[0]?.arrivalWaypoint?.location
+                          ?.latLng ?? null
+                      }
+                      loc2={
+                        shipment?.deliveries?.[0]?.arrivalWaypoint?.location
+                          ?.latLng ?? null
+                      }
+                      setLoc1={setAutoCompletePicUp}
+                      setLoc2={setAutoCompleteDeliv}
+                      selectLoc={selectAutoComplete}
+                    />
+
                     {/* <AutoCompleteMap/> */}
                   </div>
+                </div>
 
-                  <div className="flex h-[80%]  mt-4 justify-end pt-4">
+
+              </div>
+
+              <div className="float-right mt-1">
                     <button
                       className="p-3 px-6 py-2 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
                       onClick={() => {
@@ -556,14 +664,12 @@ const ShipmentAddFormCall = ({ id, closeBox }) => {
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
+                      className="p-3 px-6 py-2 mr-2 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
                       onClick={handleSubmitButton}
                     >
                       {id ? "Save" : "Add"}
                     </button>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

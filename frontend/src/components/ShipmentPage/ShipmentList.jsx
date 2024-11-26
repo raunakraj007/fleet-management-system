@@ -43,13 +43,10 @@ const ShipmentList = () => {
         <div className="container mx-auto px-6 py-2 h-[100vh]">
           <div className="h-full">
             <div className="">
-              <span className="text-3xl font-medium text-gray-700">
-                Shipments
-              </span>
-
-              <div className="float-right flex space-x-5">
-                <span className="text-red-500">{error}</span>
-
+              <div className="flex space-x-3">
+                <span className="text-3xl font-medium text-gray-700">
+                  Shipments
+                </span>
                 <div
                   className="h-8 w-8 cursor-pointer"
                   onClick={() => {
@@ -76,20 +73,25 @@ const ShipmentList = () => {
                     style={{ display: "none" }}
                   />
                 </div>
+              </div>
+              <div className="float-right flex space-x-5">
+                <span className="text-red-500">{error}</span>
 
-                <div
+                {/* for deleting all shipments */}
+                {/* <div
                   className="h-8 w-8 cursor-pointer"
                   onClick={() => setOpen(true)}
                 >
                   <img src={delIcon} alt="" />
-                </div>
+                </div> */}
               </div>
               {openAddForm && <ShipmentAddFormCall closeBox={setOpenAddForm} />}
-              <ConfirmationModal
+
+              {/* <ConfirmationModal
                 open={open}
                 setOpen={setOpen}
                 Confirm={deleteAllShipments}
-              />
+              /> */}
             </div>
 
             <ShipmentTable />

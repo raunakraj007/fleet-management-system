@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   shipments: [],
@@ -9,26 +9,23 @@ export const shipmentSlice = createSlice({
   initialState,
   reducers: {
     addShipments: (state, action) => {
-      const shipmentsWithId = action.payload.map((shipment) => ({
-        id: nanoid(),
-        ...shipment,
-      }));
-      state.shipments.push(...shipmentsWithId);
+      const newShipments = action.payload.filter((shipment)=> !state.shipments.some((s) => s._id === shipment._id));
+      state.shipments.push(...newShipments);
     },
     removeAllShipments: (state, action) => {
       state.shipments = [];
     },
     editShipmentByID: (state, action) => {
-      const { id, data } = action.payload;
-      const index = state.shipments.findIndex((shipment) => shipment.id === id);
+      const { _id, data } = action.payload;
+      const index = state.shipments.findIndex((shipment) => shipment._id === _id);
       if (index !== -1) {
         state.shipments[index] = data;
       }
     },
     deleteShipmentByID: (state, action) => {
-      const id = action.payload;
+      const _id = action.payload;
       state.shipments = state.shipments.filter(
-        (shipment) => shipment.id !== id
+        (shipment) => shipment._id !== _id
       );
     },
   },
