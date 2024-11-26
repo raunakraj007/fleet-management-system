@@ -17,6 +17,7 @@ import VehiclesPage from "./pages/VehiclesPage";
 import ShipmentPages from "./pages/ShipmentPage";
 
 import { KeepAlive } from "react-activation";
+import ShimmerUiShipment from "./components/ShipmentPage/shimmerUiShipment";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +26,8 @@ const router = createBrowserRouter(
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="shipments" element={<ShipmentPages />} />
       <Route path="vehicles" element={<VehiclesPage />} />
-      <Route path="manage-fleet" element={<ManageFleet />} />
+      {/* <Route path="manage-fleet" element={<ManageFleet />} /> */}
+      <Route path="manage-fleet" element={<ShimmerUiShipment/>} />
       <Route
         path="route-optimization"
         element={
@@ -40,8 +42,25 @@ const router = createBrowserRouter(
   )
 );
 
+const router2 = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route path="" element={<LoginSignUp />} />
+      <Route path="app" element={<AppLayout />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="shipments" element={<ShipmentPages />} />
+        <Route path="vehicles" element={<VehiclesPage />} />
+        <Route path="manage-fleet" element={<ManageFleet />} />
+        {/* <Route path="manage-fleet" element={<ShimmerUiShipment/>} /> */}
+        <Route path="route-optimization" element={<RouteOptimizer />} />
+        <Route path="profile" element={<AcountPage />} />
+      </Route>
+    </Route>
+  )
+);
+
 function App() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router2} />;
 }
 
 export default App;

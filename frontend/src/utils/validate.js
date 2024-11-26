@@ -1,6 +1,4 @@
 export const checkValidData = (email, password, cnfPassword) => {
-  console.log("in");
-
   if (!email || !password || (cnfPassword !== undefined && !cnfPassword))
     return "Fill details";
   const isEmailValid = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/.test(email);

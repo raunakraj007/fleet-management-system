@@ -40,7 +40,7 @@ const ShipmentList = () => {
   return (
     <>
       <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 scrollbar-hide">
-        <div className="container mx-auto px-6 py-8 h-[100vh]">
+        <div className="container mx-auto px-6 py-2 h-[100vh]">
           <div className="h-full">
             <div className="">
               <span className="text-3xl font-medium text-gray-700">

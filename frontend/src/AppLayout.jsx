@@ -1,13 +1,18 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet,useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoginPage from "./pages/LoginSignUp";
 import Sidebar from "./components/Sidebar";
 
 import { AliveScope } from "react-activation";
 import { RouterProvider } from "react-router-dom";
+import ProtectedRoutes from "./ProtectedRoutes";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const AppLayout = () => {
+
   const userUid = useSelector((state) => state?.user?.userDetails?.uid);
   return (
     <>

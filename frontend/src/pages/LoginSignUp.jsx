@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,10 +10,19 @@ import { checkValidData } from "../utils/validate.js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/userSlice.js";
+import axios from "axios";
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  // console.log(localStorage);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("isSignIn") === "true") {
+      navigate("/app/dashboard");
+    }
+  }, [navigate]);
+
+  const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
@@ -38,68 +47,93 @@ const LoginPage = () => {
     }
 
     if (!isSignInForm) {
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          updateProfile(auth.currentUser, {
-            displayName: name.current.value,
-          })
-            .then(() => {
-              const { uid, email, displayName } = user;
-              dispatch(
-                addUser({
-                  uid: uid,
-                  email: email,
-                  displayName: displayName,
-                })
-              );
-              navigate("/");
-            })
-            .catch((error) => {
-              // An error occurred
-              // ...
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              setErrorMessage(errorCode + "- " + errorMessage);
-            });
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/users/register`, {
+          name: name.current.value,
+          email: email.current.value,
+          password: password.current.value,
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage);
+        .then((res) => {
+          console.log(res);
+          // localStorage.setItem("isSignIn", true);
+          navigate("/app/dashboard");
         });
     } else {
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          const { uid, email, displayName } = user;
-          dispatch(
-            addUser({
-              uid: uid,
-              email: email,
-              displayName: displayName,
-            })
-          );
-          navigate("/");
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
+          email: email.current.value,
+          password: password.current.value,
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          if (errorCode == "auth/invalid-credential") {
-            setErrorMessage("invalid-credential");
-          }
+        .then((res) => {
+          console.log(res);
+          // localStorage.setItem("isSignIn", true);
+          navigate("/app/dashboard");
         });
     }
+
+    // if (!isSignInForm) {
+    //   createUserWithEmailAndPassword(
+    //     auth,
+    //     email.current.value,
+    //     password.current.value
+    //   )
+    //     .then((userCredential) => {
+    //       const user = userCredential.user;
+    //       console.log(user);
+    //       updateProfile(auth.currentUser, {
+    //         displayName: name.current.value,
+    //       })
+    //         .then(() => {
+    //           const { uid, email, displayName } = user;
+    //           dispatch(
+    //             addUser({
+    //               uid: uid,
+    //               email: email,
+    //               displayName: displayName,
+    //             })
+    //           );
+    //           navigate("/");
+    //         })
+    //         .catch((error) => {
+    //           // An error occurred
+    //           // ...
+    //           const errorCode = error.code;
+    //           const errorMessage = error.message;
+    //           setErrorMessage(errorCode + "- " + errorMessage);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       const errorCode = error.code;
+    //       const errorMessage = error.message;
+    //       setErrorMessage(errorMessage);
+    //     });
+    // } else {
+    //   signInWithEmailAndPassword(
+    //     auth,
+    //     email.current.value,
+    //     password.current.value
+    //   )
+    //     .then((userCredential) => {
+    //       // Signed in
+    //       const user = userCredential.user;
+    //       console.log(user);
+    //       const { uid, email, displayName } = user;
+    //       dispatch(
+    //         addUser({
+    //           uid: uid,
+    //           email: email,
+    //           displayName: displayName,
+    //         })
+    //       );
+    //       navigate("/");
+    //     })
+    //     .catch((error) => {
+    //       const errorCode = error.code;
+    //       if (errorCode == "auth/invalid-credential") {
+    //         setErrorMessage("invalid-credential");
+    //       }
+    //     });
+    // }
   };
 
   return (
