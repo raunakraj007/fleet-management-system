@@ -13,14 +13,14 @@ const EmptyVehiclePage = () => {
         <h1 className="text-2xl mb-4">No vehicles found</h1>
         <div className="flex justify-center space-x-3 ">
           <div
-            className="w-[25%] py-4"
+            className="w-[60%] py-4"
             onClick={() => setOpenVehicleForm(true)}
           >
             <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
               <img src={ADD_ICON} alt="" className="h-full" />
             </div>
           </div>
-          <AddVehiclesByFile />
+          {/* <AddVehiclesByFile /> */}
         </div>
 
         {/* {openVehicleForm && <VehicleFormCall closeBox={setOpenVehicleForm} />} */}

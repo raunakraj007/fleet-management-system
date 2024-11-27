@@ -9,13 +9,14 @@ import Map from "./Map";
 // import { handleSubmitButton, useFormSubmit } from "./useFormSubmit";
 import { removeNullValues } from "./utils";
 import { editVehicleByID, addVehicles } from "../../../redux/vehiclesSlice";
+import axios from "axios";
 
 const index = ({ id, closeBox }) => {
   const dispatch = useDispatch();
 
   const currentVehicle = id
     ? useSelector((state) =>
-        state.vehiclesSlice.vehicles.find((vehicle) => vehicle.id === id)
+        state.vehiclesSlice.vehicles.find((vehicle) => vehicle._id === id)
       )
     : null;
 
@@ -71,7 +72,7 @@ const index = ({ id, closeBox }) => {
   const constructVehicleObject = () => {
     const vehicle = {};
 
-    if (id) vehicle.id = id;
+    if (id) vehicle._id = id;
     console.log("id", id);
 
     // Basic Info
@@ -180,10 +181,34 @@ const index = ({ id, closeBox }) => {
     console.log("vehicle", vehicle);
 
     if (id) {
-      dispatch(editVehicleByID({ id, data: vehicle }));
-      console.log("Edit Vehicle");
+      axios
+        .post(
+          `${import.meta.env.VITE_BACKEND_URL}/vehicles/editVehicle`,
+          vehicle
+        )
+        .then((res) => {
+          console.log(res.data);
+          dispatch(editVehicleByID(vehicle));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      console.log("Edit Vehicle", vehicle);
     } else {
-      dispatch(addVehicles([vehicle]));
+      axios
+        .post(
+          `${import.meta.env.VITE_BACKEND_URL}/vehicles/addVehicle`,
+          vehicle
+        )
+        .then((res) => {
+          vehicle._id = res.data;
+          dispatch(addVehicles([vehicle]));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       console.log("Add Vehicle");
     }
 
@@ -260,7 +285,7 @@ const index = ({ id, closeBox }) => {
                   </div>
 
                   {/*Map*/}
-                  <div className=" flex-1    h-[70vh]">
+                  <div className=" flex-1   h-[70vh]">
                     <Map
                       currentVehicle={currentVehicle}
                       setAutoCompleteStartLocation={
@@ -282,7 +307,7 @@ const index = ({ id, closeBox }) => {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
+                    className="p-3 px-6 py-2 mr-2 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
                     onClick={handleFormSubmit}
                   >
                     {id ? "Edit" : "Add"}

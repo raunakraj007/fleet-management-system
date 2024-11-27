@@ -19,7 +19,7 @@ const Location = (props) => {
         {/* Starting Location */}
         <div className="relative flex  w-full max-w-xs">
           <input
-            id={`vehicle-starting-location-${currentVehicle?.id ?? "new"}`}
+            id={`vehicle-starting-location-${currentVehicle?._id ?? "new"}`}
             defaultValue={`${
               currentVehicle?.startWaypoint?.location?.latLng?.latitude ?? ""
             }${
@@ -64,7 +64,7 @@ const Location = (props) => {
         {/* Ending Location */}
         <div className="relative flex w-full max-w-xs mt-7">
           <input
-            id={`vehicle-ending-location-${currentVehicle?.id ?? "new"}`}
+            id={`vehicle-ending-location-${currentVehicle?._id ?? "new"}`}
             defaultValue={`${
               currentVehicle?.endWaypoint?.location?.latLng?.latitude ?? ""
             }${

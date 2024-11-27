@@ -4,7 +4,8 @@ import DeleteIcon from "../../assets/delete-1-svgrepo-com.svg";
 import EditIcon from "../../assets/edit.svg";
 import { deleteVehicleByID } from "../../redux/vehiclesSlice";
 import { useDispatch } from "react-redux";
-const VehicleCard = ({ vehicle, setId, setOpenEditBox }) => {
+
+const VehicleCard = ({ vehicle, setId, setOpenEditBox, setOpenAlert }) => {
   const dispatch = useDispatch();
   return (
     <div className="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal hover:scale-105 transition-all duration-100 ">
@@ -35,13 +36,16 @@ const VehicleCard = ({ vehicle, setId, setOpenEditBox }) => {
             className="w-8 h-8 rounded-lg mr-4 cursor-pointer"
             src={DeleteIcon}
             onClick={() => {
-              dispatch(deleteVehicleByID(vehicle.id));
+              // dispatch(deleteVehicleByID(vehicle._id));
+              console.log("Delete Vehicle");
+              setId(vehicle._id);
+              setOpenAlert(true);
             }}
           />
           <img
             src={EditIcon}
             onClick={() => {
-              setId(vehicle.id);
+              setId(vehicle._id);
               setOpenEditBox(true);
             }}
             className="w-10 h-10 rounded-lg mr-4 cursor-pointer"

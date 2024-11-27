@@ -9,7 +9,9 @@ export const shipmentSlice = createSlice({
   initialState,
   reducers: {
     addShipments: (state, action) => {
-      const newShipments = action.payload.filter((shipment)=> !state.shipments.some((s) => s._id === shipment._id));
+      const newShipments = action.payload.filter(
+        (shipment) => !state.shipments.some((s) => s._id === shipment._id)
+      );
       state.shipments.push(...newShipments);
     },
     removeAllShipments: (state, action) => {
@@ -17,9 +19,13 @@ export const shipmentSlice = createSlice({
     },
     editShipmentByID: (state, action) => {
       const { _id, data } = action.payload;
-      const index = state.shipments.findIndex((shipment) => shipment._id === _id);
+      const index = state.shipments.findIndex(
+        (shipment) => shipment._id === _id
+      );
+
       if (index !== -1) {
         state.shipments[index] = data;
+        console.log(state.shipments[index]);
       }
     },
     deleteShipmentByID: (state, action) => {

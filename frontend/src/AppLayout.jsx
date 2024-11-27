@@ -17,7 +17,7 @@ const AppLayout = () => {
   return (
     <>
       <AliveScope>
-        <div className=" w-full  flex ">
+        <div className=" w-full h-[100vh] flex ">
           <Sidebar />
           <div className="w-full scrollbar-hide max-h-screen overflow-y-auto">
             <Outlet />

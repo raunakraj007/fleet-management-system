@@ -10,6 +10,9 @@ const ShipmentPage = () => {
   localStorage.removeItem("isSignIn");
   const [fetchedData, setFetchedData] = useState(null);
   const dispatch = useDispatch();
+  const shipmentArrayLength = useSelector(
+    (state) => state.shipmentSlice?.shipments.length
+  );
 
   useEffect(() => {
     const data = axios
@@ -22,23 +25,18 @@ const ShipmentPage = () => {
         dispatch(addShipments(res.data));
       });
   }, []);
+  // console.log(shipments);
 
   console.log(fetchedData);
 
-  if (fetchedData === null) {
+  if (fetchedData === null && shipmentArrayLength === 0) {
     return <ShimmerUiShipment />;
   }
-
-  // const shipments = useSelector((state) => state.shipmentSlice.shipments);
 
   return (
     <main className="flex-1 h-full overflow-x-hidden overflow-y-auto bg-gray-200">
       <div className="container mx-auto px-6 py-1">
-        {fetchedData.length === 0 ? (
-          <EmptyShipmentPage />
-        ) : (
-          <ShipmentList  />
-        )}
+        {fetchedData?.length === 0 ? <EmptyShipmentPage /> : <ShipmentList />}
         {/* {shipments.length === 0 ? <ShimmerUiShipment/> : <ShipmentList />} */}
       </div>
     </main>

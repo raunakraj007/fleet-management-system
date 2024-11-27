@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "../assets/add-to-queue-svgrepo-com.svg";
 import FileIcon from "../assets/fileAdd.svg";
 import delIcon from "../assets/delete-1-svgrepo-com.svg";
@@ -9,7 +9,8 @@ import VehiclesList from "../components/VehiclePage/VehiclesList";
 import EmptyVehiclePage from "../components/VehiclePage/EmptyVehiclePage";
 // import VehicleFormCall from "../components/VehiclePage/VehicleFormCall";
 import ConfirmationModal from "../components/ConfirmationModal";
-import VehicleAddForm from "../components/VehiclePage/Form/index"
+import VehicleAddForm from "../components/VehiclePage/Form/index";
+import axios from "axios";
 
 const VehiclesPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,18 @@ const VehiclesPage = () => {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/vehicles/getVehicles`)
+      .then((res) => {
+        console.log(res);
+        dispatch(addVehicles(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const deleteAllVehicles = () => {
     dispatch(removeAllVehicles());
   };
@@ -46,9 +59,9 @@ const VehiclesPage = () => {
   }
   return (
     <main className="flex-1 h-full overflow-x-hidden overflow-y-auto bg-gray-200">
-      <div className="container mx-auto px-6 py-8">
-        <div className="">
-          <span className="text-3xl font-medium text-gray-700">Vehicles</span>
+      <div className="container mx-auto px-6">
+        <div className="  bg-gray-200">
+          <h1 className="text-3xl font-medium text-gray-700">Vehicles</h1>
           <div className="float-right flex space-x-5">
             <span className="text-red-500">{error}</span>
 
@@ -61,7 +74,7 @@ const VehiclesPage = () => {
               <img src={AddIcon} alt="" />
             </div>
 
-            <div
+            {/* <div
               className="h-8 w-8 cursor-pointer"
               onClick={() => {
                 document.getElementById("file-upload-vehicle").click();
@@ -76,26 +89,27 @@ const VehiclesPage = () => {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className="h-8 w-8 cursor-pointer"
               onClick={() => setOpenAlert(true)}
             >
               <img src={delIcon} alt="" />
-            </div>
+            </div> */}
           </div>
-          {/* {openAddForm && <VehicleFormCall closeBox={setOpenAddForm} />} */}
           {openAddForm && <VehicleAddForm closeBox={setOpenAddForm} />}
-          {openAlert && (
+          {/* {openAlert && (
             <ConfirmationModal
               open={openAlert}
               setOpen={setOpenAlert}
               Confirm={deleteAllVehicles}
             />
-          )}
+          )} */}
         </div>
-        <VehiclesList />
+        <div>
+          <VehiclesList />
+        </div>
       </div>
     </main>
   );
