@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import VehicleAccordion from "./VehicleAccordion";
 import { addRouteIndex } from "../../redux/mapSlice";
 
-const UsedVehicle = () => {
+const UsedVehicles = () => {
   const dispatch = useDispatch();
   const routes = useSelector(
     (state) => state.optimizeRouteRes?.optimizeRouteRes?.routes
@@ -13,7 +13,7 @@ const UsedVehicle = () => {
 
   return (
     <>
-      <div className="bg-white w-[90%] mt-4 px-1 mx-auto rounded-xl h-auto py-3  ">
+      <div className="bg-white w-[95%] px-1 mx-auto rounded-xl h-auto py-3  ">
         {routes?.map((route, index) => (
           <VehicleAccordion
             key={index}
@@ -28,4 +28,4 @@ const UsedVehicle = () => {
   );
 };
 
-export default UsedVehicle;
+export default UsedVehicles;

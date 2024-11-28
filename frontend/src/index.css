@@ -23,6 +23,12 @@
   cursor: row-resize;
 }
 
+.gutter-horizontal {
+  width:2px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  cursor: row-resize;
+}
+
 .split {
   height: 100%;
 }
@@ -70,6 +76,16 @@
   width: 100%; /* Adjust to your desired width */
   height: 100%; /* Set to your desired height */
   position: relative; /* Make sure the position is relative for the map */
+}
+
+.scrollbar-hide-x::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in webkit browsers (Chrome, Safari, Edge) */
+}
+
+.scrollbar-hide-x {
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 

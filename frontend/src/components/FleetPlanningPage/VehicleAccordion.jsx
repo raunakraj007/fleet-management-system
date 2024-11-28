@@ -51,7 +51,7 @@ const VehicleAccordion = ({ route, id, setOpen, open }) => {
       </h2>
 
       {open && (
-        <div className="p-5 rounded-sm border border-t-0 border-gray-200 text-gray-500">
+        <div className="p-5 border border-t-0 border-gray-200 text-gray-500">
           <div className="flex justify-between">
             <span className=" text-gray-500">
               Start Time:{" "}
@@ -90,7 +90,7 @@ const VehicleAccordion = ({ route, id, setOpen, open }) => {
                   <td>Travel Duration: </td>
                   <td>
                     {convertSecondsToTime(
-                      route?.metrics?.travelDuration.slice(0,-1)
+                      route?.metrics?.travelDuration?.seconds
                     )}
                   </td>
                 </tr>
@@ -98,7 +98,7 @@ const VehicleAccordion = ({ route, id, setOpen, open }) => {
                   <td>Visit Duration: </td>
                   <td>
                     {convertSecondsToTime(
-                      route?.metrics?.visitDuration.slice(0,-1)
+                      route?.metrics?.visitDuration?.seconds
                     )}
                   </td>
                 </tr>
@@ -108,44 +108,44 @@ const VehicleAccordion = ({ route, id, setOpen, open }) => {
                   <td>Total Duration: </td>
                   <td>
                     {convertSecondsToTime(
-                      route?.metrics?.totalDuration?.slice(0,-1)
+                      route?.metrics?.totalDuration?.seconds
                     )}
                   </td>
                 </tr>
               </table>
             </div>
-            <div className="mr-5">
+            <div>
               <table>
                 <tr>
                   <td>Fixed Cost:</td>
                   <td>
-                    {Math.floor(route?.routeCosts?.["model.vehicles.fixed_cost"] ?? 0)}
+                    {route?.routeCosts?.["model.vehicles.fixed_cost"] ?? 0}
                   </td>
                 </tr>
                 <tr>
                   <td>Cost per hour:</td>
                   <td>
-                    {Math.floor(route?.routeCosts?.["model.vehicles.cost_per_hour"] ?? 0)}
+                    {route?.routeCosts?.["model.vehicles.cost_per_hour"] ?? 0}
                   </td>
                 </tr>
                 <tr>
                   <td>Shipment Delivery Cost:</td>
                   <td>
-                    {Math.floor(route?.routeCosts?.["model.shipments.deliveries.cost"] ??
-                      0)}
+                    {route?.routeCosts?.["model.shipments.deliveries.cost"] ??
+                      0}
                   </td>
                 </tr>
                 <tr>
                   <td>Shipment Pickup Cost:</td>
                   <td>
-                    {Math.floor(route?.routeCosts?.["model.shipments.pickups.cost"] ?? 0)}
+                    {route?.routeCosts?.["model.shipments.pickups.cost"] ?? 0}
                   </td>
                 </tr>
                 <hr />
 
                 <tr>
                   <td>Total Cost:</td>
-                  <td>{Math.floor(route?.routeTotalCost ?? 0)}</td>
+                  <td>{route?.routeTotalCost ?? 0}</td>
                 </tr>
               </table>
             </div>

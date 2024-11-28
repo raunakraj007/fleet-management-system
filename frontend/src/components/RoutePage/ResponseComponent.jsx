@@ -12,7 +12,7 @@ const ResponseComponent = () => {
   return (
     <>
       <div className="bg-gray-200 h-auto max-h-[100vh] overflow-y-auto scrollbar-hide">
-        <GetResponseButton/>
+        {/* <GetResponseButton/> */}
         {/* <Matrices /> */}
         <ResponseMatrices setDisplayData = {setDisplayData}/>
         {/* <div className="h-[20vh]">{displayData}</div> */}

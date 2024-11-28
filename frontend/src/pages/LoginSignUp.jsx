@@ -67,7 +67,7 @@ const LoginPage = () => {
         .then((res) => {
           console.log(res);
           // localStorage.setItem("isSignIn", true);
-          navigate("/app/dashboard");
+          navigate("/app/shipments");
         });
     }
 

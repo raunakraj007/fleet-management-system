@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import DeliveryPickupSelector from "../PickupDileverySelector";
 import DateTimeInput from "../DateTime";
-import App from "../Maps/autoComplete/src/app";
+// import App from "../Maps/autoComplete/src/app";
 import AutoCompleteMap from "../AutoComplete/main";
 import addIcon from "../../assets/add.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";

@@ -54,7 +54,7 @@ const FleetScenario = () => {
       })
     );
 
-    navigator("/route-optimization");
+    navigator("/app/route-optimization");
   };
 
   return (

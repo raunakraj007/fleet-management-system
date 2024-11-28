@@ -3,6 +3,8 @@ import Split from "react-split";
 
 import MapComponent from "../components/Map/MapComponent";
 import ResponseComponent from "../components/RoutePage/ResponseComponent";
+import FleePlanning from "../components/FleetPlanningPage/index";
+import FleetManagement from "../components/bin/FleetManagement";
 
 const RouteOptimizer = () => {
   return (
@@ -12,6 +14,7 @@ const RouteOptimizer = () => {
           className="split"
           direction="vertical"
           sizes={[80, 20]}
+          minSize={[10,10]}
           style={{ display: "flex", flexDirection: "column" }}
         >
           <div style={{ height: "100%" }}>
@@ -19,9 +22,10 @@ const RouteOptimizer = () => {
           </div>
           <div
             style={{ height: "100%" }}
-            className="scrollbar-hide h-[100vh] bg-gray-200"
+            className="scrollbar-hide  bg-gray-200"
           >
-            <ResponseComponent />
+            {/* <ResponseComponent /> */}
+            <FleePlanning />
           </div>
         </Split>
       </div>

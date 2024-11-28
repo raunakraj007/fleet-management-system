@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import filesAdd from "../../assets/fileAdd.svg";
 import DateTimeInput from "../DateTime";
-import App from "../Maps/autoComplete/src/app";
+// import App from "../Maps/autoComplete/src/app";
 import AutoCompleteMap from "../AutoComplete/main";
 import ADD_TRUCK_ICON from "../../assets/addTruck.svg";
 import ADD_ICON from "../../assets/add-to-queue-svgrepo-com.svg";
